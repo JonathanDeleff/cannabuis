@@ -1,0 +1,1 @@
+// the component for the stats that show in the homepage will go here

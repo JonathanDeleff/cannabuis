@@ -1,3 +1,8 @@
+/*
+* The sign in page for the app
+* TODO: create functionality and do styling
+*/
+
 export const Login = () => {
     return (
         <div>
