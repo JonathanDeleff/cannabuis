@@ -4,9 +4,9 @@ export const Login = () => {
         <h1>Login</h1>
         <form>
             <label htmlFor="email">Email</label>
-            <input id="email" type="email" />
-            <label htmlFor="password">Password</label>
-            <input id="password" type="password" />
+            <input className="text-black" id="email" type="email" />
+            <label  htmlFor="password">Password</label>
+            <input className='text-black' id="password" type="password" />
             <button type="submit">Login</button>
         </form>
         </div>
