@@ -79,7 +79,7 @@ const menuItems = [
 
 const Sidebar = () => {
     return (
-        <div className='sticky top-10'>
+        <div className='sticky top-10 w-full'>
             <div className='flex items-center gap-5 mb-5'>
                 <Image className='rounded-full object-cover' src="/noavatar.png" alt="" width="50" height="50"/>
                 <div className='flex flex-col'>
@@ -98,7 +98,7 @@ const Sidebar = () => {
                 </li>
             ))}
            </ul>
-           <button className='p-5 mt-1.5 flex items-center gap-2.5 cursor-pointer text-white rounded-lg bg-none border-none w-full hover:bg-logHover'>
+           <button className='p-5 mt-1.5 flex items-center gap-2.5 cursor-pointer text-white rounded-lg bg-none border-none w-full hover:bg-hover'>
             <MdLogout />
             Logout
             </button>

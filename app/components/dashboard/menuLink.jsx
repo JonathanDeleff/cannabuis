@@ -8,7 +8,7 @@ const MenuLink = ({item}) => {
     const isActive = pathname === item.path
     
     return (
-        <Link href={item.path} className={`flex p-5 items-center gap-2.5 mt-2.5 rounded-lg ${isActive ? 'bg-hover' : ''}`}>
+        <Link href={item.path} className={`flex p-5 items-center gap-2.5 mt-2.5 rounded-lg hover:bg-hover ${isActive ? 'bg-hover' : ''}`}>
            {item.icon}
            {item.title} 
         </Link>

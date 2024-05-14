@@ -5,7 +5,7 @@ import Navbar from "../components/dashboard/navbar";
 const Layout = ({ children }) => {
     return (
         <div className='flex'>
-            <div className='flex w-1/4 bg-bgSoft p-5'>
+            <div className='flex bg-bgSoft p-5 w-1/5'>
                 <Sidebar/>
             </div>
             <div className='flex-1 p-5'>

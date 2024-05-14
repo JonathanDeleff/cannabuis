@@ -19,6 +19,10 @@ module.exports = {
         textSoft: '#b7bac1', 
         search: '#2e374a',
         hover: '#2e374a',
+        pending: '#f7cb7375',
+        complete: '#afd6ee75',
+        cancelled: '#f7737375',
+
       },
     },
   },
