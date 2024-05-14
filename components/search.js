@@ -1,1 +1,0 @@
-// the search functionality for products, may be used for both ordering and selling, and users to browse products
