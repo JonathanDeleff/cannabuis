@@ -1,14 +1,14 @@
-import Sidebar from '../ui/dashboard/sidebar/sidebar';
-import Navbar from '../ui/dashboard/navbar/navbar';
-import styles from '../ui/dashboard/dashboard.module.css';
+import Sidebar from "../components/dashboard/sidebar";
+import Navbar from "../components/dashboard/navbar";
+
 
 const Layout = ({ children }) => {
     return (
-        <div className={styles.container}>
-            <div className={styles.menu}>
+        <div className='flex'>
+            <div className='flex w-1/4 bg-bgSoft p-5'>
                 <Sidebar/>
             </div>
-            <div className={styles.content}>
+            <div className='flex-1 p-5'>
                 <Navbar/>
                 {children}
             </div>

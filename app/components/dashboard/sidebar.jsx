@@ -1,5 +1,4 @@
-import MenuLink from './menuLink/menuLink'
-import styles from './sidebar.module.css'
+import MenuLink from './menuLink'
 import Image from 'next/image'
 import {
     MdDashboard,
@@ -80,18 +79,18 @@ const menuItems = [
 
 const Sidebar = () => {
     return (
-        <div className={styles.container}>
-            <div className={styles.user}>
-                <Image className={styles.userImage} src="/noavatar.png" alt="" width="50" height="50"/>
-                <div className={styles.userDetail}>
-                    <span className={styles.username}>John Doe</span>
-                    <span className={styles.userTitle}>Admin</span>
+        <div className='sticky top-10'>
+            <div className='flex items-center gap-5 mb-5'>
+                <Image className='rounded-full object-cover' src="/noavatar.png" alt="" width="50" height="50"/>
+                <div className='flex flex-col'>
+                    <span className='font-medium'>John Doe</span>
+                    <span className='text-xs text-textSoft'>Admin</span>
                 </div>
             </div>
-            <ul className={styles.list}>
+            <ul className='list-none'>
             {menuItems.map(cat=>(
                 <li key={cat.title}>
-                    <span className={styles.cat}>{cat.title}</span>
+                    <span className='text-textSoft font-bold text-sm mt-2.5'>{cat.title}</span>
                     {cat.list.map(item => (
                         <MenuLink key={item.title} item={item}/>
                     
@@ -99,7 +98,7 @@ const Sidebar = () => {
                 </li>
             ))}
            </ul>
-           <button className={styles.logout}>
+           <button className='p-5 mt-1.5 flex items-center gap-2.5 cursor-pointer text-white rounded-lg bg-none border-none w-full hover:bg-logHover'>
             <MdLogout />
             Logout
             </button>
