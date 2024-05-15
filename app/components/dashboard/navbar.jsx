@@ -13,8 +13,8 @@ const Navbar = () => {
             </div>
             <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2 bg-search rounded-lg p-1">
-                    <MdSearch className='flex gap-2'/>
-                    <input type="text" placeholder="Search..." className="bg-transparent border-none text-text" />
+                    <MdSearch className='flex gap-2 text-black'/>
+                    <input type="text" placeholder="Search..." className="bg-transparent border-none text-black p-1" />
                 </div>
             </div>
         </div>

@@ -11,6 +11,7 @@ import {
     MdOutlineSettings,
     MdHelpCenter,
     MdLogout,
+    MdAssignment,
   } from "react-icons/md";
 
 const menuItems = [
@@ -23,8 +24,8 @@ const menuItems = [
           icon: <MdDashboard />,
         },
         {
-          title: "Users",
-          path: "/dashboard/users",
+          title: "Employees",
+          path: "/dashboard/employees",
           icon: <MdSupervisedUserCircle />,
         },
         {
@@ -36,6 +37,11 @@ const menuItems = [
           title: "Transactions",
           path: "/dashboard/transactions",
           icon: <MdAttachMoney />,
+        },
+        {
+          title: "Order",
+          path: "/dashboard/order",
+          icon: <MdAssignment />,
         },
       ],
     },
@@ -83,6 +89,7 @@ const Sidebar = () => {
             <div className='flex items-center gap-5 mb-5'>
                 <Image className='rounded-full object-cover' src="/noavatar.png" alt="" width="50" height="50"/>
                 <div className='flex flex-col'>
+                  {/* will need a restructure when we have a backend */}
                     <span className='font-medium'>John Doe</span>
                     <span className='text-xs text-textSoft'>Admin</span>
                 </div>
