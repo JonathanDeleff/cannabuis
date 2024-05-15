@@ -1,7 +1,7 @@
 import Card from "../components/dashboard/card";
 import Chart from "../components/dashboard/chart";
-import Rightbar from "../components/dashboard/rightbar";
 import Transactions from "../components/dashboard/transactions";
+import Announcements from "../components/dashboard/announcements";
 
 const Dashboard = () => {
     return (
@@ -16,7 +16,7 @@ const Dashboard = () => {
                 <Chart />
             </div>
             <div className="flex w-1/5">
-                <Rightbar />
+                <Announcements />
             </div>
         </div>
     );
