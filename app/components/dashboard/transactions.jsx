@@ -36,7 +36,7 @@ const Transactions = () => {
                     <td className='p-2.5'>
                         <div className='flex gap-2.5 items-center'>
                             {/** image source to be changed when available */}
-                            <Image src="/noavatar.png" alt="" width={40} height={40} className="userImage"/>
+                            <Image src="/noavatar.png" alt="" width={40} height={40} className="object-cover rounded-full"/>
                             Joe Schmoe
                         </div>
                     </td>
@@ -50,7 +50,7 @@ const Transactions = () => {
                     <td className='p-2.5'>
                         <div className='flex gap-2.5 items-center'>
                             {/** image source to be changed when available */}
-                            <Image src="/noavatar.png" alt="" width={40} height={40} className="userImage"/>
+                            <Image src="/noavatar.png" alt="" width={40} height={40} className="object-cover rounded-full"/>
                             Roger Dodger
                         </div>
                     </td>

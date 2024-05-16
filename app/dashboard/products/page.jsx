@@ -1,3 +1,4 @@
+// will follow very similar logic to employees page
 const ProductsPage = () => {
   return (
     <div>
