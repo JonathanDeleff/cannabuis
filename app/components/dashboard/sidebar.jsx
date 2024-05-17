@@ -105,7 +105,7 @@ const Sidebar = () => {
                 </li>
             ))}
            </ul>
-           <button className='p-5 mt-1.5 flex items-center gap-2.5 cursor-pointer text-white rounded-lg bg-none border-none w-full hover:bg-hover'>
+           <button className='p-5 mt-1.5 flex items-center gap-2.5 cursor-pointer rounded-lg bg-none border-none w-full hover:bg-hover'>
             <MdLogout />
             Logout
             </button>

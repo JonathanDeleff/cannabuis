@@ -12,18 +12,18 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      // where all the color variables live for tailwind styling
       colors: {
-        bg: '#9B5094',
-        bgSoft: '#064874', 
-        text: '#white',
-        textSoft: '#b7bac1', 
-        search: '#CDF7F6',
-        hover: '#2E86AB',
+        bg: '#39393A',
+        bgSoft: '#E0E0E0', 
+        textSoft: '#666666', 
+        search: '#9000B3',
+        hover: '#EBEBEB',
         pending: '#f7cb7375',
         complete: '#afd6ee75',
         cancelled: '#f7737375',
-        button: '#CDF7F6'
-        
+        button: '#735CDD',
+        border: '#735CDD',
       },
     },
   },

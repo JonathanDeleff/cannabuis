@@ -3,15 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --bg: #9B5094;
-  --bgSoft: #5E5768;
-  --text: white;
-  --textSoft: #b7bac1;
+  --text: black;
 }
 
 
 body{
-  background-color: var(--bg);
+
   color: var(--text);
 }
 
