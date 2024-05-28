@@ -6,7 +6,7 @@ const prevDisabled = true;
 const Pagination = () => {
     return (
         <div className="p-2.5 flex justify-between ">
-            <button className={`px-2.5 py-1 cursor-pointer text-black ${prevDisabled ? 'cursor-not-allowed bg-slate-500' : 'bg-button'}`}>Previous</button>
+            <button className={`px-2.5 py-1 cursor-pointer text-black ${prevDisabled ? 'cursor-bot-allowed bg-slate-500' : 'bg-button'}`}>Previous</button>
             <button className={`px-2.5 py-1 cursor-pointer text-black ${nextDisabled ? 'cursor-not-allowed bg-slate-500' : 'bg-button'}`}>Next</button>
         </div>
     );

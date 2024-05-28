@@ -1,11 +1,11 @@
-import Card from "../components/dashboard/card";
-import Chart from "../components/dashboard/chart";
-import Transactions from "../components/dashboard/transactions";
-import Announcements from "../components/dashboard/announcements";
+import Card from "../../components/dashboard/card";
+import Chart from "../../components/dashboard/chart";
+import Transactions from "../../components/dashboard/transactions";
+import Announcements from "../../components/dashboard/announcements";
 
 const Dashboard = () => {
     return (
-        <div className="flex gap-5 mt-5">
+        <div className="flex gap-5 mt-5 h-screen">
             <div className="flex flex-col gap-5 w-4/5">
                 <div className="flex gap-5 justify-between">
                     <Card />

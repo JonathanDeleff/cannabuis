@@ -9,7 +9,7 @@ const Announcements = () => {
                     <Image className="object-contain opacity-20" src="/cannabis1.jpg" alt="" fill/>
                 </div>
                 <div className="flex flex-col gap-6">
-                    <span className="font-bold">🔥 Available Now</span>
+                    <span className="font-bold text-white">🔥 Available Now!</span>
                     <h3 className="font-medium">New strains now in stock!!!</h3>
                     <span className="font-medium text-xs text-textSoft">Learn all about new strains in stock now</span>
                     <p className="font-medium text-xs text-textSoft">Lorem ipsum dolor sit amet consectetur adipisicing elit.

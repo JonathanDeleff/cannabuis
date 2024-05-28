@@ -1,5 +1,5 @@
-import Sidebar from "../components/dashboard/sidebar";
-import Navbar from "../components/dashboard/navbar";
+import Sidebar from "../../components/dashboard/sidebar";
+import Navbar from "../../components/dashboard/navbar";
 
 
 const Layout = ({ children }) => {
