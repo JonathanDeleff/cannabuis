@@ -5,6 +5,7 @@ import Pagination from "@/components/dashboard/pagination";
 import Employee from "@/components/employees/employeeRender";
 import postgres from "postgres";
 
+// connect to the database
 const sql = postgres({
     host: process.env.PGHOST,
     database: process.env.PGDATABASE,
@@ -17,6 +18,7 @@ const sql = postgres({
 
 export default async function EmployeesPage() {
   
+    // get employees from database
    const getEmployees = async () => {
     const rows = await sql`SELECT * FROM c_employee`;
     return rows;
@@ -24,24 +26,14 @@ export default async function EmployeesPage() {
 
     const employees = await getEmployees();
 
+    // need to convert response dates to strings to display them properly
     const formattedEmployees = employees.map(employee => {
         const formattedEmployee = { ...employee };
-        
-        // Check if date_of_hire exists and format it
-        if (formattedEmployee.date_of_hire) {
-          formattedEmployee.date_of_hire = formattedEmployee.date_of_hire.toISOString().split('T')[0];
-        }
-        
-        // Check if created_at exists and format it
-        if (formattedEmployee.created_at) {
-          formattedEmployee.created_at = formattedEmployee.created_at.toISOString().split('T')[0];
-        }
-        
-        // Check if updated_at exists and format it
-        if (formattedEmployee.updated_at) {
-          formattedEmployee.updated_at = formattedEmployee.updated_at.toISOString().split('T')[0];
-        }
-      
+
+        // format the dates to remove unnecessary time information 
+        formattedEmployee.date_of_hire = formattedEmployee.date_of_hire.toISOString().split('T')[0];       
+        formattedEmployee.created_at = formattedEmployee.created_at.toISOString().split('T')[0];      
+        formattedEmployee.updated_at = formattedEmployee.updated_at.toISOString().split('T')[0];
         return formattedEmployee;
       });
       
