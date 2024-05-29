@@ -12,6 +12,7 @@ TODOS:
 -add database functionality to dashboard
 -create cart component
 -make products selectable to add to cart (may make a seperate page for shopping versus admin product controls with a      different render method)
+-implement password hashing so login aint busted
 
 
 
