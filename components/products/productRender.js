@@ -13,7 +13,7 @@ const Product = ( {products} ) => {
                 </thead>
                 <tbody>
                     {products?.map(product => (
-                        <tr key={product.emp_id}>
+                        <tr key={product.product_sku}>
                             <td className="p-2.5">{product.product_title}</td>
                             <td className="p-2.5">{product.product_equivalency}</td>
                             <td className="p-2.5">{product.inventory_level}</td>

@@ -38,8 +38,8 @@ export default async function ProductsPage() {
     
 
   return (
-    <div className="bg-bgSoft p-5 rounded-lg mt-5">
-      <div className="flex items-center justify-between">
+    <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5">
+      <div className="flex items-center justify-between overflow-auto">
         <Search placeholder='Search for a product' />
         <Link href={"/components/products/addProduct"}>
           <button className="p-2.5 bg-button text-black rounded-lg">Add New</button>
