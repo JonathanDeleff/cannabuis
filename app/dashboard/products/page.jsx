@@ -1,41 +1,45 @@
+"use client";
 import Search from "@/components/dashboard/search";
 import Link from 'next/link';
 import Pagination from "@/components/dashboard/pagination";
-import postgres from "postgres";
+import { useState, useEffect } from "react";
 import Product from "@/components/products/productRender";
 
-// connect to the database
-const sql = postgres({
-    host: process.env.PGHOST,
-    database: process.env.PGDATABASE,
-    username: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-    port: 5432,
-    ssl: 'require',    
-});
 
 
-export default async function ProductsPage() {
+
+
+export default function ProductsPage() {
   
-    // get products from database
-   const getProducts = async () => {
-    const rows = await sql`SELECT * FROM c_product`;
-    return rows;
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products', {
+          method: 'GET',
+        });
+        setLoading(false);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
     };
 
-    const products = await getProducts();
+    fetchProducts();
+  }, []);
 
-    // need to convert response dates to strings to display them properly
-    const formattedProducts = products.map(product => {
-        const formattedProducts = { ...product };
 
-        // format the dates to remove unnecessary time information       
-        formattedProducts.created_at = formattedProducts.created_at.toISOString().split('T')[0];      
-        formattedProducts.updated_at = formattedProducts.updated_at.toISOString().split('T')[0];
-        return formattedProducts;
-      });
-      
-    
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5">
@@ -45,7 +49,7 @@ export default async function ProductsPage() {
           <button className="p-2.5 bg-button text-black rounded-lg">Add New</button>
         </Link>
       </div>
-        <Product products={formattedProducts} />
+      <Product products={products} />
       <Pagination />
     </div>
   );

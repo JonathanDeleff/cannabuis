@@ -1,45 +1,54 @@
+"use client";
 import Search from "@/components/dashboard/search";
 import Link from 'next/link';
 import Pagination from "@/components/dashboard/pagination";
-import postgres from "postgres";
 import Transaction from "@/components/transactions/transactionRender";
-
+import { useState, useEffect } from "react";
 // connect to the database
-const sql = postgres({
-    host: process.env.PGHOST,
-    database: process.env.PGDATABASE,
-    username: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-    port: 5432,
-    ssl: 'require',    
-});
 
-
-export default async function TransactionsPage() {
+export default function TransactionsPage() {
   
-    // TODO: requires sql query to also grab customer name
-    // get products from database
-   const getTransactions = async () => {
-    const rows = await sql`SELECT * FROM c_transaction`;
-    return rows;
+
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const response = await fetch('/api/transactions', {
+          method: 'GET',
+        });
+        setLoading(false);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        const processedData = data.map(transaction => {
+          const transactionCost = parseFloat(transaction.transaction_cost);
+          const transactionTax = parseFloat(transaction.transaction_tax);
+          const total = (transactionCost + transactionTax).toFixed(2);
+          return {
+            ...transaction,
+            created_at: transaction.created_at.split('T')[0],
+            total: total,
+          };
+        });
+
+        setTransactions(processedData);
+      } catch (error) {
+        console.error('Error fetching employees:', error);
+      }
     };
 
-    const transactions = await getTransactions();
-
-    // need to convert response dates to strings to display them properly
-    const formattedTransactions = transactions.map(transaction => {
-        const formattedTransactions = { ...transaction };
-
-        // format the dates to remove unnecessary time information       
-        formattedTransactions.created_at = formattedTransactions.created_at.toISOString().split('T')[0];      
-        formattedTransactions.updated_at = formattedTransactions.updated_at.toISOString().split('T')[0];
-
-        // calculate the total cost of the transaction
-        const total = parseFloat(formattedTransactions.transaction_cost) + parseFloat(formattedTransactions.transaction_tax);
-        formattedTransactions.total = total.toFixed(2);
-       
-        return formattedTransactions;
-      });
+    fetchTransactions();
+  }, []);
+      
+  if (loading) {
+    return <div>Loading...</div>;
+  }
       
     
 
@@ -51,7 +60,7 @@ export default async function TransactionsPage() {
           <button className="p-2.5 bg-button text-black rounded-lg">Add New</button>
         </Link>
       </div>
-        <Transaction transactions={formattedTransactions} />
+        <Transaction transactions={transactions} />
       <Pagination />
     </div>
   );

@@ -1,43 +1,49 @@
 // app/dashboard/employees/page.jsx
+"use client";
 import Search from "@/components/dashboard/search";
 import Link from 'next/link';
 import Pagination from "@/components/dashboard/pagination";
 import Employee from "@/components/employees/employeeRender";
-import postgres from "postgres";
+import { useState, useEffect } from "react";
 
-// connect to the database
-const sql = postgres({
-    host: process.env.PGHOST,
-    database: process.env.PGDATABASE,
-    username: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-    port: 5432,
-    ssl: 'require',    
-});
-
-
-export default async function EmployeesPage() {
+export default function EmployeesPage() {
   
-    // get employees from database
-   const getEmployees = async () => {
-    const rows = await sql`SELECT * FROM c_employee`;
-    return rows;
+  const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const response = await fetch('/api/employees', {
+          method: 'GET',
+        });
+        setLoading(false);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        const processedData = data.map(employee => {
+          return {
+            ...employee,
+            date_of_hire: employee.date_of_hire.split('T')[0],
+          };
+        });
+
+        setEmployees(processedData);
+      } catch (error) {
+        console.error('Error fetching employees:', error);
+      }
     };
 
-    const employees = await getEmployees();
-
-    // need to convert response dates to strings to display them properly
-    const formattedEmployees = employees.map(employee => {
-        const formattedEmployee = { ...employee };
-
-        // format the dates to remove unnecessary time information 
-        formattedEmployee.date_of_hire = formattedEmployee.date_of_hire.toISOString().split('T')[0];       
-        formattedEmployee.created_at = formattedEmployee.created_at.toISOString().split('T')[0];      
-        formattedEmployee.updated_at = formattedEmployee.updated_at.toISOString().split('T')[0];
-        return formattedEmployee;
-      });
+    fetchEmployees();
+  }, []);
       
-    
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="bg-bgSoft p-5 rounded-lg mt-5">
@@ -47,7 +53,7 @@ export default async function EmployeesPage() {
           <button className="p-2.5 bg-button text-black rounded-lg">Add New</button>
         </Link>
       </div>
-        <Employee employees={formattedEmployees} />
+        <Employee employees={employees} />
       <Pagination />
     </div>
   );
