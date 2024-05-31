@@ -1,4 +1,16 @@
-// TODO: add styling for status boxes
+const getStatusClass = (status) => {
+    switch (status) {
+      case 'Completed':
+        return 'bg-complete';
+      case 'Pending':
+        return 'bg-pending';
+      case 'Cancelled':
+        return 'bg-cancelled';
+      default:
+        return 'bg-gray-500'; // Default styling if status is not recognized
+    }
+  };
+
 const Transaction = ( {transactions} ) => {
     return (
         <div>
@@ -13,9 +25,11 @@ const Transaction = ( {transactions} ) => {
                 </thead>
                 <tbody>
                     {transactions?.map(transaction => (
-                        <tr key={transaction.transaction_id}>
+                        <tr key={transaction.transaction_id} className="p-2.5 m-2.5">
                             <td className="p-2.5">{transaction.customer_id}</td>
-                            <td className="p-2.5">{transaction.transaction_status}</td>
+                            <td className="p-2.5">
+                            <span className={`rounded-full p-2 flex w-32 justify-center ${getStatusClass(transaction.transaction_status)}`}>{transaction.transaction_status}</span>
+                                </td>
                             <td className="p-2.5">{transaction.created_at}</td>
                             <td className="p-2.5">${transaction.total}</td>
                         </tr>
