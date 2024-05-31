@@ -1,10 +1,12 @@
-const Product = ( {products} ) => {
+const Product = ({ products }) => {
     return (
         <div>
             <table className="w-full">
                 <thead>
                     <tr>
+                        <td className="p-2.5">SKU</td>
                         <td className="p-2.5">Product Name</td>
+                        <td className="p-2.5">Brand</td>
                         <td className="p-2.5">Category</td>
                         <td className="p-2.5">Stock</td>
                         <td className="p-2.5">Price</td>
@@ -14,7 +16,9 @@ const Product = ( {products} ) => {
                 <tbody>
                     {products?.map(product => (
                         <tr key={product.product_sku}>
+                            <td className="p-2.5">{product.product_sku}</td>
                             <td className="p-2.5">{product.product_title}</td>
+                            <td className="p-2.5">{product.product_brand}</td>
                             <td className="p-2.5">{product.product_equivalency}</td>
                             <td className="p-2.5">{product.inventory_level}</td>
                             <td className="p-2.5">${product.sell_price}</td>
