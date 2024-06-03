@@ -1,82 +1,70 @@
-import React, { useState, useMemo } from 'react';
+import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
-const Product = ({ products, onAddToCart, searchQuery }) => {
-    const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-
-    const sortedProducts = useMemo(() => {
-        let sortableProducts = [...products];
-
-        if (sortConfig.key) {
-            sortableProducts.sort((a, b) => {
-                if (a[sortConfig.key] < b[sortConfig.key]) {
-                    return sortConfig.direction === 'ascending' ? -1 : 1;
-                }
-                if (a[sortConfig.key] > b[sortConfig.key]) {
-                    return sortConfig.direction === 'ascending' ? 1 : -1;
-                }
-                return 0;
-            });
-        }
-
-        return sortableProducts.filter(product =>
-            product.product_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            product.product_sku.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            product.product_brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            product.product_equivalency.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            product.product_description.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-    }, [products, sortConfig, searchQuery]);
-
-    const requestSort = key => {
-        let direction = 'ascending';
-        if (
-            sortConfig.key === key &&
-            sortConfig.direction === 'ascending'
-        ) {
-            direction = 'descending';
-        }
-        setSortConfig({ key, direction });
-    };
-
-    return (
-        <div>
-            <table className="w-full">
-                <thead>
-                    <tr>
-                        <th className="p-2.5 cursor-pointer" onClick={() => requestSort('product_sku')}>SKU</th>
-                        <th className="p-2.5 cursor-pointer" onClick={() => requestSort('product_title')}>Product Name</th>
-                        <th className="p-2.5 cursor-pointer" onClick={() => requestSort('product_brand')}>Brand</th>
-                        <th className="p-2.5 cursor-pointer" onClick={() => requestSort('product_equivalency')}>Category</th>
-                        <th className="p-2.5 cursor-pointer" onClick={() => requestSort('inventory_level')}>Stock</th>
-                        <th className="p-2.5 cursor-pointer" onClick={() => requestSort('sell_price')}>Price</th>
-                        <th className="p-2.5">Description</th>
-                        <th className="p-2.5">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {sortedProducts.map(product => (
-                        <tr key={product.product_sku}>
-                            <td className="p-2.5">{product.product_sku}</td>
-                            <td className="p-2.5">{product.product_title}</td>
-                            <td className="p-2.5">{product.product_brand}</td>
-                            <td className="p-2.5">{product.product_equivalency}</td>
-                            <td className="p-2.5">{product.inventory_level}</td>
-                            <td className="p-2.5">${product.sell_price}</td>
-                            <td className="p-2.5">{product.product_description}</td>
-                            <td className="p-2.5">
-                                <button 
-                                    className="bg-blue-500 text-white p-2 rounded" 
-                                    onClick={() => onAddToCart(product)}
-                                >
-                                    Add to Cart
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
+const Product = ({ products, onAddToCart, requestSort, sortConfig }) => {
+  return (
+    <div>
+      <table className="w-full">
+        <thead>
+          <tr>
+            <th className="p-2.5 cursor-pointer" onClick={() => requestSort('product_sku')}>
+                <div className="flex flex-row items-center">
+                    SKU {sortConfig.key === 'product_sku' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
+                </div>
+            </th>
+            <th className="p-2.5 cursor-pointer" onClick={() => requestSort('product_title')}>
+                <div className="flex flex-row items-center"> 
+                    Product Name {sortConfig.key === 'product_title' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
+                </div>
+             
+            </th>
+            <th className="p-2.5 cursor-pointer" onClick={() => requestSort('product_brand')}>
+                <div className="flex flex-row items-center">
+                    Brand {sortConfig.key === 'product_brand' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
+                </div>
+            </th>
+            <th className="p-2.5 cursor-pointer items-center" onClick={() => requestSort('product_equivalency')}>
+                <div className="flex flex-row">
+                    Category {sortConfig.key === 'product_equivalency' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
+                </div>
+            </th>
+            <th className="p-2.5 cursor-pointer items-center" onClick={() => requestSort('inventory_level')}>
+                <div className="flex flex-row">
+                    Stock {sortConfig.key === 'inventory_level' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
+                </div>
+            </th>
+            <th className="p-2.5 cursor-pointer items-center" onClick={() => requestSort('sell_price')}>
+                <div className="flex flex-row">
+                    Price {sortConfig.key === 'sell_price' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
+                </div>
+            </th>
+            <th className="p-2.5">Description</th>
+            <th className="p-2.5">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map(product => (
+            <tr key={product.product_sku}>
+              <td className="p-2.5">{product.product_sku}</td>
+              <td className="p-2.5">{product.product_title}</td>
+              <td className="p-2.5">{product.product_brand}</td>
+              <td className="p-2.5">{product.product_equivalency}</td>
+              <td className="p-2.5">{product.inventory_level}</td>
+              <td className="p-2.5">${product.sell_price}</td>
+              <td className="p-2.5">{product.product_description}</td>
+              <td className="p-2.5">
+                <button 
+                  className="bg-blue-500 text-white p-2 rounded" 
+                  onClick={() => onAddToCart(product)}
+                >
+                  Add to Cart
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
 export default Product;
