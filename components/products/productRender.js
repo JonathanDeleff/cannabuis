@@ -1,8 +1,9 @@
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
+import { BsCartPlusFill } from "react-icons/bs";
 
 const Product = ({ products, onAddToCart, requestSort, sortConfig }) => {
   return (
-    <div>
+    <div className="overflow-y-auto">
       <table className="w-full">
         <thead>
           <tr>
@@ -23,17 +24,17 @@ const Product = ({ products, onAddToCart, requestSort, sortConfig }) => {
                 </div>
             </th>
             <th className="p-2.5 cursor-pointer items-center" onClick={() => requestSort('product_equivalency')}>
-                <div className="flex flex-row">
+                <div className="flex flex-row items-center">
                     Category {sortConfig.key === 'product_equivalency' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
                 </div>
             </th>
             <th className="p-2.5 cursor-pointer items-center" onClick={() => requestSort('inventory_level')}>
-                <div className="flex flex-row">
+                <div className="flex flex-row items-center">
                     Stock {sortConfig.key === 'inventory_level' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
                 </div>
             </th>
             <th className="p-2.5 cursor-pointer items-center" onClick={() => requestSort('sell_price')}>
-                <div className="flex flex-row">
+                <div className="flex flex-row items-center">
                     Price {sortConfig.key === 'sell_price' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
                 </div>
             </th>
@@ -53,10 +54,10 @@ const Product = ({ products, onAddToCart, requestSort, sortConfig }) => {
               <td className="p-2.5">{product.product_description}</td>
               <td className="p-2.5">
                 <button 
-                  className="bg-blue-500 text-white p-2 rounded" 
+                  className="bg-button rounded-full text-white p-2.5" 
                   onClick={() => onAddToCart(product)}
                 >
-                  Add to Cart
+                  <BsCartPlusFill className="text-2xl"/>
                 </button>
               </td>
             </tr>
