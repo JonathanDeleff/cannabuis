@@ -1,8 +1,7 @@
 import React, { useState, useMemo } from 'react';
 
-const Product = ({ products, onAddToCart }) => {
+const Product = ({ products, onAddToCart, searchQuery }) => {
     const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
-    const [searchQuery, setSearchQuery] = useState('');
 
     const sortedProducts = useMemo(() => {
         let sortableProducts = [...products];
@@ -41,13 +40,6 @@ const Product = ({ products, onAddToCart }) => {
 
     return (
         <div>
-            <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="p-2 border mb-4"
-            />
             <table className="w-full">
                 <thead>
                     <tr>
