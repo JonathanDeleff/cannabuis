@@ -11,7 +11,15 @@ const sql = postgres({
 
 export async function GET(req) {
     try {
-        const data = await sql`SELECT * FROM c_order`;
+        const data = await sql`SELECT 
+        c_order.order_id, 
+        c_order.order_date, 
+        c_order.order_status, 
+        order_details.order_cost
+    FROM 
+        c_order
+    JOIN 
+        order_details ON c_order.order_id = order_details.order_id;`;
         return new Response(JSON.stringify(data), {
           status: 200,
           headers: { 'Content-Type': 'application/json' },

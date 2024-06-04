@@ -1,68 +1,42 @@
-import Image from 'next/image';
+const getStatusClass = (status) => {
+    switch (status) {
+      case 'Completed':
+        return 'bg-complete';
+      case 'Pending':
+        return 'bg-pending';
+      case 'Cancelled':
+        return 'bg-cancelled';
+      default:
+        return 'bg-gray-500'; // Default styling if status is not recognized
+    }
+  };
 
-const Transactions = () => {
+const Transactions = ( {transactions} ) => {
     return (
-        <div className="bg-bgSoft p-5 rounded-lg">
-        <h2 className="mb-5 font-extralight text-textSoft">Latest Transactions</h2>
-        {/** table to be implemented with backend 
-         * will use an auto generated table more similar to how the sidebar is generated
-         * this is a placeholder
-        */}
+        <div className="bg-bgSoft rounded-md">
         <table className="w-full">
             <thead>
                 <tr>
-                    <td>Name</td>
-                    <td>Status</td>
-                    <td>Date</td>
-                    <td>Amount</td>
+                    <td className="p-2.5">Customer ID</td>
+                    <td className="p-2.5">Status</td>
+                    <td className="p-2.5">Date</td>
+                    <td className="p-2.5">Amount</td>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td className='p-2.5'>
-                        <div className='flex gap-2.5 items-center'>
-                            {/** image source to be changed when available */}
-                            <Image src="/noavatar.png" alt="" width={40} height={40} className="object-cover rounded-full"/>
-                            John Doe
-                        </div>
-                    </td>
-                    <td className='p-2.5'>
-                        <span className="rounded p-1.5 text-sm text-white bg-pending">pending</span>
-                    </td>
-                    <td className='p-2.5'>14.02.2024</td>
-                    <td className='p-2.5'>$3,200</td>
-                </tr>
-                <tr>
-                    <td className='p-2.5'>
-                        <div className='flex gap-2.5 items-center'>
-                            {/** image source to be changed when available */}
-                            <Image src="/noavatar.png" alt="" width={40} height={40} className="object-cover rounded-full"/>
-                            Joe Schmoe
-                        </div>
-                    </td>
-                    <td className='p-2.5'>
-                        <span className="rounded p-1.5 text-sm text-white bg-complete">Complete</span>
-                    </td>
-                    <td className='p-2.5'>14.02.2024</td>
-                    <td className='p-2.5'>$200</td>
-                </tr>
-                <tr>
-                    <td className='p-2.5'>
-                        <div className='flex gap-2.5 items-center'>
-                            {/** image source to be changed when available */}
-                            <Image src="/noavatar.png" alt="" width={40} height={40} className="object-cover rounded-full"/>
-                            Roger Dodger
-                        </div>
-                    </td>
-                    <td className='p-2.5'>
-                        <span className="rounded p-1.5 text-sm text-white bg-cancelled">Cancelled</span>
-                    </td>
-                    <td className='p-2.5'>14.02.2024</td>
-                    <td className='p-2.5'>$60</td>
-                </tr>
+                {transactions?.map(transaction => (
+                    <tr key={transaction.transaction_id} className="p-2.5 m-2.5">
+                        <td className="p-2.5">{transaction.customer_id}</td>
+                        <td className="p-2.5">
+                        <span className={`rounded-full p-2 flex w-32 justify-center ${getStatusClass(transaction.transaction_status)}`}>{transaction.transaction_status}</span>
+                            </td>
+                        <td className="p-2.5">{transaction.created_at}</td>
+                        <td className="p-2.5">${transaction.total}</td>
+                    </tr>
+                ))}
             </tbody>
         </table>
-        </div>
+    </div>
     );
 }
 

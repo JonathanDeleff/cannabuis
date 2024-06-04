@@ -1,4 +1,17 @@
-const Product = ({ orders }) => {
+const getStatusClass = (status) => {
+    switch (status) {
+      case 'Completed':
+        return 'bg-complete';
+      case 'Pending':
+        return 'bg-pending';
+      case 'Cancelled':
+        return 'bg-cancelled';
+      default:
+        return 'bg-gray-500'; // Default styling if status is not recognized
+    }
+  };
+
+const Orders = ({ orders }) => {
     return (
         <div>
             <table className="w-full">
@@ -7,22 +20,17 @@ const Product = ({ orders }) => {
                         <td className="p-2.5">Order ID</td>
                         <td className="p-2.5">Order Status</td>
                         <td className="p-2.5">Order Date</td>
-                        <td className="p-2.5">Category</td>
-                        <td className="p-2.5">Stock</td>
-                        <td className="p-2.5">Price</td>
-                        <td className="p-2.5">Description</td>
+                        <td className="p-2.5">Order Amount</td>
+
                     </tr>
                 </thead>
                 <tbody>
-                    {products?.map(product => (
-                        <tr key={product.product_sku}>
-                            <td className="p-2.5">{product.product_sku}</td>
-                            <td className="p-2.5">{product.product_title}</td>
-                            <td className="p-2.5">{product.product_brand}</td>
-                            <td className="p-2.5">{product.product_equivalency}</td>
-                            <td className="p-2.5">{product.inventory_level}</td>
-                            <td className="p-2.5">${product.sell_price}</td>
-                            <td className="p-2.5">{product.product_description}</td>
+                    {orders?.map(order => (
+                        <tr key={order.order_id}>
+                            <td className="p-2.5">{order.order_id}</td>
+                            <td className="p-2.5"> <span className={`rounded-full p-2 flex w-32 justify-center ${getStatusClass(order.order_status)}`}>{order.order_status}</span></td>
+                            <td className="p-2.5">{order.order_date}</td>
+                            <td className="p-2.5">${order.order_cost}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -31,4 +39,4 @@ const Product = ({ orders }) => {
     )
 }
 
-export default Product;
+export default Orders;
