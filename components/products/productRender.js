@@ -1,4 +1,5 @@
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
+import { BsCartPlusFill } from "react-icons/bs";
 
 const Product = ({ products, onAddToCart, requestSort, sortConfig }) => {
   return (
@@ -53,10 +54,10 @@ const Product = ({ products, onAddToCart, requestSort, sortConfig }) => {
               <td className="p-2.5">{product.product_description}</td>
               <td className="p-2.5">
                 <button 
-                  className="bg-blue-500 text-white p-2 rounded" 
+                  className="bg-button text-white p-2 rounded-full" 
                   onClick={() => onAddToCart(product)}
                 >
-                  Add to Cart
+                  <BsCartPlusFill/>
                 </button>
               </td>
             </tr>
