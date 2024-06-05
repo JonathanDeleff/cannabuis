@@ -71,10 +71,10 @@ export default function ProductsPage() {
 
   const cartEmpty = () => cart === undefined || cart.length == 0;
   
-  function totalCost(cart) {
+  function totalCost() {
     let total = 0;
 
-    if (!cartEmpty) {
+    if (!cartEmpty()) {
       cart.forEach((product) => total += product.sell_price * product.inventory_level);
     }
     
@@ -94,7 +94,21 @@ export default function ProductsPage() {
     }));
   };
 
-  const handleAddToCart = (product) => setCart((prevProducts) => [...prevProducts, { ...product, inventory_level: 1 }]);
+  const handleAddToCart = (product) => {
+    let canAdd = true;
+
+    cart.every(cartItem => {
+      if (product.product_sku === cartItem.product_sku) {
+        canAdd = false;
+      }
+      
+      return canAdd;
+    });
+
+    if (canAdd) {
+      setCart((prevProducts) => [...prevProducts, { ...product, inventory_level: 1 }]);
+    }
+  };
 
   const handleRemoveFromCart = (product_sku) => setCart(cart.filter((product) => product.product_sku !== product_sku));
 
@@ -131,7 +145,7 @@ export default function ProductsPage() {
               <p className="p-2.5">Cart is empty</p>
             ) : (
               <div>
-                <p className="p-2.5">${totalCost()}</p>
+                <p className="p-2.5">Total Cost: ${totalCost()}</p>
                 {confirm ? (
                   <Confirm 
                     onConfirm={handleConfirmSell}
