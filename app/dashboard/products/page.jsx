@@ -4,12 +4,16 @@ import Link from 'next/link';
 import Pagination from "@/components/dashboard/pagination";
 import { useState, useEffect, useMemo } from "react";
 import Product from "@/components/products/productRender";
+import Cart from "@/components/products/shoppingCart";
+import Confirm from "@/components/products/confirmPage";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
+  const [confirm, setConfirm] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -65,25 +69,85 @@ export default function ProductsPage() {
     setSortConfig({ key, direction });
   };
 
+  const cartEmpty = () => cart === undefined || cart.length == 0;
+  
+  function totalCost(cart) {
+    let total = 0;
+
+    if (!cartEmpty) {
+      cart.forEach((product) => total += product.sell_price * product.inventory_level);
+    }
+    
+    return total;
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
+  const handleQuantityChange = (productSKU, newQuantity) => {
+    setCart(currentProducts => currentProducts.map(product => {
+      if (product.product_sku === productSKU) {
+        return { ...product, inventory_level: newQuantity };
+      }
+      return product;
+    }));
+  };
+
+  const handleAddToCart = (product) => setCart((prevProducts) => [...prevProducts, { ...product, inventory_level: 1 }]);
+
+  const handleRemoveFromCart = (product_sku) => setCart(cart.filter((product) => product.product_sku !== product_sku));
+
+  const handleConfirmSell = () => {
+    // database code here iirc
+    setCart([]);
+    setConfirm(false);
+  }
+
   return (
-    <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5">
-      <div className="flex items-center justify-between">
-        <Search placeholder='Search for a product' setSearchQuery={setSearchQuery} />
-        <Link href={"/components/products/addProduct"}>
-          <button className="p-2.5 bg-button text-white rounded-lg">Add New</button>
-        </Link>
-      </div>
-        <Product 
-          products={sortedProducts} 
-          onAddToCart={() => {}} 
-          requestSort={requestSort} 
-          sortConfig={sortConfig} 
-        />
-      <Pagination />
+    <div className="flex gap-2 mt-5">
+        <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5 w-4/5">
+          <div className="flex items-center justify-between overflow-auto">
+            <Search placeholder='Search for a product' setSearchQuery={setSearchQuery} />
+            <Link href={"/components/products/addProduct"}>
+              <button className="p-2.5 bg-button text-black rounded-lg">Add New</button>
+            </Link>
+          </div>
+          <Product 
+            products={sortedProducts} 
+            onAddToCart={handleAddToCart} 
+            requestSort={requestSort} 
+            sortConfig={sortConfig} 
+          />
+          <Pagination />
+        </div>
+        <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5 w-1/5">
+            <Cart 
+              products={cart} 
+              onRemoveFromCart={handleRemoveFromCart} 
+              handleQuantityChange={handleQuantityChange}
+            />
+            {cartEmpty() ? (
+              <p className="p-2.5">Cart is empty</p>
+            ) : (
+              <div>
+                <p className="p-2.5">${totalCost()}</p>
+                {confirm ? (
+                  <Confirm 
+                    onConfirm={handleConfirmSell}
+                    onCancel={() => setConfirm(false)}
+                  />
+                ) : (
+                  <button 
+                    className="p-2.5 bg-button text-black rounded-lg" 
+                    onClick={() => setConfirm(true)}
+                  >
+                    Sell Items
+                  </button>
+                )}
+              </div>
+            )}
+        </div>
     </div>
   );
 }
