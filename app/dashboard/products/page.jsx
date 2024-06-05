@@ -153,7 +153,7 @@ export default function ProductsPage() {
                 <p className="p-2.5">Total Cost: ${totalCost()}</p>
                 <button 
                   className="p-2.5 bg-button text-black rounded-lg" 
-                  onClick={() => handleClearCart()}
+                  onClick={handleClearCart}
                 >
                   Clear Cart
                 </button>
