@@ -101,7 +101,7 @@ export default function ProductsPage() {
       if (product.product_sku === cartItem.product_sku) {
         canAdd = false;
       }
-      
+
       return canAdd;
     });
 
@@ -114,6 +114,7 @@ export default function ProductsPage() {
 
   const handleConfirmSell = () => {
     // database code here iirc
+    // cart.forEach((product) => DATA BASE QUERY HERE);
     setCart([]);
     setConfirm(false);
   }
