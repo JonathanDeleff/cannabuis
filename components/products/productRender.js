@@ -23,18 +23,18 @@ const Product = ({ products, onAddToCart, requestSort, sortConfig }) => {
                     Brand {sortConfig.key === 'product_brand' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
                 </div>
             </th>
-            <th className="p-2.5 cursor-pointer items-center" onClick={() => requestSort('product_equivalency')}>
-                <div className="flex flex-row">
+            <th className="p-2.5 cursor-pointer" onClick={() => requestSort('product_equivalency')}>
+                <div className="flex flex-row items-center">
                     Category {sortConfig.key === 'product_equivalency' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
                 </div>
             </th>
-            <th className="p-2.5 cursor-pointer items-center" onClick={() => requestSort('inventory_level')}>
-                <div className="flex flex-row">
+            <th className="p-2.5 cursor-pointer" onClick={() => requestSort('inventory_level')}>
+                <div className="flex flex-row items-center">
                     Stock {sortConfig.key === 'inventory_level' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
                 </div>
             </th>
-            <th className="p-2.5 cursor-pointer items-center" onClick={() => requestSort('sell_price')}>
-                <div className="flex flex-row">
+            <th className="p-2.5 cursor-pointer" onClick={() => requestSort('sell_price')}>
+                <div className="flex flex-row items-center">
                     Price {sortConfig.key === 'sell_price' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
                 </div>
             </th>
