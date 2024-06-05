@@ -112,11 +112,15 @@ export default function ProductsPage() {
 
   const handleRemoveFromCart = (product_sku) => setCart(cart.filter((product) => product.product_sku !== product_sku));
 
+  const handleClearCart = () => {
+    setCart([]);
+    setConfirm(false);
+  }
+
   const handleConfirmSell = () => {
     // database code here iirc
     // cart.forEach((product) => DATA BASE QUERY HERE);
-    setCart([]);
-    setConfirm(false);
+    handleClearCart();
   }
 
   return (
@@ -145,8 +149,14 @@ export default function ProductsPage() {
             {cartEmpty() ? (
               <p className="p-2.5">Cart is empty</p>
             ) : (
-              <div>
+              <div className="flex flex-col items-center">
                 <p className="p-2.5">Total Cost: ${totalCost()}</p>
+                <button 
+                  className="p-2.5 bg-button text-black rounded-lg" 
+                  onClick={() => handleClearCart()}
+                >
+                  Clear Cart
+                </button>
                 {confirm ? (
                   <Confirm 
                     onConfirm={handleConfirmSell}
@@ -154,7 +164,7 @@ export default function ProductsPage() {
                   />
                 ) : (
                   <button 
-                    className="p-2.5 bg-button text-black rounded-lg" 
+                    className="mt-1 p-2.5 bg-button text-black rounded-lg" 
                     onClick={() => setConfirm(true)}
                   >
                     Sell Items
