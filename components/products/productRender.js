@@ -3,7 +3,7 @@ import { BsCartPlusFill } from "react-icons/bs";
 
 const Product = ({ products, onAddToCart, requestSort, sortConfig }) => {
   return (
-    <div>
+    <div className="overflow-y-auto">
       <table className="w-full">
         <thead>
           <tr>
@@ -57,7 +57,7 @@ const Product = ({ products, onAddToCart, requestSort, sortConfig }) => {
                   className="bg-button text-white p-2 rounded-full" 
                   onClick={() => onAddToCart(product)}
                 >
-                  <BsCartPlusFill/>
+                  <BsCartPlusFill className="text-2xl"/>
                 </button>
               </td>
             </tr>
