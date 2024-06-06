@@ -5,15 +5,21 @@ npm i @neondatabase/serverless
 npm i postgres
 
 TODOS: 
--add search functionality for products, employees, and transaction - anders (done)
--add styling for transaction status boxes - jon (done)
--create ordersPage and ordersRender component - jon (done)
--change database tools to api call - jon (done)
--add database functionality to dashboard - jon(added transactions, other analytics to be determined, low priority)
+
 -create components for adding products and employees - sean
--create cart component - ethan
--make products selectable to add to cart (may make a seperate page for shopping versus admin product controls with a different render method) - ethan
+-add database functionality to dashboard - jon(maybe delegate portions)
 -implement password hashing so login aint busted -maybe (very low prority)
+
+NEW TODOS:
+
+-style cart - jon
+-add POST and PUSH methods to api - jon
+-add functionality for add forms - jon
+-add analytics tables (database) - ders
+-10 reports for analytics - sean
+-
+
+
 
 
 

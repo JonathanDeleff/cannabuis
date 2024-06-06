@@ -23,17 +23,17 @@ const Product = ({ products, onAddToCart, requestSort, sortConfig }) => {
                     Brand {sortConfig.key === 'product_brand' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
                 </div>
             </th>
-            <th className="p-2.5 cursor-pointer items-center" onClick={() => requestSort('product_equivalency')}>
+            <th className="p-2.5 cursor-pointer" onClick={() => requestSort('product_equivalency')}>
                 <div className="flex flex-row items-center">
                     Category {sortConfig.key === 'product_equivalency' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
                 </div>
             </th>
-            <th className="p-2.5 cursor-pointer items-center" onClick={() => requestSort('inventory_level')}>
+            <th className="p-2.5 cursor-pointer" onClick={() => requestSort('inventory_level')}>
                 <div className="flex flex-row items-center">
                     Stock {sortConfig.key === 'inventory_level' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
                 </div>
             </th>
-            <th className="p-2.5 cursor-pointer items-center" onClick={() => requestSort('sell_price')}>
+            <th className="p-2.5 cursor-pointer" onClick={() => requestSort('sell_price')}>
                 <div className="flex flex-row items-center">
                     Price {sortConfig.key === 'sell_price' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
                 </div>
@@ -54,7 +54,7 @@ const Product = ({ products, onAddToCart, requestSort, sortConfig }) => {
               <td className="p-2.5">{product.product_description}</td>
               <td className="p-2.5">
                 <button 
-                  className="bg-button rounded-full text-white p-2.5" 
+                  className="bg-button text-white p-2 rounded-full" 
                   onClick={() => onAddToCart(product)}
                 >
                   <BsCartPlusFill className="text-2xl"/>
