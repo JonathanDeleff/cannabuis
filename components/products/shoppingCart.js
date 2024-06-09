@@ -11,7 +11,7 @@ const Cart = ({ products, onRemoveFromCart, handleQuantityChange }) => {
                     Name (Price)
                 </div>
             </th>
-            <th className="p-2 cursor-pointer items-center">
+            <th className="p-2 cursor-pointer items-center w-14">
                 <div className="flex flex-row">
                     Quantity
                 </div>
@@ -39,7 +39,7 @@ const Cart = ({ products, onRemoveFromCart, handleQuantityChange }) => {
               </td>
               <td className="p-2">
                 <button 
-                  className="bg-blue-500 text-white p-2 rounded" 
+                  className="bg-button text-white p-2 rounded-full" 
                   onClick={() => onRemoveFromCart(product.product_sku)}
                 >
                   <BsCartXFill className="text-2xl"/>

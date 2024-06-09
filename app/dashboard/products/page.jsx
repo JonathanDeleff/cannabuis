@@ -18,19 +18,20 @@ export default function ProductsPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/api/products', {
-          method: 'GET',
-        });
-        setLoading(false);
-
+        const response = await fetch('/api/products', { method: 'GET' });
+        
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-
+        
         const data = await response.json();
         setProducts(data);
+
       } catch (error) {
         console.error('Error fetching products:', error);
+
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -124,23 +125,8 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="flex gap-2 mt-5">
-        <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5 w-4/5">
-          <div className="flex items-center justify-between overflow-auto">
-            <Search placeholder='Search for a product' setSearchQuery={setSearchQuery} />
-            <Link href={"/components/products/addProduct"}>
-              <button className="p-2.5 bg-button text-black rounded-lg">Add New</button>
-            </Link>
-          </div>
-          <Product 
-            products={sortedProducts} 
-            onAddToCart={handleAddToCart} 
-            requestSort={requestSort} 
-            sortConfig={sortConfig} 
-          />
-          <Pagination />
-        </div>
-        <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5 w-1/5">
+    <div className="flex gap-2 mt-5 flex-col">
+       <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5 w-full">
             <Cart 
               products={cart} 
               onRemoveFromCart={handleRemoveFromCart} 
@@ -173,6 +159,22 @@ export default function ProductsPage() {
               </div>
             )}
         </div>
+        <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-full w-full">
+          <div className="flex items-center justify-between">
+            <Search placeholder='Search for a product' setSearchQuery={setSearchQuery} />
+            <Link href={"/components/products/addProduct"}>
+              <button className="p-2.5 bg-button text-black rounded-lg">Add New</button>
+            </Link>
+          </div>
+          <Product 
+            products={sortedProducts} 
+            onAddToCart={handleAddToCart} 
+            requestSort={requestSort} 
+            sortConfig={sortConfig} 
+          />
+          <Pagination />
+        </div>
+       
     </div>
   );
 }
