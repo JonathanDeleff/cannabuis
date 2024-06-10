@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo } from "react";
 import Product from "@/components/products/productRender";
 import Cart from "@/components/products/shoppingCart";
 import Confirm from "@/components/products/confirmPage";
+import AddProduct from "@/components/products/addProduct";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -14,7 +15,28 @@ export default function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
   const [confirm, setConfirm] = useState(false);
+  const [ShowAddProduct, setShowAddProduct] = useState(false);
+  const [newProduct, setNewProduct] = useState({
+    product_sku: '',
+    product_brand: '',
+    product_title: '',
+    product_description: '',
+    product_weight: '',
+    product_equivalency: '',
+    category_name: '',
+    category_description: '',
+    subcategory_name: '',
+    subcategory_description: '',
+    case_size: '',
+    inventory_level: '',
+    cost_price: '',
+    sell_price: '',
+    discount_price: '',
+    tags: '',
+    store_id: ''
+  });
 
+  // api fetch and product logic
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -62,6 +84,7 @@ export default function ProductsPage() {
     );
   }, [products, sortConfig, searchQuery]);
 
+  //cart logic here
   const requestSort = key => {
     let direction = 'ascending';
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -124,6 +147,15 @@ export default function ProductsPage() {
     handleClearCart();
   }
 
+  // addProduct logic here
+  const handleOpenAdd = () => {
+    setShowAddProduct(true);
+  };
+
+  const handleCloseAdd = () => {
+    setShowAddProduct(false);
+  };
+
   return (
     <div className="flex gap-2 mt-5 flex-col">
        <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5 w-full">
@@ -162,9 +194,8 @@ export default function ProductsPage() {
         <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-full w-full">
           <div className="flex items-center justify-between">
             <Search placeholder='Search for a product' setSearchQuery={setSearchQuery} />
-            <Link href={"/components/products/addProduct"}>
-              <button className="p-2.5 bg-button text-black rounded-lg">Add New</button>
-            </Link>
+              <button onClick={handleOpenAdd} className="p-2.5 bg-button text-black rounded-lg">Add New</button>
+              <AddProduct show={ShowAddProduct} onCLose={handleCloseAdd} newProduct={newProduct} setNewProduct={setNewProduct}/>
           </div>
           <Product 
             products={sortedProducts} 

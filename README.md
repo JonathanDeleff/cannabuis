@@ -11,13 +11,10 @@ TODOS:
 -implement password hashing so login aint busted -maybe (very low prority)
 
 NEW TODOS:
-
--style cart - jon (done)
--add POST and PUT methods to api - jon (done)
 -add functionality for add forms - jon
 -add analytics tables (database) - ders
--10 reports for analytics - sean
--
+-finish databse functionality for cart now that POST and PUT methods are present
+-implement login
 
 
 
