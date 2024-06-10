@@ -13,7 +13,7 @@ TODOS:
 NEW TODOS:
 
 -style cart - jon (done)
--add POST and PUSH methods to api - jon
+-add POST and PUT methods to api - jon (done)
 -add functionality for add forms - jon
 -add analytics tables (database) - ders
 -10 reports for analytics - sean

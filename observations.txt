@@ -1,0 +1,16 @@
+Observations:
+Jon:
+-could make use of a store table, could be used to handle an inventory, quite a bit of brainstorming would need to be done, but the way our tables manage inventory right now seems sus. 
+- the products table could be served better as just a tracker of all items that are sold, adding a status field could be useful, the quantity on hand could be moved to a store table and remove the store id field from products.
+-adding a field for transactions to determine a return or sale rather than the transaction status of completed, pending, and cancelled. As a transaction will be completed pretty immediately upon payment. No point in tracking if a cart was filled and then cancelled(likely a cart will be filled and cancelled even just as part of training)
+-possibly just an inventory table, just thinking of how to reduce redundancies in the database, something like c_inventory ( store_id, products_sku, quantity )
+
+Anders:
+
+
+
+Ethan:
+
+
+
+Sean:

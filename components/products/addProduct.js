@@ -1,7 +1,7 @@
-const AddProduct = ( {newProduct} ) => {
+const AddProduct = ( {newProduct, handleAddProduct} ) => {
     return (
-        <div>
-            <form> 
+        <div className="">
+            <form className="flex flex-col w-60"> 
                 <input placeholder="sku" type="text" value={newProduct.product_sku}/>
                 <input placeholder="brand" type="text" value={newProduct.product_brand}/> 
                 <input placeholder="title" type="text" value={newProduct.product_title}/> 
@@ -19,7 +19,7 @@ const AddProduct = ( {newProduct} ) => {
                 <input placeholder="discount price" type="text" value={newProduct.discount_price}/>  
                 <input placeholder="Tags" type="text" value={newProduct.tags}/> 
                 <input placeholder="Store Id" type="text" value={newProduct.store_id}/>
-                <button type="submit" >Add Product </button>
+                <button type="submit" onClick={handleAddProduct} >Add Product </button>
             </form>
         </div>
     );

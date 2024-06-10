@@ -46,7 +46,6 @@ const [newEmployee, setNewEmployee] = useState({
     return (
         <div>
         <AddProduct newProduct={newProduct}/>
-        <AddEmployee newEmployee={newEmployee}/>
         </div>
     );
 }
