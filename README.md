@@ -16,7 +16,7 @@ NEW TODOS:
 -add POST and PUT methods to api - jon (done)
 -add functionality for add forms - jon
 -add analytics tables (database) - ders
--10 reports for analytics - sean
+ -10 reports for analytics - sean
 -
 
 
