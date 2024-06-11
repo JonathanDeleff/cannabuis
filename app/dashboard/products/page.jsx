@@ -38,27 +38,27 @@ export default function ProductsPage() {
 
   // api fetch and product logic
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('/api/products', { method: 'GET' });
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        setProducts(data);
-
-      } catch (error) {
-        console.error('Error fetching products:', error);
-
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchProducts();
   }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('/api/products', { method: 'GET' });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      setProducts(data);
+
+    } catch (error) {
+      console.error('Error fetching products:', error);
+
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const sortedProducts = useMemo(() => {
     let sortableProducts = [...products];
@@ -144,6 +144,7 @@ export default function ProductsPage() {
   const handleConfirmSell = () => {
     handleUpdateDB();
     handleClearCart();
+    fetchProducts();
   };
 
   const handleUpdateDB = async () => {
