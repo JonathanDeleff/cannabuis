@@ -15,4 +15,5 @@ const AddEmployee = ( {newEmployee} ) => {
         </div>
     );
 }
-    export default AddEmployee;
+
+export default AddEmployee;
