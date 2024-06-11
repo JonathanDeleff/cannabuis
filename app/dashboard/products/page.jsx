@@ -7,6 +7,7 @@ import Product from "@/components/products/productRender";
 import Cart from "@/components/products/shoppingCart";
 import Confirm from "@/components/products/confirmPage";
 import AddProduct from "@/components/products/addProduct";
+import { PUT } from "@/app/api/products/route";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -142,8 +143,19 @@ export default function ProductsPage() {
   }
 
   const handleConfirmSell = () => {
-    // database code here iirc
-    // cart.forEach((product) => DATA BASE QUERY HERE);
+    cart.forEach((cartProduct) => {
+      products.every(dbProduct => {
+        if (cartProduct.product_sku === dbProduct.product_sku) {
+          let newQuantity = dbProduct.inventory_level - cartProduct.inventory_level;
+          PUT({ ...cartProduct, inventory_level: newQuantity });
+
+          return false;
+        }
+        
+        return true;
+      })
+    });
+
     handleClearCart();
   }
 
