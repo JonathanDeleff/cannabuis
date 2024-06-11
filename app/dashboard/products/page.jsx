@@ -139,14 +139,37 @@ export default function ProductsPage() {
   const handleClearCart = () => {
     setCart([]);
     setConfirm(false);
-  }
+  };
 
   const handleConfirmSell = () => {
+    handleUpdateDB();
+    handleClearCart();
+  };
+
+  const handleUpdateDB = async () => {
     cart.forEach((cartProduct) => {
-      products.every(dbProduct => {
+      products.every(async dbProduct => {
         if (cartProduct.product_sku === dbProduct.product_sku) {
           let newQuantity = dbProduct.inventory_level - cartProduct.inventory_level;
-          PUT({ ...cartProduct, inventory_level: newQuantity });
+          
+          try {
+            const response = await fetch('/api/products', {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ ...dbProduct, inventory_level: newQuantity })
+            });
+      
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+      
+            const data = await response.json();
+            console.log('Product updated in database:', data);
+          } catch (error) {
+            console.error('Error updating database, products not sold:', error);
+          }
 
           return false;
         }
@@ -154,9 +177,7 @@ export default function ProductsPage() {
         return true;
       })
     });
-
-    handleClearCart();
-  }
+  };
 
   // addProduct logic here
   const handleOpenAdd = () => {
