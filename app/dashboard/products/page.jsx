@@ -7,7 +7,6 @@ import Product from "@/components/products/productRender";
 import Cart from "@/components/products/shoppingCart";
 import Confirm from "@/components/products/confirmPage";
 import AddProduct from "@/components/products/addProduct";
-import { PUT } from "@/app/api/products/route";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
