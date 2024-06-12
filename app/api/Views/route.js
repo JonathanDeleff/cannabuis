@@ -57,7 +57,7 @@ const sql = postgres({
     ssl: 'require',    
 });
 
-export async function getMostSoldItems(req) {
+export async function GETMOSTSOLDITEMS(req) {
     try {
         const data = await sql`SELECT * FROM Most_Sold_Items;`;
         return new Response(JSON.stringify(data), {
@@ -73,7 +73,7 @@ export async function getMostSoldItems(req) {
     }
 }
 
-export async function getEmployeeRefunds(req) {
+export async function GETEMPLOYEEREFUNDS(req) {
     try {
         const data = await sql`SELECT * FROM Employee_Refunds;`;
         return new Response(JSON.stringify(data), {
@@ -89,7 +89,7 @@ export async function getEmployeeRefunds(req) {
     }
 }
 
-export async function getMostReturnedItems(req) {
+export async function GETMOSTRETURNEDITEMS(req) {
     try {
         const data = await sql`SELECT * FROM Most_Returned_Items;`;
         return new Response(JSON.stringify(data), {
@@ -105,7 +105,7 @@ export async function getMostReturnedItems(req) {
     }
 }
 
-export async function getOverallLossSales(req) {
+export async function GETOVERALLLOSSSALES(req) {
     try {
         const data = await sql`SELECT * FROM Overall_Loss_Sales;`;
         return new Response(JSON.stringify(data), {
@@ -121,7 +121,7 @@ export async function getOverallLossSales(req) {
     }
 }
 
-export async function getEmployeeMostItemsSold(req) {
+export async function GETEMPLOYEEMOSTITEMSSOLD(req) {
     try {
         const data = await sql`SELECT * FROM Employee_Most_Items_Sold;`;
         return new Response(JSON.stringify(data), {
@@ -137,7 +137,7 @@ export async function getEmployeeMostItemsSold(req) {
     }
 }
 
-export async function getEmployeeMostSales(req) {
+export async function GETEMPLOYEEMOSTSALES(req) {
     try {
         const data = await sql`SELECT * FROM Employee_Most_Sales;`;
         return new Response(JSON.stringify(data), {
@@ -153,7 +153,7 @@ export async function getEmployeeMostSales(req) {
     }
 }
 
-export async function getEmployeeLeastSales(req) {
+export async function GETEMPLOYEELEASTSALES(req) {
     try {
         const data = await sql`SELECT * FROM Employee_Least_Sales;`;
         return new Response(JSON.stringify(data), {
@@ -169,7 +169,7 @@ export async function getEmployeeLeastSales(req) {
     }
 }
 
-export async function getPeakHourSales(req) {
+export async function GETPEAKHOURSALES(req) {
     try {
         const data = await sql`SELECT * FROM Peak_Hour_Sales;`;
         return new Response(JSON.stringify(data), {
@@ -185,7 +185,7 @@ export async function getPeakHourSales(req) {
     }
 }
 
-export async function getLowHourSales(req) {
+export async function GETLOWHOURSALES(req) {
     try {
         const data = await sql`SELECT * FROM Low_Hour_Sales;`;
         return new Response(JSON.stringify(data), {
@@ -201,7 +201,7 @@ export async function getLowHourSales(req) {
     }
 }
 
-export async function getSalesPerCategory(req) {
+export async function GETSALESPERCATEGORY(req) {
     try {
         const data = await sql`SELECT * FROM Sales_Per_Category;`;
         return new Response(JSON.stringify(data), {
