@@ -17,7 +17,7 @@ const Transaction = ( {transactions} ) => {
             <table className="w-full">
                 <thead>
                     <tr>
-                        <td className="p-2.5">Customer ID</td>
+                        <td className="p-2.5">Customer Name</td>
                         <td className="p-2.5">Status</td>
                         <td className="p-2.5">Date</td>
                         <td className="p-2.5">Amount</td>
@@ -26,7 +26,7 @@ const Transaction = ( {transactions} ) => {
                 <tbody>
                     {transactions?.map(transaction => (
                         <tr key={transaction.transaction_id} className="p-2.5 m-2.5">
-                            <td className="p-2.5">{transaction.customer_id}</td>
+                            <td className="p-2.5">{transaction.customer_fname + " " + transaction.customer_lname}</td>
                             <td className="p-2.5">
                             <span className={`rounded-full p-2 flex w-32 justify-center ${getStatusClass(transaction.transaction_status)}`}>{transaction.transaction_status}</span>
                                 </td>

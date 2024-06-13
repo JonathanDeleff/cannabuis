@@ -23,10 +23,8 @@ export default function ProductsPage() {
     product_description: '',
     product_weight: '',
     product_equivalency: '',
-    category_name: '',
-    category_description: '',
-    subcategory_name: '',
-    subcategory_description: '',
+    category_id: '',
+    subcategory_id: '',
     case_size: '',
     inventory_level: '',
     cost_price: '',
@@ -38,9 +36,6 @@ export default function ProductsPage() {
 
   // api fetch and product logic
   useEffect(() => {
-    fetchProducts();
-  }, []);
-
   const fetchProducts = async () => {
     try {
       const response = await fetch('/api/products', { method: 'GET' });
@@ -58,7 +53,9 @@ export default function ProductsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  } 
+    fetchProducts();
+  }, []);
 
   const sortedProducts = useMemo(() => {
     let sortableProducts = [...products];
