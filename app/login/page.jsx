@@ -1,4 +1,4 @@
-"use cient";
+"use client";
 import LoginForm  from '../../components/login/loginForm';
 import { useState, useEffect } from 'react';
 
@@ -11,10 +11,10 @@ const Login = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        const email = e.target.emp_email.value;
+        const email = e.target.email.value;
 
         try {
-            const response = await fetch(`/api/login?email=${email}`);
+            const response = await fetch(`/api/login?emp_email=${email}`);
             if (response.ok) {
                 const data = await response.json();
                 setEmployee(data);
