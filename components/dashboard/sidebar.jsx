@@ -87,7 +87,7 @@ const Sidebar = () => {
     return (
         <div className='sticky top-10 w-full'>
             <div className='flex items-center gap-5 mb-5'>
-                <Image className='rounded-full object-cover' src="/noavatar.png" alt="" width="50" height="50"/>
+                <Image className='rounded-full object-cover' priority={true} src="/noavatar.png" alt="" width="50" height="50"/>
                 <div className='flex flex-col'>
                   {/* will need a restructure when we have a backend */}
                     <span className='font-medium'>John Doe</span>

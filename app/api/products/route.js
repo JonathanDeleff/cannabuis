@@ -24,11 +24,11 @@ export async function GET(req) {
 FROM 
     c_product p
 JOIN 
-    category c ON p.category_id = c.category_id
+    c_category c ON p.category_id = c.category_id
 JOIN 
-    subcategory sc ON p.subcategory_id = sc.subcategory_id
+    c_subcategory sc ON p.subcategory_id = sc.subcategory_id
 LEFT JOIN 
-    inventory i ON p.product_sku = i.product_sku;`;
+    c_inventory i ON p.product_sku = i.product_sku;`;
     return new Response(JSON.stringify(products), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },

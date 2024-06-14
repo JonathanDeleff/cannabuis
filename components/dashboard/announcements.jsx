@@ -6,7 +6,7 @@ const Announcements = () => {
         <div className="fixed">
             <div className="relative bg-gradient-to-t from-bgSoft p-5 rounded-lg mb-5">
                 <div className="absolute bottom-0 right-0 h-1/2 w-1/2">
-                    <Image className="object-contain opacity-20" src="/cannabis1.jpg" alt="" fill/>
+                    <Image className="object-contain opacity-20" src="/cannabis1.jpg" fill sizes="2" alt="" priority={true} />
                 </div>
                 <div className="flex flex-col gap-6">
                     <span className="font-bold text-white">🔥 Available Now!</span>

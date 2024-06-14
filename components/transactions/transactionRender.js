@@ -14,7 +14,7 @@ const getStatusClass = (status) => {
 const Transaction = ( {transactions} ) => {
     return (
         <div>
-            <table className="w-full">
+            <table className="w-full bg-bgSoft rounded-lg">
                 <thead>
                     <tr>
                         <td className="p-2.5">Customer Name</td>
