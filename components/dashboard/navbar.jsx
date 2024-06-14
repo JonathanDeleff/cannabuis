@@ -1,6 +1,6 @@
 "use client"
 import { usePathname } from 'next/navigation';
-import { MdNotifications, MdOutlineChat, MdPublic, MdSearch } from 'react-icons/md';
+import { MdSearch } from 'react-icons/md';
 
 const Navbar = () => {
     
