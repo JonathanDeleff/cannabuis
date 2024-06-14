@@ -12,6 +12,7 @@ const sql = postgres({
 export async function GET(req) {
     try {
         const data = await sql`SELECT
+    ct.transaction_id AS transaction_id,
     td.transaction_cost AS transaction_cost,
     ct.transaction_tax AS transaction_tax,
     c.customer_fname AS customer_fname,
@@ -21,9 +22,9 @@ export async function GET(req) {
 FROM
     c_transaction ct
 JOIN
-    transaction_details td ON ct.transaction_id = td.transaction_id
+    c_transaction_details td ON ct.transaction_id = td.transaction_id
 JOIN
-    transaction_status ts ON ct.transaction_status_id = ts.status_id
+    c_transaction_status ts ON ct.transaction_status_id = ts.status_id
 JOIN
     c_customer c ON ct.customer_id = c.customer_id;`;
         return new Response(JSON.stringify(data), {

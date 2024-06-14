@@ -12,7 +12,7 @@ const sql = postgres({
 export async function GET(req) {
     try {
         const url = new URL(req.url);
-        const email = url.searchParams.get('email');
+        const email = url.searchParams.get('emp_email');
 
         if (!email) {
             return new Response(JSON.stringify({ error: 'Email is required' }), {
@@ -21,7 +21,7 @@ export async function GET(req) {
             });
         }
 
-        const data = await sql`SELECT * FROM c_employee WHERE email = ${email}`;
+        const data = await sql`SELECT * FROM c_employee WHERE emp_email = ${email}`;
 
         if (data.length === 0) {
             return new Response(JSON.stringify({ error: 'Employee not found' }), {

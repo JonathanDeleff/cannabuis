@@ -1,7 +1,7 @@
 "use client";
 import Card from "../../components/dashboard/card";
 import Chart from "../../components/dashboard/chart";
-import Transactions from "../../components/dashboard/transactions";
+import Transactions from "../../components/transactions/transactionRender";
 import Announcements from "../../components/dashboard/announcements";
 import { useEffect, useState } from 'react';
 

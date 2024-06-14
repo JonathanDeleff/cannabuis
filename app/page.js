@@ -1,10 +1,9 @@
 import Link from "next/link"
+import Login from "./login/page";
 
 export default function Page() {
     return (
-        <div>
-            <Link href='/dashboard'>dashboard</Link>
-        </div>
+        <Login />
     );
 }
 
