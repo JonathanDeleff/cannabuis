@@ -13,7 +13,7 @@ const AddProduct = ({ show, onClose, newProduct, setNewProduct }) => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch('/api/getcategories');
+                const response = await fetch('/api/products/categories', { method: 'GET' });
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -27,7 +27,7 @@ const AddProduct = ({ show, onClose, newProduct, setNewProduct }) => {
 
         const fetchSubcategories = async () => {
             try {
-                const response = await fetch('/api/getsubcategories');
+                const response = await fetch('/api/products/subcategories', { method: 'GET' });
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }

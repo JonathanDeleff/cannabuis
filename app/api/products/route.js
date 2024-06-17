@@ -119,32 +119,3 @@ export async function PUT(req) {
   }
 }
 
-
-
-/**
- * Fetches all categories from the 'c_category' table.
- * Returns a list of categories.
- */
-export async function GETCATEGORIES(req, res) {
-  try {
-      const categories = await sql`SELECT category_name FROM c_category;`;
-      res.status(200).json(categories);
-  } catch (error) {
-      console.error('Database query error:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-  }
-}
-
-/**
-* Fetches all subcategory names from the 'c_subcategory' table.
-* Returns a list of subcategory names.
-*/
-export async function GETSUBCATEGORIES(req, res) {
-  try {
-      const subcategories = await sql`SELECT subcategory_name FROM c_subcategory;`;
-      res.status(200).json(subcategories);
-  } catch (error) {
-      console.error('Database query error:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-  }
-}

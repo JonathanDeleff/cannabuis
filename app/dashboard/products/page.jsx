@@ -1,6 +1,5 @@
 "use client";
 import Search from "@/components/dashboard/search";
-import Link from 'next/link';
 import Pagination from "@/components/dashboard/pagination";
 import { useState, useEffect, useMemo } from "react";
 import Product from "@/components/products/productRender";
