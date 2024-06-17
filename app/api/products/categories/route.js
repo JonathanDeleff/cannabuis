@@ -11,7 +11,7 @@ const sql = postgres({
 
 export async function GET(req) {
     try {
-      const categories = await sql`SELECT category_name FROM c_category;`;
+      const categories = await sql`SELECT category_id, category_name FROM c_category;`;
       return new Response(JSON.stringify(categories), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },

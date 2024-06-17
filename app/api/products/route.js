@@ -62,7 +62,7 @@ export async function POST(req) {
     `;
 
     await sql`
-      INSERT INTO inventory (
+      INSERT INTO c_inventory (
         product_sku, store_id, inventory_level, sell_price, discount_price
       )
       VALUES (

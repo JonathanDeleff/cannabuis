@@ -81,12 +81,12 @@ const AddProduct = ({ show, onClose, newProduct, setNewProduct }) => {
         setNewProduct({ ...newProduct, [name]: value });
 
         if (name === 'category_id') {
-            const isExistingCategory = categories.some(category => category.category_name === value);
+            const isExistingCategory = categories.some(category => category.category_id === value);
             setIsNewCategory(!isExistingCategory);
         }
 
         if (name === 'subcategory_id') {
-            const isExistingSubcategory = subcategories.some(subcategory => subcategory.subcategory_name === value);
+            const isExistingSubcategory = subcategories.some(subcategory => subcategory.subcategory_id === value);
             setIsNewSubcategory(!isExistingSubcategory);
         }
     };
@@ -140,7 +140,7 @@ const AddProduct = ({ show, onClose, newProduct, setNewProduct }) => {
                         <select className="p-1 text-black" name="category_id" value={newProduct.category_id} onChange={handleChange}>
                             <option value="">Select category</option>
                             {categories.map(category => (
-                                <option key={category.category_name} value={category.category_name}>{category.category_name}</option>
+                                <option key={category.category_id} value={category.category_id}>{category.category_name}</option>
                             ))}
                             <option value="new">Add new category</option>
                         </select>
@@ -159,7 +159,7 @@ const AddProduct = ({ show, onClose, newProduct, setNewProduct }) => {
                         <select className="p-1 text-black" name="subcategory_id" value={newProduct.subcategory_id} onChange={handleChange}>
                             <option value="">Select subcategory</option>
                             {subcategories.map(subcategory => (
-                                <option key={subcategory.subcategory_name} value={subcategory.subcategory_name}>{subcategory.subcategory_name}</option>
+                                <option key={subcategory.subcategory_id} value={subcategory.subcategory_id}>{subcategory.subcategory_name}</option>
                             ))}
                             <option value="new">Add new subcategory</option>
                         </select>
@@ -170,7 +170,7 @@ const AddProduct = ({ show, onClose, newProduct, setNewProduct }) => {
                 </div>
             </div>
             <div className="flex justify-between m-1">
-                Case Size: <input className="w-60 p-1 text-black" name="case_size" placeholder="case size" type="text" value={newProduct.case_size} onChange={handleChange} />
+                Case Size: <input className="w-60 p-1 text-black" name="case_size" placeholder="case size" type="number" value={newProduct.case_size} onChange={handleChange} />
             </div>
             <div className="flex justify-between m-1">
                 Inventory Level: <input className="w-60 p-1 text-black" name="inventory_level" placeholder="inventory level" type="number" value={newProduct.inventory_level} onChange={handleChange} />
@@ -191,7 +191,7 @@ const AddProduct = ({ show, onClose, newProduct, setNewProduct }) => {
                 Store ID:<input className="w-60 p-1 text-black" name="store_id" placeholder="Store Id" type="text" value={newProduct.store_id} onChange={handleChange} />
             </div>
             <div className="flex justify-center m-2 gap-2">
-                <button type="submit" className="bg-button rounded-lg w-44 p-1">Add Product</button>
+                <button type="submit" onClick={onClose} className="bg-button rounded-lg w-44 p-1">Add Product</button>
                 <button type="button" onClick={onClose} className="bg-cancelled rounded-lg w-44 p-1">Cancel</button>
             </div>
         </form>
