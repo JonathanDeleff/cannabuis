@@ -30,25 +30,18 @@ const MostSoldToday = () => {
     return (
         <div className="bg-bgSoft p-5 rounded-lg flex gap-5 cursor-pointer w-full hover:bg-hover">
         <MdToday size={24}/>
-        <div className="flex flex-col gap-5">
-            <span className="title">Most sold today</span>
-            {/*  placeholder numbers for backend analytics*/}
-            {information.length > 0 ? (
-                <table className="w-full">
-                    <tbody>
-                        {information.map(product => (
-                            <tr key={product.product_sku}>
-                                <td className="p-2">
-                                    <span className="text-sm font-light">{product.product_sku}: {product.total_sold} sold</span>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            ) : (
-                <span className="text-sm font-light">Information not found</span>
-            )}
-        </div>
+        {information.length > 0 ? (
+            <div className="flex flex-col gap-5">
+                <span className="title">Most sold item today: {information[0].product_sku}</span>
+                <span className="text-sm font-light">Total Sold: {information[0].total_quantity_sold}</span>
+                <span className="text-sm font-light">Average Cost: {information[0].average_sale_cost}</span>
+            </div>
+        ) : (
+            <div className="flex flex-col gap-5">
+                <span className="title">Most sold item today: N/a</span>
+                <span className="text-sm font-light">No information found</span>
+            </div>
+        )}
         </div>
     );
 }
