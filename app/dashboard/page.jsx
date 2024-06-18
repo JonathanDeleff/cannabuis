@@ -1,5 +1,4 @@
 "use client";
-import Card from "../../components/dashboard/card";
 import DailyWeeklyAllTime from "@/components/dashboard/cards/dailyWeeklyAllTime";
 import MostSoldToday from "@/components/dashboard/cards/mostSoldToday";
 import WeeklySales from "@/components/dashboard/cards/weeklySales";
