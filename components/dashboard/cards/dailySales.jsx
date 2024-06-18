@@ -1,3 +1,4 @@
+"use client";
 import { MdSell, MdSupervisedUserCircle } from "react-icons/md";
 import { useState, useEffect } from "react";
 
@@ -42,7 +43,7 @@ const DailySales = () => {
         <MdSell size={24}/>
         {!noData() ? (
             <div className="flex flex-col gap-5">
-                <span className="title">Sales for {cardData[0].sales_date}</span>
+                <span className="title">Sales for {new Date(cardData[0].sales_date).toDateString()}</span>
                 <span className="text-sm font-light">Sales today: {cardData[0].today_sales}</span>
                 <span className="text-sm font-light">Sales this week: {cardData[0].highest_sales_this_week}</span>
                 <span className="text-sm font-light">Sales all time: {cardData[0].highest_sales_all_time}</span>
