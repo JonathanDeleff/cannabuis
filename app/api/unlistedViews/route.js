@@ -57,7 +57,7 @@ const sql = postgres({
     ssl: 'require',    
 });
 
-export async function GETMOSTSOLDITEMS(req) {
+export async function GET(req) {
     try {
         const data = await sql`SELECT * FROM Most_Sold_Items;`;
         return new Response(JSON.stringify(data), {
