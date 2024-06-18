@@ -4,15 +4,13 @@ npm i recharts@2.9.0
 npm i @neondatabase/serverless
 npm i postgres
 
-TODOS: 
--add database functionality to dashboard - jon(maybe delegate portions)
--implement password hashing so login aint busted -maybe (very low prority)
+TODOS:
+- create order page, with add to order functionality
 
-NEW TODOS:
--add analytics tables (database) - ders
--finish databse functionality for cart now that POST and PUT methods are present
--implement login
 
+
+future TODOS:
+- add ability to show only users store products, with a toggle to display other stores inventory
 
 
 

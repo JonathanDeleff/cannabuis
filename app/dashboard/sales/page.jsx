@@ -176,6 +176,39 @@ export default function ProductsPage() {
     });
   };
 
+  const handlePostTransaction = async () => {
+    cart.forEach((cartProduct) => {
+      products.every(async dbProduct => {
+        if (cartProduct.product_sku === dbProduct.product_sku) {
+          let newQuantity = dbProduct.inventory_level - cartProduct.inventory_level;
+          
+          try {
+            const response = await fetch('/api/products/transaction', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({  })
+            });
+      
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+      
+            const data = await response.json();
+            console.log('Product updated in database:', data);
+          } catch (error) {
+            console.error('Error updating database, products not sold:', error);
+          }
+
+          return false;
+        }
+        
+        return true;
+      })
+    });
+  };
+
   // addProduct logic here
   const handleOpenAdd = () => {
     setShowAddProduct(true);
