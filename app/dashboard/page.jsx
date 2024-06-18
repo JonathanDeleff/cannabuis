@@ -55,7 +55,7 @@ useEffect(() => {
         <div className="flex gap-5 mt-5 h-screen">
             <div className="flex flex-col gap-5 w-4/5">
                 <div className="flex gap-5 justify-between">
-                    <DailyWeeklyAllTime />
+                    <DailySales />
                     <MostSoldToday />
                     <WeeklySalesCategory />
                 </div>
