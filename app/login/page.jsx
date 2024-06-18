@@ -34,7 +34,7 @@ const Login = () => {
             } else { 
                 console.error('Login failed.');
                 setLoginFail(true);
-                setLoginFailText("Please put in a valid email.");
+                setLoginFailText("Please input a valid email.");
             }
         } catch (error) {
             console.error('Error fetching employee data', error);
