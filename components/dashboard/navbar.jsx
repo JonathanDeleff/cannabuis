@@ -2,7 +2,7 @@
 import { usePathname } from 'next/navigation';
 import { MdSearch } from 'react-icons/md';
 
-const Navbar = () => {
+export default function Navbar() {
     
     const pathname = usePathname()
     
@@ -20,5 +20,3 @@ const Navbar = () => {
         </div>
     )
 }
-
-export default Navbar;

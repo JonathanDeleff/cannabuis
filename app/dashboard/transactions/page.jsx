@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 
 export default function TransactionsPage() {
   
-
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
 

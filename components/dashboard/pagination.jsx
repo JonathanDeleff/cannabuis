@@ -3,7 +3,7 @@ const nextDisabled = false;
 const prevDisabled = true;
 
 // page navigation for rendered items still needs logic
-const Pagination = () => {
+export default function Pagination() {
     return (
         <div className="p-2.5 flex justify-between ">
             <button className={`px-2.5 py-1 cursor-pointer text-black ${prevDisabled ? 'cursor-bot-allowed bg-slate-500' : 'bg-button'}`}>Previous</button>
@@ -11,5 +11,3 @@ const Pagination = () => {
         </div>
     );
 }
-
-export default Pagination;

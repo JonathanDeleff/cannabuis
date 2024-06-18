@@ -41,7 +41,7 @@ const data = [
   ];
 
   // the type of chart we use can be changed, code comes from recharts documentation -- recharts.org
-const Chart = () => {
+export default function Chart() {
     return (
         <div className="h-96 bg-bgSoft p-5 rounded-lg">
         <h2 className='font-extralight text-textSoft mb-5'>Weekly Recap</h2>
@@ -69,5 +69,3 @@ const Chart = () => {
         </div>
     );
 }
-
-export default Chart;

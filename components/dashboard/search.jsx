@@ -1,6 +1,6 @@
 import { MdSearch } from "react-icons/md";
 
-const Search = ({placeholder, setSearchQuery}) => {
+export default function Search({placeholder, setSearchQuery}) {
   return (
     <div className="border-solid border-border border-2 flex items-center gap-2 bg-search rounded-lg p-1">
       <MdSearch className='flex gap-2 text-black'/>
@@ -8,5 +8,3 @@ const Search = ({placeholder, setSearchQuery}) => {
     </div>
   );
 }
-
-export default Search;

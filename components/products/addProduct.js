@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const AddProduct = ({ show, onClose, newProduct, setNewProduct }) => {
+export default function AddProduct({ show, onClose, newProduct, setNewProduct }) {
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
     const [newCategory, setNewCategory] = useState('');
@@ -197,5 +197,3 @@ const AddProduct = ({ show, onClose, newProduct, setNewProduct }) => {
         </form>
     );
 }
-
-export default AddProduct;

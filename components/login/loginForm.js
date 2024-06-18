@@ -1,4 +1,4 @@
-const LoginForm = ({ onSubmit, loginFailed, failText }) => {
+export default function LoginForm({ onSubmit, loginFailed, failText }) {
     return (
         <div className="w-screen h-screen flex flex-col grow justify-center items-center bg-[url(/cannabis1.jpg)] bg-cover">
             <form onSubmit={onSubmit} className="bg-bg p-12 rounded-lg flex flex-col justify-center gap-8 items-center">
@@ -23,5 +23,3 @@ const LoginForm = ({ onSubmit, loginFailed, failText }) => {
         </div>
     );
 }
-
-export default LoginForm;

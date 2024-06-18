@@ -91,7 +91,7 @@ export default function ProductsPage() {
 
   const cartEmpty = () => cart === undefined || cart.length == 0;
   
-  function totalCost() {
+  const totalCost = () => {
     let total = 0;
 
     if (!cartEmpty()) {
@@ -100,10 +100,6 @@ export default function ProductsPage() {
     
     return total;
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   const handleQuantityChange = (productSKU, newQuantity) => {
     setCart(currentProducts => currentProducts.map(product => {
@@ -142,6 +138,10 @@ export default function ProductsPage() {
     handleClearCart();
     fetchProducts();
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   const handleUpdateDB = async () => {
     cart.forEach((cartProduct) => {

@@ -2,7 +2,7 @@
 import { MdCalendarViewWeek, MdSupervisedUserCircle } from "react-icons/md";
 import { useState, useEffect } from "react";
 
-const WeeklySalesCategory = () => {
+export default function WeeklySalesCategory() {
     // placeholder logic for number coloring
     const [isPositive, setPositive] = useState(true);
     const [cardData, setCardData] = useState([]);
@@ -82,5 +82,3 @@ const WeeklySalesCategory = () => {
         </div>
     );
 }
-
-export default WeeklySalesCategory;

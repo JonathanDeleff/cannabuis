@@ -11,7 +11,7 @@ const getStatusClass = (status) => {
     }
   };
 
-const Orders = ({ orders }) => {
+export default function Orders({ orders }) {
     return (
         <div>
             <table className="w-full">
@@ -38,5 +38,3 @@ const Orders = ({ orders }) => {
         </div>
     )
 }
-
-export default Orders;

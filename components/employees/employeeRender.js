@@ -1,4 +1,4 @@
-const Employee = ({ employees }) => {    
+export default function Employee({ employees }) {    
     return (
         <div>
             <table className="w-full">
@@ -31,5 +31,3 @@ const Employee = ({ employees }) => {
         </div>
     );
 }
-
-export default Employee;

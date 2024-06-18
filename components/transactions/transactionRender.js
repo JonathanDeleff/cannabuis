@@ -11,7 +11,7 @@ const getStatusClass = (status) => {
     }
   };
 
-const Transaction = ( {transactions} ) => {
+export default function Transaction( {transactions} ) {
     return (
         <div>
             <table className="w-full bg-bgSoft rounded-lg">
@@ -39,5 +39,3 @@ const Transaction = ( {transactions} ) => {
         </div>
     )
 }
-
-export default Transaction;

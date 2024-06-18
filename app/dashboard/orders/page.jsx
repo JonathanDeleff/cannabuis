@@ -5,7 +5,7 @@ import Search from "@/components/dashboard/search";
 import Link from 'next/link';
 import Pagination from "@/components/dashboard/pagination";
 
-const OrdersPage = () => {
+export default function OrdersPage() {
 
     const [loading, setLoading] = useState(true);
     const [orders, setOrders] = useState([]);
@@ -52,5 +52,3 @@ const OrdersPage = () => {
     </div>
     )
 }
-
-export default OrdersPage

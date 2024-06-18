@@ -1,4 +1,4 @@
-const AddEmployee = ( {newEmployee} ) => {
+export default function AddEmployee({newEmployee}) {
     return (
         <div>
             <form> 
@@ -15,5 +15,3 @@ const AddEmployee = ( {newEmployee} ) => {
         </div>
     );
 }
-
-export default AddEmployee;

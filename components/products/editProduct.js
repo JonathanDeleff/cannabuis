@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const EditProduct = ({ show, onClose, existingProduct, setExistingProduct }) => {
+export default function EditProduct({ show, onClose, existingProduct, setExistingProduct }) {
 
     const handleEditProduct = async (e) => {
         e.preventDefault();
@@ -117,5 +117,3 @@ const EditProduct = ({ show, onClose, existingProduct, setExistingProduct }) => 
         document.body
     );
 };
-
-export default EditProduct;

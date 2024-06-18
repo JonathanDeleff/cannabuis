@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-const MenuLink = ({item}) => {
+export default function MenuLink({item}) {
     
     const pathname = usePathname()
     const isActive = pathname === item.path
@@ -13,6 +13,4 @@ const MenuLink = ({item}) => {
            {item.title} 
         </Link>
     )
-}
-
-export default MenuLink; 
+} 

@@ -1,6 +1,6 @@
 import { BsCartXFill } from "react-icons/bs";
 
-const Cart = ({ products, onRemoveFromCart, handleQuantityChange }) => {
+export default function Cart({ products, onRemoveFromCart, handleQuantityChange }) {
   return (
     <div>
       <table className="w-full">
@@ -52,5 +52,3 @@ const Cart = ({ products, onRemoveFromCart, handleQuantityChange }) => {
     </div>
   );
 }
-
-export default Cart;

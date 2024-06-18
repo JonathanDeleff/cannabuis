@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 // code should handle fetching just the target employee data
 //will require login logic for routing after login is confirmed
 //password hashing not a must right now but will be later on
-const Login = () => {
+export default function Login() {
 
     const [employee, setEmployee] = useState([]);
     const [loginState, setLoginState] = useState({
@@ -54,5 +54,3 @@ const Login = () => {
         </div>
     );
 }
-
-export default Login; 

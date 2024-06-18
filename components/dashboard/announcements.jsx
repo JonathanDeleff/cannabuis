@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { MdPlayCircleFilled } from "react-icons/md";
 
-const Announcements = () => {
+export default function Announcements() {
     return (
         <div className="fixed">
             <div className="relative bg-gradient-to-t from-bgSoft p-5 rounded-lg mb-5">
@@ -24,5 +24,3 @@ const Announcements = () => {
         </div>
     );
 }
-
-export default Announcements;

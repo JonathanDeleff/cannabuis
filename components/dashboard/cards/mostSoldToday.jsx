@@ -2,7 +2,7 @@
 import { MdSupervisedUserCircle, MdToday } from "react-icons/md";
 import { useState, useEffect } from "react";
 
-const MostSoldToday = () => {
+export default function MostSoldToday() {
     // placeholder logic for number coloring
     const [isPositive, setPositive] = useState(true);
     const [cardData, setCardData] = useState([]);
@@ -75,5 +75,3 @@ const MostSoldToday = () => {
         </div>
     );
 }
-
-export default MostSoldToday;

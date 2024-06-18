@@ -1,4 +1,4 @@
-const Confirm = ({ onConfirm, onCancel }) => {
+export default function Confirm({ onConfirm, onCancel }) {
     return (
         <div className="flex flex-col items-center">
             <button className="mt-1 p-2.5 bg-green-500 text-white rounded-lg" onClick={() => onCancel()} >
@@ -10,5 +10,4 @@ const Confirm = ({ onConfirm, onCancel }) => {
         </div>
     );
 }
-  
-export default Confirm;
+

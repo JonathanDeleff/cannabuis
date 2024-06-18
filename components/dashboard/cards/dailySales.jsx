@@ -2,7 +2,7 @@
 import { MdSell, MdSupervisedUserCircle } from "react-icons/md";
 import { useState, useEffect } from "react";
 
-const DailySales = () => {
+export default function DailySales() {
     // placeholder logic for number coloring
     const [isPositive, setPositive] = useState(true);
     const [cardData, setCardData] = useState([]);
@@ -57,5 +57,3 @@ const DailySales = () => {
         </div>
     );
 }
-
-export default DailySales;

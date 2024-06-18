@@ -1,7 +1,7 @@
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import { BsCartPlusFill } from "react-icons/bs";
 
-const Product = ({ products, onAddToCart, requestSort, sortConfig }) => {
+export default function Product({ products, onAddToCart, requestSort, sortConfig }) {
   return (
     <div className="">
       <table className="w-full">
@@ -68,4 +68,3 @@ const Product = ({ products, onAddToCart, requestSort, sortConfig }) => {
   );
 }
 
-export default Product;

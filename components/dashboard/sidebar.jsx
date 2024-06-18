@@ -88,7 +88,7 @@ const menuItems = [
   ];
 
 
-const Sidebar = () => {
+export default function Sidebar() {
     return (
         <div className='sticky top-10 w-full'>
             <div className='flex items-center gap-5 mb-5'>
@@ -117,5 +117,3 @@ const Sidebar = () => {
         </div>
     )
 }
-
-export default Sidebar;

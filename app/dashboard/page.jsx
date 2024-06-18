@@ -8,10 +8,10 @@ import Announcements from "../../components/dashboard/announcements";
 import { useEffect, useState } from 'react';
 
 
-const Dashboard = () => {
+export default function Dashboard() {
 
-    const [loading, setLoading] = useState(true);
-    const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -68,5 +68,3 @@ const Dashboard = () => {
         </div>
     );
 }
-
-export default Dashboard;
