@@ -1,7 +1,7 @@
 "use client";
-import DailyWeeklyAllTime from "@/components/dashboard/cards/dailyWeeklyAllTime";
+import DailySales from "@/components/dashboard/cards/dailySales";
 import MostSoldToday from "@/components/dashboard/cards/mostSoldToday";
-import WeeklySales from "@/components/dashboard/cards/weeklySales";
+import WeeklySalesCategory from "@/components/dashboard/cards/weeklySalesCategory";
 import Chart from "../../components/dashboard/chart";
 import Transactions from "../../components/transactions/transactionRender";
 import Announcements from "../../components/dashboard/announcements";
@@ -57,7 +57,7 @@ useEffect(() => {
                 <div className="flex gap-5 justify-between">
                     <DailyWeeklyAllTime />
                     <MostSoldToday />
-                    <WeeklySales />
+                    <WeeklySalesCategory />
                 </div>
                 <Transactions transactions={transactions}/>
                 <Chart />

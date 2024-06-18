@@ -1,10 +1,11 @@
 import { MdCalendarViewWeek, MdSupervisedUserCircle } from "react-icons/md";
 import { useState, useEffect } from "react";
 
-const WeeklySales = () => {
+const WeeklySalesCategory = () => {
     // placeholder logic for number coloring
     const [isPositive, setPositive] = useState(true);
     const [cardData, setCardData] = useState([]);
+    const [loading, setLoading] = useState(true);
     
     const randomElementFromArray = (array) => {
         return array[Math.floor(Math.random() * array.length)];
@@ -14,27 +15,36 @@ const WeeklySales = () => {
     useEffect(() => {
         const fetchCardInfo = async () => {
             try {
-                const response = await fetch('/api/Views/dashboardviews', { method: 'GETWEEKLYSALESBYCATEGORY' });
+                const response = await fetch('/api/dashboardviews/weeklySalesCategory', { method: 'GET' });
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 
-                const data = randomElementFromArray(await response.json());
+                const data = await response.json();
                 setCardData(data);
 
             } catch (error) {
                 console.error('Error fetching information:', error);
         
+            } finally {
+                setLoading(false);
+                
             }
         };
         fetchCardInfo();
     }, []);
 
+    const noData = () => cardData === undefined || cardData.length == 0;
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div className="bg-bgSoft p-5 rounded-lg flex gap-5 cursor-pointer w-full hover:bg-hover">
         <MdCalendarViewWeek size={24}/>
-        {cardData.length > 0 ? (
+        {!noData() ? (
             <div className="flex flex-col gap-5">
                 <span className="title">Weekly sales of {cardData[0].category_name}</span>
                 <span className="text-2xl font-medium">{cardData[0].total_sales}</span>
@@ -49,4 +59,4 @@ const WeeklySales = () => {
     );
 }
 
-export default WeeklySales;
+export default WeeklySalesCategory;
