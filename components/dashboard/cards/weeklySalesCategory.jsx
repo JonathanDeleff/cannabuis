@@ -1,3 +1,4 @@
+"use client";
 import { MdCalendarViewWeek, MdSupervisedUserCircle } from "react-icons/md";
 import { useState, useEffect } from "react";
 
@@ -44,17 +45,40 @@ const WeeklySalesCategory = () => {
     return (
         <div className="bg-bgSoft p-5 rounded-lg flex gap-5 cursor-pointer w-full hover:bg-hover">
         <MdCalendarViewWeek size={24}/>
-        {!noData() ? (
-            <div className="flex flex-col gap-5">
-                <span className="title">Weekly sales of {cardData[0].category_name}</span>
-                <span className="text-2xl font-medium">{cardData[0].total_sales}</span>
-            </div>
-        ) : (
-            <div className="flex flex-col gap-5">
-                <span className="title">Weekly sales of random category</span>
-                <span className="text-2xl font-medium">No info available</span>
-            </div>
-        )}
+        <div className="flex flex-col gap-5">
+            <span className="title"> Weekly sales by category</span>
+            <table className="w-full">
+                    <thead>
+                    <tr>
+                        <th className="p-2 cursor-pointer">
+                            <div className="flex flex-row items-center"> 
+                                Category
+                            </div>
+                        </th>
+                        <th className="p-2 cursor-pointer items-center w-14">
+                            <div className="flex flex-row">
+                                Sales
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                <tbody>
+                {cardData.map(category => (
+                    <tr key={category.category_name}>
+                    <td className="p-2">
+                        {category.category_name}
+                    </td>
+                    <td className="p-2">
+                        {category.total_sales}
+                    </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+            {noData() && (
+                <span className="text-sm font-light">No info available</span>
+            )}
+        </div>
         </div>
     );
 }
