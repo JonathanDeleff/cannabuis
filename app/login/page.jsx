@@ -9,8 +9,10 @@ import { useRouter } from 'next/navigation';
 const Login = () => {
 
     const [employee, setEmployee] = useState([]);
-    const [loginFail, setLoginFail] = useState(false);
-    const [loginFailText, setLoginFailText] = useState("");
+    const [loginState, setLoginState] = useState({
+        failed: false,
+        failText: ""
+    });
 
     const router = useRouter();
 
@@ -28,23 +30,27 @@ const Login = () => {
                     setEmployee(await data);
                     router.push('/dashboard');
                 } else {
-                    setLoginFail(true);
-                    setLoginFailText("Password is incorrect.");
+                    setLoginState({
+                        failed: true,
+                        failText: "Password is incorrect."
+                    });
                 }
             } else { 
                 console.error('Login failed.');
-                setLoginFail(true);
-                setLoginFailText("Please input a valid email.");
+                setLoginState({
+                    failed: true,
+                    failText: "Please input a valid email."
+                });
             }
         } catch (error) {
             console.error('Error fetching employee data', error);
-            setLoginFail(true);
+            setLoginState({ ...loginState, failed: true });
         }
     };
 
     return (
         <div>
-            <LoginForm onSubmit={onSubmit} loginFailed={loginFail} failText={loginFailText} />
+            <LoginForm onSubmit={onSubmit} loginFailed={loginState.failed} failText={loginState.failText} />
         </div>
     );
 }

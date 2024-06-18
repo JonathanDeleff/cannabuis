@@ -7,7 +7,7 @@ const MostSoldToday = () => {
     const [isPositive, setPositive] = useState(true);
     const [cardData, setCardData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [productData, setProductData] = useState({});
+    const [productData, setProductData] = useState([]);
 
     // api fetch and product logic
     useEffect(() => {
