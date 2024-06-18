@@ -2,7 +2,7 @@ import Sidebar from "../../components/dashboard/sidebar";
 import Navbar from "../../components/dashboard/navbar";
 
 
-const Layout = ({ children }) => {
+export default function Layout({ children }) {
     return (
         <div className='flex bg-bg'>
             <div className='flex bg-bgSoft p-5 w-72 max-h-screen'>
@@ -15,5 +15,3 @@ const Layout = ({ children }) => {
         </div>
     )
 }
-
-export default Layout;
