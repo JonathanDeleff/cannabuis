@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 const MostSoldToday = () => {
     // placeholder logic for number coloring
     const [isPositive, setPositive] = useState(true);
-    const [information, setInformation] = useState([]);
+    const [cardData, setCardData] = useState([]);
 
     // api fetch and product logic
     useEffect(() => {
@@ -17,7 +17,7 @@ const MostSoldToday = () => {
                 }
                 
                 const data = await response.json();
-                setInformation(await data);
+                setCardData(await data);
         
             } catch (error) {
                 console.error('Error fetching information:', error);
@@ -30,11 +30,11 @@ const MostSoldToday = () => {
     return (
         <div className="bg-bgSoft p-5 rounded-lg flex gap-5 cursor-pointer w-full hover:bg-hover">
         <MdToday size={24}/>
-        {information.length > 0 ? (
+        {cardData.length > 0 ? (
             <div className="flex flex-col gap-5">
-                <span className="title">Most sold item today: {information[0].product_sku}</span>
-                <span className="text-sm font-light">Total Sold: {information[0].total_quantity_sold}</span>
-                <span className="text-sm font-light">Average Cost: {information[0].average_sale_cost}</span>
+                <span className="title">Most sold item today: {cardData[0].product_sku}</span>
+                <span className="text-sm font-light">Total Sold: {cardData[0].total_quantity_sold}</span>
+                <span className="text-sm font-light">Average Cost: {cardData[0].average_sale_cost}</span>
             </div>
         ) : (
             <div className="flex flex-col gap-5">
