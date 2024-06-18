@@ -5,8 +5,8 @@ const WeeklySales = () => {
     // placeholder logic for number coloring
     const [isPositive, setPositive] = useState(true);
     const [information, setInformation] = useState({
-        category_name: '',
-        total_sales: ''
+        category_name: 'No info',
+        total_sales: 'No info'
     });
     
     const randomElementFromArray = (array) => {
@@ -31,7 +31,7 @@ const WeeklySales = () => {
                 console.error('Error fetching information:', error);
         
             }
-        } 
+        };
         fetchCardInfo();
     }, []);
 

@@ -1,4 +1,4 @@
-import { MdSupervisedUserCircle } from "react-icons/md";
+import { MdSupervisedUserCircle, MdToday } from "react-icons/md";
 import { useState, useEffect } from "react";
 
 const MostSoldToday = () => {
@@ -23,27 +23,31 @@ const MostSoldToday = () => {
                 console.error('Error fetching information:', error);
         
             }
-        } 
+        };
         fetchCardInfo();
     }, []);
     
     return (
         <div className="bg-bgSoft p-5 rounded-lg flex gap-5 cursor-pointer w-full hover:bg-hover">
-        <MdSupervisedUserCircle size={24}/>
+        <MdToday size={24}/>
         <div className="flex flex-col gap-5">
             <span className="title">Most sold today</span>
             {/*  placeholder numbers for backend analytics*/}
-            <table className="w-full">
-                <tbody>
-                    {information.map(product => (
-                        <tr key={product.product_sku}>
-                            <td className="p-2">
-                                <span className="text-sm font-light">{product.product_sku}: {product.total_sold} sold</span>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            {information.length > 0 ? (
+                <table className="w-full">
+                    <tbody>
+                        {information.map(product => (
+                            <tr key={product.product_sku}>
+                                <td className="p-2">
+                                    <span className="text-sm font-light">{product.product_sku}: {product.total_sold} sold</span>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            ) : (
+                <span className="text-sm font-light">Information not found</span>
+            )}
         </div>
         </div>
     );

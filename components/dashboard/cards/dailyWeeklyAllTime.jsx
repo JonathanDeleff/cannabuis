@@ -23,7 +23,7 @@ const DailyWeeklyAllTime = () => {
                 console.error('Error fetching information:', error);
         
             }
-        } 
+        };
         fetchCardInfo();
     }, []);
 
