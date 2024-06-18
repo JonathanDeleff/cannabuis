@@ -13,7 +13,7 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [transactions, setTransactions] = useState([]);
 
-useEffect(() => {
+  useEffect(() => {
     const fetchTransactions = async () => {
       try {
         const response = await fetch('/api/transactions', {
