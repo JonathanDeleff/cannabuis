@@ -14,7 +14,7 @@ export default function ProductsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
   const [confirm, setConfirm] = useState(false);
-  const [ShowAddProduct, setShowAddProduct] = useState(false);
+  const [showAddProduct, setShowAddProduct] = useState(false);
   const [newProduct, setNewProduct] = useState({
     product_sku: '',
     product_brand: '',
@@ -22,8 +22,8 @@ export default function ProductsPage() {
     product_description: '',
     product_weight: '',
     product_equivalency: '',
-    category_id: '',
-    subcategory_id: '',
+    category: '',
+    subcategory: '',
     case_size: '',
     inventory_level: '',
     cost_price: '',
@@ -33,16 +33,15 @@ export default function ProductsPage() {
     store_id: ''
   });
 
-  // api fetch and product logic
-  useEffect(() => {
+  // API fetch and product logic
   const fetchProducts = async () => {
     try {
       const response = await fetch('/api/products', { method: 'GET' });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
       setProducts(data);
 
@@ -52,7 +51,9 @@ export default function ProductsPage() {
     } finally {
       setLoading(false);
     }
-  } 
+  };
+
+  useEffect(() => {
     fetchProducts();
   }, []);
 
@@ -76,11 +77,13 @@ export default function ProductsPage() {
       product.product_sku.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.product_brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.product_equivalency.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.product_description.toLowerCase().includes(searchQuery.toLowerCase())
+      product.product_description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.subcategory.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [products, sortConfig, searchQuery]);
 
-  //cart logic here
+  // Cart logic here
   const requestSort = key => {
     let direction = 'ascending';
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -89,15 +92,15 @@ export default function ProductsPage() {
     setSortConfig({ key, direction });
   };
 
-  const cartEmpty = () => cart === undefined || cart.length == 0;
-  
+  const cartEmpty = () => cart === undefined || cart.length === 0;
+
   const totalCost = () => {
     let total = 0;
 
     if (!cartEmpty()) {
       cart.forEach((product) => total += product.sell_price * product.inventory_level);
     }
-    
+
     return total;
   };
 
@@ -133,81 +136,43 @@ export default function ProductsPage() {
     setConfirm(false);
   };
 
-  const handleConfirmSell = () => {
-    handleUpdateDB();
-    handleClearCart();
-    fetchProducts();
+  const handleConfirmSell = async () => {
+    try {
+      const response = await fetch('/api/sell', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          transaction_cost: totalCost(),
+          transaction_tax: totalCost() * 0.1, // Example tax calculation
+          transaction_prov: 'AB', // Example province
+          payment_method: 'Credit Card', // Example payment method
+          transaction_status: 'sold',
+          cartItems: cart.map(item => ({
+            product_sku: item.product_sku,
+            transaction_quantity: item.inventory_level,
+            transaction_cost: item.sell_price * item.inventory_level
+          }))
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Transaction completed:', data);
+      handleClearCart();
+      fetchProducts();
+    } catch (error) {
+      console.error('Error completing transaction:', error);
+    }
   };
 
   if (loading) {
     return <div>Loading...</div>;
   }
-
-  const handleUpdateDB = async () => {
-    cart.forEach((cartProduct) => {
-      products.every(async dbProduct => {
-        if (cartProduct.product_sku === dbProduct.product_sku) {
-          let newQuantity = dbProduct.inventory_level - cartProduct.inventory_level;
-          
-          try {
-            const response = await fetch('/api/products', {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ ...dbProduct, inventory_level: newQuantity })
-            });
-      
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-      
-            const data = await response.json();
-            console.log('Product updated in database:', data);
-          } catch (error) {
-            console.error('Error updating database, products not sold:', error);
-          }
-
-          return false;
-        }
-        
-        return true;
-      })
-    });
-  };
-
-  const handlePostTransaction = async () => {
-    cart.forEach((cartProduct) => {
-      products.every(async dbProduct => {
-        if (cartProduct.product_sku === dbProduct.product_sku) {
-          let newQuantity = dbProduct.inventory_level - cartProduct.inventory_level;
-          
-          try {
-            const response = await fetch('/api/products/transaction', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({  })
-            });
-      
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-      
-            const data = await response.json();
-            console.log('Product updated in database:', data);
-          } catch (error) {
-            console.error('Error updating database, products not sold:', error);
-          }
-
-          return false;
-        }
-        
-        return true;
-      })
-    });
-  };
 
   // addProduct logic here
   const handleOpenAdd = () => {
@@ -220,54 +185,53 @@ export default function ProductsPage() {
 
   return (
     <div className="flex gap-2 mt-5 flex-col">
-       <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5 w-full">
-            <Cart 
-              products={cart} 
-              onRemoveFromCart={handleRemoveFromCart} 
-              handleQuantityChange={handleQuantityChange}
-            />
-            {cartEmpty() ? (
-              <p className="p-2.5">Cart is empty</p>
+      <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5 w-full">
+        <Cart 
+          products={cart} 
+          onRemoveFromCart={handleRemoveFromCart} 
+          handleQuantityChange={handleQuantityChange}
+        />
+        {cartEmpty() ? (
+          <p className="p-2.5">Cart is empty</p>
+        ) : (
+          <div className="flex flex-col items-center">
+            <p className="p-2.5">Total Cost: ${totalCost()}</p>
+            <button 
+              className="p-2.5 bg-button text-black rounded-lg" 
+              onClick={handleClearCart}
+            >
+              Clear Cart
+            </button>
+            {confirm ? (
+              <Confirm 
+                onConfirm={handleConfirmSell}
+                onCancel={() => setConfirm(false)}
+              />
             ) : (
-              <div className="flex flex-col items-center">
-                <p className="p-2.5">Total Cost: ${totalCost()}</p>
-                <button 
-                  className="p-2.5 bg-button text-black rounded-lg" 
-                  onClick={handleClearCart}
-                >
-                  Clear Cart
-                </button>
-                {confirm ? (
-                  <Confirm 
-                    onConfirm={handleConfirmSell}
-                    onCancel={() => setConfirm(false)}
-                  />
-                ) : (
-                  <button 
-                    className="mt-1 p-2.5 bg-button text-black rounded-lg" 
-                    onClick={() => setConfirm(true)}
-                  >
-                    Sell Items
-                  </button>
-                )}
-              </div>
+              <button 
+                className="mt-1 p-2.5 bg-button text-black rounded-lg" 
+                onClick={() => setConfirm(true)}
+              >
+                Sell Items
+              </button>
             )}
-        </div>
-        <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-full w-full">
-          <div className="flex items-center justify-between">
-            <Search placeholder='Search for a product' setSearchQuery={setSearchQuery} />
-              <button onClick={handleOpenAdd} className="p-2.5 bg-button text-black rounded-lg">Add New</button>
-              <AddProduct show={ShowAddProduct} onCLose={handleCloseAdd} newProduct={newProduct} setNewProduct={setNewProduct}/>
           </div>
-          <Product 
-            products={sortedProducts} 
-            onAddToCart={handleAddToCart} 
-            requestSort={requestSort} 
-            sortConfig={sortConfig} 
-          />
-          <Pagination />
+        )}
+      </div>
+      <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-full w-full">
+        <div className="flex items-center justify-between">
+          <Search placeholder='Search for a product' setSearchQuery={setSearchQuery} />
+          <button onClick={handleOpenAdd} className="p-2.5 bg-button text-black rounded-lg">Add New</button>
+          <AddProduct show={showAddProduct} onClose={handleCloseAdd} newProduct={newProduct} setNewProduct={setNewProduct}/>
         </div>
-       
+        <Product 
+          products={sortedProducts} 
+          onAddToCart={handleAddToCart} 
+          requestSort={requestSort} 
+          sortConfig={sortConfig} 
+        />
+        <Pagination />
+      </div>
     </div>
   );
 }
