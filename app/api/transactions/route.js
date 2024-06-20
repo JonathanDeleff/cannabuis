@@ -17,14 +17,12 @@ export async function GET(req) {
     ct.transaction_tax AS transaction_tax,
     c.customer_fname AS customer_fname,
     c.customer_lname AS customer_lname,
-    ts.status_name AS transaction_status,
+    ct.transaction_status,
     ct.created_at AS created_at
 FROM
     c_transaction ct
 JOIN
     c_transaction_details td ON ct.transaction_id = td.transaction_id
-JOIN
-    c_transaction_status ts ON ct.transaction_status_id = ts.status_id
 JOIN
     c_customer c ON ct.customer_id = c.customer_id;`;
         return new Response(JSON.stringify(data), {
