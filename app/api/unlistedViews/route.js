@@ -46,16 +46,7 @@
 
 
 
-import postgres from "postgres";
-
-const sql = postgres({
-    host: process.env.PGHOST,
-    database: process.env.PGDATABASE,
-    username: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-    port: 5432,
-    ssl: 'require',    
-});
+import sql from '@/app/lib/db';
 
 export async function GET(req) {
     try {
