@@ -11,7 +11,7 @@ const getStatusClass = (status) => {
     }
   };
 
-export default function Orders({ orders }) {
+export default function Orders({ orders, onSelect }) {
     return (
         <div>
             <table className="w-full">
@@ -21,6 +21,7 @@ export default function Orders({ orders }) {
                         <td className="p-2.5">Order Status</td>
                         <td className="p-2.5">Order Date</td>
                         <td className="p-2.5">Order Amount</td>
+                        <td className="p-2.5">Actions</td>
 
                     </tr>
                 </thead>
@@ -31,6 +32,11 @@ export default function Orders({ orders }) {
                             <td className="p-2.5"> <span className={`rounded-full p-2 flex w-32 justify-center ${getStatusClass(order.status_name)}`}>{order.status_name}</span></td>
                             <td className="p-2.5">{order.order_date}</td>
                             <td className="p-2.5">${order.order_cost}</td>
+                            <td className="p-2.5">
+                              <button className="mt-1 p-2.5 bg-button text-white rounded-lg" onClick={() => onSelect(order)} >
+                                Select Order
+                              </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

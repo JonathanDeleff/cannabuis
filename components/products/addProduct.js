@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const AddProduct = ({ show, onClose, newProduct, setNewProduct }) => {
+export default function AddProduct({ show, onClose, newProduct, setNewProduct }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewProduct((prevProduct) => ({ ...prevProduct, [name]: value }));
@@ -102,5 +102,3 @@ const AddProduct = ({ show, onClose, newProduct, setNewProduct }) => {
     </div>
   );
 };
-
-export default AddProduct;
