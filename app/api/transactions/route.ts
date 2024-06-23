@@ -1,0 +1,39 @@
+import postgres from "postgres";
+
+const sql = postgres({
+    host: process.env.PGHOST,
+    database: process.env.PGDATABASE,
+    username: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    port: 5432,
+    ssl: 'require',    
+});
+
+export async function GET() {
+    try {
+        const data = await sql`SELECT
+    ct.transaction_id AS transaction_id,
+    td.transaction_cost AS transaction_cost,
+    ct.transaction_tax AS transaction_tax,
+    c.customer_fname AS customer_fname,
+    c.customer_lname AS customer_lname,
+    ct.transaction_status,
+    ct.created_at AS transaction_date
+FROM
+    c_transaction ct
+JOIN
+    c_transaction_details td ON ct.transaction_id = td.transaction_id
+JOIN
+    c_customer c ON ct.customer_id = c.customer_id;`;
+        return new Response(JSON.stringify(data), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      } catch (error) {
+        console.error('Database query error:', error);
+        return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+}
