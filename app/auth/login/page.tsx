@@ -1,8 +1,8 @@
 "use client";
-import LoginForm from '@/app/components/login/loginForm';
+import LoginForm from '@/app/components/auth/loginForm';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { EmployeeType, LoginStateType } from '../types/dashboardTypes/types';
+import { EmployeeType, LoginStateType } from '@/app/types/dashboardTypes/types';
 
 export default function Login() {
 

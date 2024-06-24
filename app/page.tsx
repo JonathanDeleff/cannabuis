@@ -1,5 +1,4 @@
-
-import Login from "./login/page";
+import Login from "@/app/auth/login/page";
 
 export default function Page() {
     return (

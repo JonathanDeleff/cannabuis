@@ -1,4 +1,3 @@
-// app/dashboard/employees/page.jsx
 "use client";
 import { Search } from "@/app/components/dashboard/search";
 import Link from 'next/link';

@@ -1,5 +1,6 @@
 import MenuLink from './menuLink';
 import Image from 'next/image';
+import { signOut } from '@/auth';
 import {
     MdDashboard,
     MdSupervisedUserCircle,
@@ -13,6 +14,7 @@ import {
     MdLogout,
     MdAssignment,
 } from "react-icons/md";
+
 
 const menuItems = [
     {
@@ -64,10 +66,16 @@ export default function Sidebar() {
                     </li>
                 ))}
             </ul>
-            <button className="p-5 mt-1.5 flex items-center gap-2.5 cursor-pointer rounded-lg bg-none border-none w-full hover:bg-hover">
-                <MdLogout />
-                Logout
-            </button>
+            <form action={async () => {
+                'use server'
+                await signOut();
+              }}
+            >
+                <button className="p-5 mt-1.5 flex items-center gap-2.5 cursor-pointer rounded-lg bg-none border-none w-full hover:bg-hover" >
+                    <MdLogout />
+                    Logout
+                </button>
+            </form>
         </div>
     );
 }
