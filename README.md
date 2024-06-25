@@ -6,7 +6,7 @@ npm install recharts
 
 TODOS:
 - Add customers to sales so we can properly update database
-- Fix transaction pull so we can pull transactions that dont have a customer
+
 
 Notes: 
 - right now login token wont expire

@@ -89,6 +89,14 @@ export interface TransactionType {
     customer_lname: string;
     transaction_status: string;
     transaction_date: string;
+    transaction_items: TransactionDetailsType[];
+}
+
+export interface TransactionDetailsType {
+    transaction_id: string;
+    transaction_item_id: string;
+    product_sku: string;
+    transaction_quantity: number;
 }
 
 export interface SellType {

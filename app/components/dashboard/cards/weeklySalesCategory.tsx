@@ -60,7 +60,7 @@ export default function WeeklySalesCategory() {
                         {cardData.map(category => (
                             <tr key={category.category}>
                                 <td className="p-2">{category.category}</td>
-                                <td className="p-2">{category.total_sales}</td>
+                                <td className="p-2">${category.total_sales}</td>
                             </tr>
                         ))}
                     </tbody>

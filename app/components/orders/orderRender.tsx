@@ -38,7 +38,7 @@ const Orders: React.FC<OrdersProps> = ({ orders, onSelect }) => {
                 </thead>
                 <tbody>
                     {orders?.map(order => (
-                        <tr key={order.order_item_id}>
+                        <tr key={order.order_id}>
                             <td className="p-2.5">{order.order_id}</td>
                             <td className="p-2.5"> <span className={`rounded-full p-2 flex w-32 justify-center ${getStatusClass(order.order_status.toLowerCase())}`}>
                                     {capitalizeFirstLetter(order.order_status)}

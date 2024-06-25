@@ -80,22 +80,15 @@ export async function POST(req: Request) {
         )
         RETURNING *;
       `;
-    } catch (err) {
-      console.error('Error inserting into c_product:', err);
-      return new Response(JSON.stringify({ error: 'Error inserting into c_product' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
+    
 
     // Insert into c_inventory table
-    try {
       await sql`
         INSERT INTO c_inventory (
-          product_sku, store_id, inventory_level, sell_price, discount_price
+          inventory_id, product_sku, store_id, inventory_level, sell_price, discount_price
         )
         VALUES (
-          ${product_sku}, ${store_id}, ${inventory_level}, ${sell_price}, ${discount_price}
+          uuid_generate_v4(), ${product_sku}, ${store_id}, ${inventory_level}, ${sell_price}, ${discount_price}
         );
       `;
     } catch (err) {
