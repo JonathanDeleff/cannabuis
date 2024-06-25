@@ -1,6 +1,5 @@
 import postgres from "postgres";
 import { NextResponse } from "next/server";
-import { SellType } from "@/app/types/dashboardTypes/types";
 
 const sql = postgres({
   host: process.env.PGHOST,
@@ -71,7 +70,7 @@ export async function POST(req: Request) {
           throw new Error(`Missing required field 'transaction_cost' in cart item: ${JSON.stringify(item)}`);
         }
 
-        // Insert into c_transaction_details
+        // Insert into c_transaction_details using the same transaction_id
         await sql`
           INSERT INTO c_transaction_details (
             transaction_id, product_sku, transaction_quantity, transaction_cost, store_id
