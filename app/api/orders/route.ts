@@ -23,11 +23,15 @@ export async function GET() {
         c_order_details.order_item_id,
         c_order_details.product_sku,
         c_order_details.order_quantity,
-        c_order.store_id
+        c_order.store_id,
+        c_product.cost_price AS order_item_cost,
+        c_product.product_title
       FROM 
         c_order
       JOIN 
-        c_order_details ON c_order.order_id = c_order_details.order_id`;
+        c_order_details ON c_order.order_id = c_order_details.order_id
+      JOIN 
+        c_product ON c_order_details.product_sku = c_product.product_sku`;
 
     // Transform the flat data into the nested structure
     const ordersMap: { [key: string]: OrderType } = {};
@@ -41,7 +45,9 @@ export async function GET() {
         order_item_id,
         product_sku,
         order_quantity,
-        store_id
+        store_id,
+        order_item_cost,
+        product_title
       } = row;
 
       if (!ordersMap[order_id]) {
@@ -58,7 +64,9 @@ export async function GET() {
       ordersMap[order_id].order_items.push({
         order_item_id,
         product_sku,
-        order_quantity
+        product_title,
+        order_quantity,
+        order_item_cost,
       });
     });
 

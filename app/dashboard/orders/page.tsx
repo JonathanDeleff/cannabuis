@@ -55,7 +55,7 @@ export default function OrdersPage() {
 
     return (
       <div>
-        {isSelected && (
+        {selected && (
           <div className="bg-bgSoft p-5 rounded-lg mt-5">
             <SelectedOrder order={selected} />
           </div>

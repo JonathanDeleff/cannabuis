@@ -78,7 +78,9 @@ export interface OrderType {
 export interface OrderItemType {
     order_item_id: string;
     product_sku: string;
+    product_title: string;
     order_quantity: number;
+    order_item_cost: number;
 }
 
 export interface TransactionType {
