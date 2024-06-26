@@ -1,6 +1,6 @@
 import MenuLink from './menuLink';
 import Image from 'next/image';
-import { signOut } from '@/auth';
+import { auth, signOut } from '@/auth';
 import {
     MdDashboard,
     MdSupervisedUserCircle,
@@ -45,15 +45,16 @@ const menuItems = [
     },
 ];
 
-export default function Sidebar() {
+const Sidebar = async () => {
+    const session = await auth();
     return (
         <div className="sticky top-10 w-full">
             <div className="flex items-center gap-5 mb-5">
                 <Image className="rounded-full object-cover" priority={true} src="/noavatar.png" alt="User Avatar" width={50} height={50} />
                 <div className="flex flex-col">
                     {/* This will need restructuring when backend is integrated */}
-                    <span className="font-medium">John Doe</span>
-                    <span className="text-xs text-textSoft">Admin</span>
+                    <span className="font-medium">{session?.user?.name}</span>
+                    <span className="text-xs text-textSoft">{session?.user?.jobTitle}</span>
                 </div>
             </div>
             <ul className="list-none">
@@ -79,3 +80,5 @@ export default function Sidebar() {
         </div>
     );
 }
+
+export default Sidebar;

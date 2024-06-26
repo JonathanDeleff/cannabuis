@@ -1,6 +1,15 @@
 import { BsCartXFill } from "react-icons/bs";
+import { ProductType } from "@/app/types/dashboardTypes/types";
 
-export default function Cart({ products, onRemoveFromCart, handleQuantityChange }) {
+
+interface CartProps {
+  products: ProductType[];
+  onRemoveFromCart: (product_sku: string) => void;
+  handleQuantityChange: (product_sku: string, newQuantity: number) => void;
+}
+
+
+const Cart: React.FC<CartProps> = ({ products, onRemoveFromCart, handleQuantityChange }) => {
   return (
     <div>
       <table className="w-full">
@@ -24,7 +33,7 @@ export default function Cart({ products, onRemoveFromCart, handleQuantityChange 
           </tr>
         </thead>
         <tbody>
-          {products.map(product => (
+          {products.map((product: ProductType) => (
             <tr key={product.product_sku}>
               <td className="p-2">
                 {product.product_title} (${product.sell_price * product.inventory_level})
@@ -33,7 +42,7 @@ export default function Cart({ products, onRemoveFromCart, handleQuantityChange 
                 <input 
                   type="number" 
                   value={product.inventory_level} 
-                  onChange={(e) => handleQuantityChange(product.product_sku, e.target.value)}
+                  onChange={(e) => handleQuantityChange(product.product_sku, parseFloat(e.target.value))}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-700 focus:ring focus:ring-teal-700 focus:ring-opacity-50"
                 />
               </td>
@@ -52,3 +61,5 @@ export default function Cart({ products, onRemoveFromCart, handleQuantityChange 
     </div>
   );
 }
+
+export default Cart;

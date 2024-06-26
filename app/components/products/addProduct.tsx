@@ -77,10 +77,10 @@ const AddProduct: React.FC<AddProductProps> = ({ show, onClose, newProduct, setN
                     Equivalency: <input className="w-60 p-1 text-black" name="product_equivalency" placeholder="equivalency" type="text" value={newProduct.product_equivalency} onChange={handleChange}/> 
                 </div>
                 <div className="flex justify-between m-1">
-                    Category Name: <input className="w-60 p-1 text-black" name="category" placeholder="category name" type="text" value={newProduct.category_name} onChange={handleChange}/> 
+                    Category Name: <input className="w-60 p-1 text-black" name="category" placeholder="category name" type="text" value={newProduct.category} onChange={handleChange}/> 
                 </div>
                 <div className="flex justify-between m-1">
-                    subcategory Name: <input className="w-60 p-1 text-black" name="subcategory" placeholder="subcategory name" type="text" value={newProduct.subcategory_name} onChange={handleChange}/>  
+                    subcategory Name: <input className="w-60 p-1 text-black" name="subcategory" placeholder="subcategory name" type="text" value={newProduct.subcategory} onChange={handleChange}/>  
                 </div>
                 <div className="flex justify-between m-1">
                     Case Size: <input className="w-60 p-1 text-black" name="case_size" placeholder="case size" type="number" value={newProduct.case_size} onChange={handleChange}/>  
