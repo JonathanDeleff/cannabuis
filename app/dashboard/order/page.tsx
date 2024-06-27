@@ -143,8 +143,43 @@ export default function OrderPage() {
         setConfirm(false);
     };
 
+    const formatDate = (date: Date): string => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
     const handleConfirmOrder = async () => {
-        // API FOR ORDER HERE
+        try {
+            const response = await fetch('/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    order_date: formatDate(new Date()), // new Date() gives current datetime
+                    order_status: "on route",
+                    order_items: cart.map(item => ({
+                        product_sku: item.product_sku,
+                        order_quantity: item.inventory_level,
+                        order_cost: item.sell_price * item.inventory_level
+                    }))
+                })
+            });
+      
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+      
+            const data = await response.json();
+            console.log('Order completed:', data);
+
+            handleClearCart();
+            //fetchProducts();
+        } catch (error) {
+            console.error('Error completing order:', error);
+        }
     };
 
     if (loading) {
