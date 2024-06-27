@@ -6,8 +6,28 @@ export default function SelectedOrder({ order }) {
     const [loading, setLoading] = useState(true);
     const [items, setItems] = useState([]);
 
+    // API fetch and product logic
+    const fetchDetails = async () => {
+        try {
+            const response = await fetch(`/api/orders/getdetails?order_id=${order.order_id}`);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            setItems(data);
+
+        } catch (error) {
+            console.error('Error fetching products:', error);
+
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        // api to get c_order_details
+        fetchDetails();
     }, []);
 
     const totalCost = () => {
