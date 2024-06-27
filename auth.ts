@@ -76,13 +76,11 @@ export const { auth, signIn, signOut } = NextAuth({
                 token.storeId = user.storeId; 
             }
 
-            console.log('JWT Callback - Token:', token);
             return token;
         },
         async session({ session, token }: { session: Session; token: any }) {
             session.user =  token
         
-            console.log('Session Callback - User:', session.user);
             return session;
         }
     },
