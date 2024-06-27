@@ -17,8 +17,11 @@ const getStatusClass = (status: string) => {
   }
 };
 
+const Transaction = ({ transactions, limit }: { transactions: TransactionType[], limit?: number }) => {
+  
+  const sortedTransactions = transactions.sort((a, b) => new Date(b.transaction_date).getTime() - new Date(a.transaction_date).getTime());
+  const displayedTransactions = limit ? sortedTransactions.slice(0, limit) : sortedTransactions;
 
-const Transaction = ({ transactions }: { transactions: TransactionType[] }) => {
   return (
     <div>
       <table className="w-full bg-bgSoft rounded-lg">
@@ -31,7 +34,7 @@ const Transaction = ({ transactions }: { transactions: TransactionType[] }) => {
           </tr>
         </thead>
         <tbody>
-          {transactions?.map(transaction => (
+          {displayedTransactions.map(transaction => (
             <tr key={transaction.transaction_id} className="p-2.5 m-2.5">
               <td className="p-2.5 text-center">{`${transaction.customer_fname} ${transaction.customer_lname}`}</td>
               <td className="p-2.5">
