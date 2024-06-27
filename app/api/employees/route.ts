@@ -48,3 +48,21 @@ export async function PUT(req: Request) {
       });
     }
 }
+
+export async function DELETE(req: Request) {
+  const body = await req.json();
+  const { emp_id } = body;
+  try {
+      await sql`DELETE FROM c_employee WHERE emp_id = ${emp_id}`;
+      return new Response(JSON.stringify({ message: 'Employee deleted successfully' }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+  } catch (error) {
+      console.error('Database query error:', error);
+      return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+  }
+}
