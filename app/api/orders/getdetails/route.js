@@ -6,7 +6,7 @@ const sql = postgres({
     username: process.env.PGUSER,
     password: process.env.PGPASSWORD,
     port: 5432,
-    ssl: 'require',    
+    ssl: 'require',
 });
 
 export async function GET(req) {
@@ -30,7 +30,7 @@ export async function GET(req) {
             });
         }
 
-        return new Response(JSON.stringify(data[0]), {
+        return new Response(JSON.stringify(data), {
             status: 200,
             headers: { 'Content-Type': 'application/json' },
         });
