@@ -64,7 +64,7 @@ export default function Chart() {
   useSuppressWarnings("Support for defaultProps will be removed")
 
     return (
-        <div className="h-96 bg-bgSoft p-5 rounded-lg">
+        <div className="h-96 bg-bgSoft p-5 rounded-lg shadow-lg shadow-slate-700">
         <h2 className='font-extralight text-textSoft mb-5'>Weekly Recap</h2>
         <ResponsiveContainer width="100%" height="90%">
             <LineChart

@@ -59,7 +59,7 @@ export default function MostSoldToday() {
     }
 
     return (
-        <div className="bg-bgSoft p-5 rounded-lg flex gap-5 cursor-pointer w-full hover:bg-hover">
+        <div className="bg-bgSoft p-5 rounded-lg flex gap-5 cursor-pointer w-full hover:bg-hover shadow-lg shadow-slate-700">
         <MdToday size={24}/>
         {!noData() ? (
             <div className="flex flex-col gap-5">

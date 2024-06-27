@@ -24,7 +24,7 @@ const Transaction = ({ transactions, limit }: { transactions: TransactionType[],
 
   return (
     <div>
-      <table className="w-full bg-bgSoft rounded-lg">
+      <table className="w-full bg-bgSoft rounded-lg shadow-lg shadow-slate-700">
         <thead>
           <tr>
             <th className="p-2.5">Customer Name</th>

@@ -40,7 +40,7 @@ export default function DailySales() {
     }
 
     return (
-        <div className="bg-bgSoft p-5 rounded-lg flex gap-5 cursor-pointer w-full hover:bg-hover">
+        <div className="bg-bgSoft p-5 rounded-lg flex gap-5 cursor-pointer w-full hover:bg-hover shadow-md shadow-slate-700">
         <MdSell size={24}/>
         {!noData() ? (
             <div className="flex flex-col gap-5">
