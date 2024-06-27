@@ -6,6 +6,8 @@ npm install recharts
 
 TODOS:
 - Add customers to sales so we can properly update database
+- Add employee info to sales
+- Add delete functionality for employees
 
 
 Notes: 
