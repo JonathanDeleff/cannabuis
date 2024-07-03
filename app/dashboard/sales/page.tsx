@@ -105,7 +105,7 @@ export default function ProductsPage() {
     let total = 0;
 
     if (!cartEmpty()) {
-      cart.forEach((product) => total += product.sell_price * product.inventory_level);
+      cart.forEach((product) => total += product.discount_price * product.inventory_level);
     }
 
     return total;

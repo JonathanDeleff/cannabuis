@@ -36,7 +36,7 @@ const Cart: React.FC<CartProps> = ({ products, onRemoveFromCart, handleQuantityC
           {products.map((product: ProductType) => (
             <tr key={product.product_sku}>
               <td className="p-2">
-                {product.product_title} (${product.sell_price * product.inventory_level})
+                {product.product_title} (${product.discount_price * product.inventory_level})
               </td>
               <td className="p-2">
                 <input 
