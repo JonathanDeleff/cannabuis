@@ -13,7 +13,7 @@ interface ProductProps {
 export default function Product({ products, onAddToCart, requestSort, sortConfig }: ProductProps) {
   return (
     <div className="">
-      <div className="flex flex-row">
+      <div className="flex flex-row justify-between">
         <p className="p-2.5 cursor-pointer" onClick={() => requestSort('product_sku')}>
             <div className="flex flex-row items-center">
                 SKU {sortConfig.key === 'product_sku' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
@@ -42,7 +42,7 @@ export default function Product({ products, onAddToCart, requestSort, sortConfig
         </p>
         <p className="p-2.5 cursor-pointer" onClick={() => requestSort('sell_price')}>
             <div className="flex flex-row items-center">
-                Price {sortConfig.key === 'sell_price' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
+                Price {sortConfig.key === 'discount_price' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
             </div>
         </p>
       </div>
@@ -53,7 +53,7 @@ export default function Product({ products, onAddToCart, requestSort, sortConfig
             <p className="p-2.5">{product.product_title} - {product.category}</p>
             <p className="p-2.5">{product.product_brand}</p> 
             <p className="p-2.5">{product.inventory_level}</p>
-            <p className="p-2.5">${product.sell_price}</p>
+            <p className="p-2.5">${product.discount_price}</p>
             <p className="p-2.5">
               <button 
                 className="bg-button text-white p-2 rounded-full" 
