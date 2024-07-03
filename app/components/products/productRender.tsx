@@ -13,30 +13,62 @@ interface ProductProps {
 export default function Product({ products, onAddToCart, requestSort, sortConfig }: ProductProps) {
   return (
     <div className="">
-      <table>
-        <tbody>
-          {products.map(product => (
-            <tr key={product.product_sku}>
-              <div className="flex flex-col border-2 border-border p-2 m-2 min-w-1/3 rounded-md shadow-md shadow-slate-600">
-              <td className="p-2.5">{product.product_title} - {product.category}</td>
-              <td className="p-2.5">{product.product_brand}</td>
-              <td className="p-2.5">{product.inventory_level}</td>
-              <td className="p-2.5">${product.sell_price}</td>
-              <td className="p-2.5">
-                <button 
-                  className="bg-button text-white p-2 rounded-full" 
-                  onClick={() => onAddToCart(product)}
-                  >
-                  <div className="text-2xl">
-                  <BsCartPlusFill />
-                  </div>
-                </button>
-              </td>
+      <div className="flex flex-row">
+        <p className="p-2.5 cursor-pointer" onClick={() => requestSort('product_sku')}>
+            <div className="flex flex-row items-center">
+                SKU {sortConfig.key === 'product_sku' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
+            </div>
+        </p>
+        <p className="p-2.5 cursor-pointer" onClick={() => requestSort('product_title')}>
+            <div className="flex flex-row items-center"> 
+                Product Name {sortConfig.key === 'product_title' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
+            </div>
+          
+        </p>
+        <p className="p-2.5 cursor-pointer" onClick={() => requestSort('product_brand')}>
+            <div className="flex flex-row items-center">
+                Brand {sortConfig.key === 'product_brand' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
+            </div>
+        </p>
+        <p className="p-2.5 cursor-pointer" onClick={() => requestSort('product_equivalency')}>
+            <div className="flex flex-row items-center">
+                Category {sortConfig.key === 'subcategory_name' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
+            </div>
+        </p>
+        <p className="p-2.5 cursor-pointer" onClick={() => requestSort('inventory_level')}>
+            <div className="flex flex-row items-center">
+                Stock {sortConfig.key === 'inventory_level' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
+            </div>
+        </p>
+        <p className="p-2.5 cursor-pointer" onClick={() => requestSort('sell_price')}>
+            <div className="flex flex-row items-center">
+                Price {sortConfig.key === 'sell_price' && (sortConfig.direction === 'ascending' ? <MdArrowDropUp/> : <MdArrowDropDown/>)}
+            </div>
+        </p>
+      </div>
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">       
+        {products.map(product => (
+          <div key={product.product_sku}>
+            <div className="border-2 border-border p-2 m-2 rounded-md shadow-md shadow-slate-600">
+            <p className="p-2.5">{product.product_title} - {product.category}</p>
+            <p className="p-2.5">{product.product_brand}</p> 
+            <p className="p-2.5">{product.inventory_level}</p>
+            <p className="p-2.5">${product.sell_price}</p>
+            <p className="p-2.5">
+              <button 
+                className="bg-button text-white p-2 rounded-full" 
+                onClick={() => onAddToCart(product)}
+                >
+                <div className="text-2xl">
+                <BsCartPlusFill />
                 </div>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              </button>
+            </p>
+              </div>
+          </div>
+        ))}
+      </div> 
+
     </div>
   );
 }

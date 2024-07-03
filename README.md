@@ -14,6 +14,8 @@ TODOS:
 
 
 
+- Implement conditional rendering depending on employee job title (will need a scrum to determine what we need/don't)
+
 Notes: 
 - right now login token wont expire
 - When selling and quantity is set at 1, db goes down by 2
