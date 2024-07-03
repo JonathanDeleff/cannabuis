@@ -48,7 +48,7 @@ const menuItems = [
 const Sidebar = async () => {
     const session = await auth();
     return (
-        <div className="sticky top-10 w-full">
+        <div className="sticky top-10 w-full ">
             <div className="flex items-center gap-5 mb-5">
                 <Image className="rounded-full object-cover" priority={true} src="/noavatar.png" alt="User Avatar" width={50} height={50} />
                 <div className="flex flex-col">

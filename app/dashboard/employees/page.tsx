@@ -11,6 +11,8 @@ export default function EmployeesPage() {
   const [employees, setEmployees] = useState<EmployeeType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [editingEmployee, setEditingEmployee] = useState<EmployeeType | null>(null);
+  
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -46,6 +48,7 @@ export default function EmployeesPage() {
     return <div>Loading...</div>;
   }
 
+
   return (
     <div className="bg-bgSoft p-5 rounded-lg mt-5">
       <div className="flex items-center justify-between">
@@ -54,7 +57,7 @@ export default function EmployeesPage() {
           <button className="p-2.5 bg-button text-black rounded-lg">Add New</button>
         </Link>
       </div>
-        <Employee employees={employees} />
+        <Employee employees={employees} editingEmployee={editingEmployee} setEditingEmployee={setEditingEmployee} setEmployees={setEmployees}/>
       <Pagination />
     </div>
   );

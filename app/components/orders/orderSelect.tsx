@@ -27,17 +27,13 @@ const SelectedOrder: React.FC<SelectedOrderProps> = ({ order }) => {
     const [items, setItems] = useState<OrderItemType[]>([]);
 
     useEffect(() => {
-        // You can optionally fetch more details of the selected order here
-        // For demonstration, we assume order items are already available in `order.order_items`
         setItems(order.order_items);
         setLoading(false);
     }, [order]);
 
     const totalCost = () => {
-        let total = 0;
-        items.forEach((item) => total += item.order_item_cost);
-        return total;
-    };
+        return items.reduce((total, item) => total + Number(item.order_item_cost) * item.order_quantity, 0);
+    }
 
     if (loading) {
         return <div>Loading...</div>;
@@ -69,7 +65,7 @@ const SelectedOrder: React.FC<SelectedOrderProps> = ({ order }) => {
                     ))}
                 </tbody>
             </table>
-            <span className="text-sm font-light">Total Order Cost: ${order.order_cost}</span>
+            <span className="text-sm font-light">Total Order Cost: ${totalCost().toFixed(2)}</span>
         </div>
     );
 };

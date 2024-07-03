@@ -55,7 +55,7 @@ export default function TransactionsPage() {
     
 
   return (
-    <div className="bg-bgSoft p-5 rounded-lg mt-5">
+    <div className="bg-bgSoft p-5 rounded-lg mt-5 shadow-lg shadow-slate-700">
       <div className="flex items-center justify-between">
         <Search placeholder='Search for a Transaction' setSearchQuery={setSearchQuery} />
         <Link href={"/components/products/addProduct"}>

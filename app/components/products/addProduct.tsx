@@ -57,7 +57,7 @@ const AddProduct: React.FC<AddProductProps> = ({ show, onClose, newProduct, setN
 
   return (
     <div className="w-auto">
-      <form onSubmit={handleSubmit} className="flex flex-col bg-bg text-white border-border border-2 rounded-md p-2.5 m-2.5"> 
+      <form onSubmit={handleSubmit} className="flex flex-col bg-bg text-white border-border border-2 rounded-md p-2.5 m-2.5 shadow-lg shadow-slate-700"> 
                 <div className="flex justify-between m-1"> 
                     Product Sku: <input className="w-60 p-1 text-black" name="product_sku" placeholder="sku" type="text" value={newProduct.product_sku} onChange={handleChange}/>
                 </div>

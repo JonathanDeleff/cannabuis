@@ -4,7 +4,7 @@ import { MdPlayCircleFilled } from "react-icons/md";
 export default function Announcements() {
     return (
         <div className="fixed">
-            <div className="relative bg-gradient-to-t from-bgSoft p-5 rounded-lg mb-5">
+            <div className="relative bg-gradient-to-t from-bgSoft p-5 rounded-lg mb-5 shadow-lg shadow-slate-700">
                 <div className="absolute bottom-0 right-0 h-1/2 w-1/2">
                     <Image className="object-contain opacity-20" src="/cannabis1.jpg" fill sizes="2" alt="" priority={true} />
                 </div>

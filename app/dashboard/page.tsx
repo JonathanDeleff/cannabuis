@@ -61,7 +61,7 @@ export default function Dashboard() {
                     <MostSoldToday />
                     <WeeklySalesCategory />
                 </div>
-                <Transaction transactions={transactions}/>
+                <Transaction transactions={transactions} limit={4}/>
                 <Chart />
             </div>
             <div className="flex w-1/5">

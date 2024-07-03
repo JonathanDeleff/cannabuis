@@ -37,7 +37,7 @@ export default function WeeklySalesCategory() {
     }
 
     return (
-        <div className="bg-bgSoft p-5 rounded-lg flex gap-5 cursor-pointer w-full hover:bg-hover">
+        <div className="bg-bgSoft p-5 rounded-lg flex gap-5 cursor-pointer w-full hover:bg-hover shadow-lg shadow-slate-700">
             <MdCalendarViewWeek size={24} />
             <div className="flex flex-col gap-5">
                 <span className="title">Weekly sales by category</span>
