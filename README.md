@@ -10,8 +10,7 @@ TODOS:
 - Add delete functionality for employees
 - Implement add employees (jon)
 - Implement Search functionality for employees (ethan)
-- Create tiles for displaying products (jon)
-
+- Tiles need to be refined, selectable and a conditional rendering so when one is selected it shows more info
 
 
 - Implement conditional rendering depending on employee job title (will need a scrum to determine what we need/don't)
