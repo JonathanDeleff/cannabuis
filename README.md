@@ -5,8 +5,8 @@ npm install react-icons --save
 npm install recharts
 
 TODOS:
-- Add customers to sales so we can properly update database
-- Add employee info to sales
+- Add customers to sales so we can properly update database 
+- Add employee info to sales (Ders)
 - Add delete functionality for employees
 - Implement add employees (jon)
 - Implement Search functionality for employees (ethan)
