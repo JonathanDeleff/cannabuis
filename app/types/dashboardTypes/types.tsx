@@ -46,6 +46,7 @@ export interface EmployeeType {
     date_of_hire: string;
     password: string;
     store_id: string;
+    store_name: string;
 }
 
 export interface ProductType {
@@ -111,4 +112,8 @@ export interface SellType {
     cartItems: ProductType[];
 }
 
+export interface StoreType {
+    store_id: string;
+    store_name: string;
+}
 

@@ -12,8 +12,8 @@ interface LoginFormProps {
 const LoginForm: React.FC<LoginFormProps> = () => {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
   return (
-    <div className="w-screen h-screen flex flex-col grow justify-center items-center bg-[url(/cannabis1.jpg)] bg-cover">
-      <form action={dispatch} className="bg-bg p-12 rounded-lg flex flex-col justify-center gap-8 items-center">
+    <div className=" w-screen h-screen flex flex-col grow justify-center items-center bg-[url(/cannabis1.jpg)] bg-cover">
+      <form action={dispatch} className="bg-bg p-12 shadow-lg rounded-lg flex flex-col justify-center gap-8 items-center">
         <h1 className="text-2xl font-bold text-white">Login</h1>
         <input
           type="text"
