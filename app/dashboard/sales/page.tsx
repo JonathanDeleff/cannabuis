@@ -6,7 +6,7 @@ import Product from "@/app/components/products/productRender";
 import Cart from "@/app/components/products/shoppingCart";
 import Confirm from "@/app/components/products/confirmPage";
 import AddProduct from "@/app/components/products/addProduct";
-import AddCustomer from "@/app/components/products/addcustomer";
+import AddCustomer from "@/app/components/products/addCustomer";
 import CustomerSearch from "@/app/components/products/customerSearch";
 import { ProductType, SortConfig, CustomerType } from "@/app/types/dashboardTypes/types";
 
@@ -58,14 +58,12 @@ export default function ProductsPage() {
 
   const [customerSearchQuery, setCustomerSearchQuery] = useState<string>('');
   const [customerSearchResults, setCustomerSearchResults] = useState<CustomerType[]>([]);
-  const [mounted, setMounted] = useState(false); // Added mounted state
+  const [mounted, setMounted] = useState(false);
 
-  // Set mounted to true after client-side rendering
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // API fetch and product logic
   const fetchProducts = async () => {
     try {
       const response = await fetch('/api/products', { method: 'GET' });
@@ -76,10 +74,8 @@ export default function ProductsPage() {
 
       const data: ProductType[] = await response.json();
       setProducts(data);
-
     } catch (error) {
       console.error('Error fetching products:', error);
-
     } finally {
       setLoading(false);
     }
@@ -121,7 +117,6 @@ export default function ProductsPage() {
     );
   }, [products, sortConfig, searchQuery]);
 
-  // Cart logic here
   const requestSort = (key: string) => {
     let direction: 'ascending' | 'descending' = 'ascending';
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -134,11 +129,9 @@ export default function ProductsPage() {
 
   const totalCost = () => {
     let total = 0;
-
     if (!cartEmpty()) {
       cart.forEach((product) => total += product.discount_price * product.inventory_level);
     }
-
     return total;
   };
 
@@ -158,7 +151,6 @@ export default function ProductsPage() {
       if (product.product_sku === cartItem.product_sku) {
         canAdd = false;
       }
-
       return canAdd;
     });
 
@@ -184,9 +176,9 @@ export default function ProductsPage() {
         body: JSON.stringify({
           customer_id: selectedCustomer?.customer_id,
           transaction_cost: totalCost(),
-          transaction_tax: totalCost() * 0.1, // Example tax calculation
-          transaction_prov: 'AB', // Example province
-          payment_method: 'Credit Card', // Example payment method
+          transaction_tax: totalCost() * 0.1,
+          transaction_prov: 'AB',
+          payment_method: 'Credit Card',
           transaction_status: 'sold',
           cartItems: cart.map(item => ({
             product_sku: item.product_sku,
@@ -209,7 +201,6 @@ export default function ProductsPage() {
     }
   };
 
-  // Customer search logic
   const handleCustomerSearch = async () => {
     try {
       const results = await searchCustomer(customerSearchQuery);
@@ -219,11 +210,6 @@ export default function ProductsPage() {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  // Add product and customer logic here
   const handleOpenAddProduct = () => {
     setShowAddProduct(true);
   };
@@ -322,6 +308,7 @@ export default function ProductsPage() {
             )}
             <AddProduct show={showAddProduct} onClose={handleCloseAddProduct} newProduct={newProduct} setNewProduct={setNewProduct} />
             <AddCustomer show={showAddCustomer} onClose={handleCloseAddCustomer} onAddCustomer={setSelectedCustomer} />
+            <CustomerSearch show={showCustomerSearch} onClose={handleCloseCustomerSearch} onSelectCustomer={setSelectedCustomer} />
           </div>
           <Product 
             products={sortedProducts} 
