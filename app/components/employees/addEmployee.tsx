@@ -39,6 +39,7 @@ const AddEmployee: React.FC<NewEmpProps> = ({ newEmployee, setAddNew, stores }) 
         } catch (error) {
             console.error('Error:', error);
         }
+        setAddNew(false);
     };
 
     return (

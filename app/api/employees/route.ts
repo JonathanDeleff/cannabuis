@@ -56,7 +56,7 @@ export async function POST(req: Request) {
   const { emp_fname, emp_lname, emp_email, emp_jobtitle, date_of_hire, password, store_id } = body;
   try {
     await sql`INSERT INTO c_employee (emp_id ,emp_fname, emp_lname, emp_email, emp_jobtitle, date_of_hire, password, store_id)
-              VALUES ( ${emp_fname}, ${emp_lname}, ${emp_email}, ${emp_jobtitle}, ${date_of_hire}, ${password}, ${store_id})`;
+              VALUES ( uuid_generate_v4(), ${emp_fname}, ${emp_lname}, ${emp_email}, ${emp_jobtitle}, ${date_of_hire}, ${password}, ${store_id})`;
               return new Response(JSON.stringify({ message: 'Employee updated successfully' }), {
                 status: 200,
                 headers: { 'Content-Type': 'application/json' },
