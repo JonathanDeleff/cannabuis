@@ -40,11 +40,9 @@ const EditEmployee: React.FC<EditProps> = ({ employee, cancelEdit, updateEmploye
                 updateEmployee(formData);
             } else {
                 console.error('Failed to update employee');
-                // Handle error response
             }
         } catch (error) {
             console.error('Error:', error);
-            // Handle network error
         }
     };
 
@@ -52,7 +50,7 @@ const EditEmployee: React.FC<EditProps> = ({ employee, cancelEdit, updateEmploye
 
     return (
         <div className='flex justify-center items-center'>
-            <form onSubmit={handleSubmit} className='flex flex-col gap-1 bg-bg p-3 rounded-md w-96'>
+            <form onSubmit={handleSubmit} className='flex flex-col gap-1 bg-bg p-3 rounded-lg shadow-md shadow-slate-700 w-96'>
                 <input type='text' name='emp_fname' value={formData.emp_fname} onChange={handleChange}/>
                 <input type='text' name='emp_lname' value={formData.emp_lname} onChange={handleChange}/>
                 <input type='text' name='emp_email' value={formData.emp_email} onChange={handleChange}/>

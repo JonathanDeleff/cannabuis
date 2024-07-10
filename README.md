@@ -19,3 +19,4 @@ Notes:
 - right now login token wont expire
 - When selling and quantity is set at 1, db goes down by 2
 - There is some seriouse issues around orders and prices when fetched, the problem appears to come from the reusing of sales components updating the wrong fields to prices for orders. orders use item_cost, where as sales uses discount_price, conditional rendering can be used to differentiate the 2.
+- Employees also need image_url in the database
