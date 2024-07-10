@@ -112,3 +112,20 @@ export interface SellType {
 }
 
 
+export interface SortConfig {
+    key: string;
+    direction: 'ascending' | 'descending';
+  }
+  
+  export interface CustomerType {
+    customer_id?: string;
+    customer_fname: string;
+    customer_lname: string;
+    customer_email: string;
+    customer_phone: string;
+    street_address: string;
+    city: string;
+    province: string;
+    postal_code: string;
+    store_id?: string;
+  }

@@ -1,12 +1,31 @@
 "use client";
+import { useState, useEffect, useMemo } from "react";
 import { Search } from "@/app/components/dashboard/search";
 import Pagination from "@/app/components/dashboard/pagination";
-import { useState, useEffect, useMemo } from "react";
 import Product from "@/app/components/products/productRender";
 import Cart from "@/app/components/products/shoppingCart";
 import Confirm from "@/app/components/products/confirmPage";
 import AddProduct from "@/app/components/products/addProduct";
-import { ProductType, SortConfig } from "@/app/types/dashboardTypes/types";
+import AddCustomer from "@/app/components/products/addcustomer";
+import CustomerSearch from "@/app/components/products/customerSearch";
+import { ProductType, SortConfig, CustomerType } from "@/app/types/dashboardTypes/types";
+
+const searchCustomer = async (searchQuery: string) => {
+  try {
+    const response = await fetch(`/api/customer/search?searchQuery=${encodeURIComponent(searchQuery)}`, {
+      method: 'GET',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error searching customer:', error);
+    throw error;
+  }
+};
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -16,6 +35,9 @@ export default function ProductsPage() {
   const [sortConfig, setSortConfig] = useState<SortConfig>({ key: '', direction: 'ascending' });
   const [confirm, setConfirm] = useState<boolean>(false);
   const [showAddProduct, setShowAddProduct] = useState<boolean>(false);
+  const [showAddCustomer, setShowAddCustomer] = useState<boolean>(false);
+  const [showCustomerSearch, setShowCustomerSearch] = useState<boolean>(false);
+  const [selectedCustomer, setSelectedCustomer] = useState<CustomerType | null>(null);
   const [newProduct, setNewProduct] = useState<ProductType>({
     product_sku: '',
     product_brand: '',
@@ -33,6 +55,15 @@ export default function ProductsPage() {
     tags: '',
     store_id: ''
   });
+
+  const [customerSearchQuery, setCustomerSearchQuery] = useState<string>('');
+  const [customerSearchResults, setCustomerSearchResults] = useState<CustomerType[]>([]);
+  const [mounted, setMounted] = useState(false); // Added mounted state
+
+  // Set mounted to true after client-side rendering
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // API fetch and product logic
   const fetchProducts = async () => {
@@ -62,21 +93,21 @@ export default function ProductsPage() {
     let sortableProducts = [...products];
 
     if (sortConfig.key) {
-        sortableProducts.sort((a, b) => {
-            const aValue = a[sortConfig.key as keyof ProductType];
-            const bValue = b[sortConfig.key as keyof ProductType];
+      sortableProducts.sort((a, b) => {
+        const aValue = a[sortConfig.key as keyof ProductType];
+        const bValue = b[sortConfig.key as keyof ProductType];
 
-            if (typeof aValue === 'string' && typeof bValue === 'string') {
-                return sortConfig.direction === 'ascending'
-                    ? aValue.localeCompare(bValue)
-                    : bValue.localeCompare(aValue);
-            } else if (typeof aValue === 'number' && typeof bValue === 'number') {
-                return sortConfig.direction === 'ascending'
-                    ? aValue - bValue
-                    : bValue - aValue;
-            }
-            return 0;
-        });
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return sortConfig.direction === 'ascending'
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return sortConfig.direction === 'ascending'
+            ? aValue - bValue
+            : bValue - aValue;
+        }
+        return 0;
+      });
     }
 
     return sortableProducts.filter(product =>
@@ -151,6 +182,7 @@ export default function ProductsPage() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          customer_id: selectedCustomer?.customer_id,
           transaction_cost: totalCost(),
           transaction_tax: totalCost() * 0.1, // Example tax calculation
           transaction_prov: 'AB', // Example province
@@ -177,17 +209,43 @@ export default function ProductsPage() {
     }
   };
 
+  // Customer search logic
+  const handleCustomerSearch = async () => {
+    try {
+      const results = await searchCustomer(customerSearchQuery);
+      setCustomerSearchResults(results);
+    } catch (error) {
+      console.error('Error searching customer:', error);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  // addProduct logic here
-  const handleOpenAdd = () => {
+  // Add product and customer logic here
+  const handleOpenAddProduct = () => {
     setShowAddProduct(true);
   };
 
-  const handleCloseAdd = () => {
+  const handleCloseAddProduct = () => {
     setShowAddProduct(false);
+  };
+
+  const handleOpenAddCustomer = () => {
+    setShowAddCustomer(true);
+  };
+
+  const handleCloseAddCustomer = () => {
+    setShowAddCustomer(false);
+  };
+
+  const handleOpenCustomerSearch = () => {
+    setShowCustomerSearch(true);
+  };
+
+  const handleCloseCustomerSearch = () => {
+    setShowCustomerSearch(false);
   };
 
   return (
@@ -201,7 +259,7 @@ export default function ProductsPage() {
         {cartEmpty() ? (
           <p className="p-2.5">Cart is empty</p>
         ) : (
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center w-full">
             <p className="p-2.5">Total Cost: ${totalCost()}</p>
             <button 
               className="p-2.5 bg-button text-black rounded-lg" 
@@ -222,26 +280,58 @@ export default function ProductsPage() {
                 Sell Items
               </button>
             )}
+            <div className="mt-4 w-full flex items-center relative">
+              <input
+                type="text"
+                value={customerSearchQuery}
+                onChange={(e) => setCustomerSearchQuery(e.target.value)}
+                placeholder="Search by name, email, or phone"
+                className="flex-grow p-2 border rounded-lg"
+              />
+              <ul className="absolute left-0 top-full mt-1 w-full bg-white border rounded-lg z-10">
+                {customerSearchResults.map((customer) => (
+                  <li
+                    key={customer.customer_id}
+                    onClick={() => {
+                      setSelectedCustomer(customer);
+                      setCustomerSearchResults([]);
+                      setCustomerSearchQuery('');
+                    }}
+                    className="cursor-pointer p-2 border-b hover:bg-gray-200"
+                  >
+                    {customer.customer_fname} {customer.customer_lname} ({customer.customer_email})
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <button
+              className="p-2.5 bg-button text-black rounded-lg w-full mt-2"
+              onClick={handleOpenAddCustomer}
+            >
+              Add New Customer
+            </button>
           </div>
         )}
       </div>
-      <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-full w-full">
-        <div className="flex items-center justify-between">
-          <Search placeholder='Search for a product' setSearchQuery={setSearchQuery} />
-          {!showAddProduct && ( 
-            <button onClick={handleOpenAdd} className="p-2.5 bg-button text-black rounded-lg">Add New</button>
-          )}
-          
-          <AddProduct show={showAddProduct} onClose={handleCloseAdd} newProduct={newProduct} setNewProduct={setNewProduct}/>
+      {mounted && (
+        <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-full w-full">
+          <div className="flex items-center justify-between">
+            <Search placeholder='Search for a product' setSearchQuery={setSearchQuery} />
+            {!showAddProduct && ( 
+              <button onClick={handleOpenAddProduct} className="p-2.5 bg-button text-black rounded-lg">Add New Product</button>
+            )}
+            <AddProduct show={showAddProduct} onClose={handleCloseAddProduct} newProduct={newProduct} setNewProduct={setNewProduct} />
+            <AddCustomer show={showAddCustomer} onClose={handleCloseAddCustomer} onAddCustomer={setSelectedCustomer} />
+          </div>
+          <Product 
+            products={sortedProducts} 
+            onAddToCart={handleAddToCart} 
+            requestSort={requestSort} 
+            sortConfig={sortConfig} 
+          />
+          <Pagination />
         </div>
-        <Product 
-          products={sortedProducts} 
-          onAddToCart={handleAddToCart} 
-          requestSort={requestSort} 
-          sortConfig={sortConfig} 
-        />
-        <Pagination />
-      </div>
+      )}
     </div>
   );
 }
