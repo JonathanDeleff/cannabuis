@@ -10,6 +10,8 @@ export default function MostSoldToday() {
     const [loading, setLoading] = useState<boolean>(true);
     const [productData, setProductData] = useState<ProductType>({} as ProductType);
 
+    const noData = () => cardData === undefined || cardData.length == 0;
+    
     // api fetch and product logic
     useEffect(() => {
         const fetchCardInfo = async () => {
@@ -52,7 +54,7 @@ export default function MostSoldToday() {
         fetchCardInfo();
     }, []);
     
-    const noData = () => cardData === undefined || cardData.length == 0;
+    
 
     if (loading) {
         return <div>Loading...</div>;
