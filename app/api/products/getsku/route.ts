@@ -1,4 +1,3 @@
-import { ProductType } from "@/app/types/dashboardTypes/types";
 import postgres from "postgres";
 
 const sql = postgres({
@@ -10,10 +9,11 @@ const sql = postgres({
     ssl: 'require',    
 });
 
-export async function GET(req: ProductType) {
+export async function GET(req: Request) {
     try {
          
-        const productSku = req.product_sku;
+        const { searchParams } = new URL(req.url);
+        const productSku = searchParams.get('product_sku');
 
         if (!productSku) {
             return new Response(JSON.stringify({ error: 'Product SKU is required' }), {
