@@ -115,7 +115,10 @@ const AddCustomer = ({ show, onClose, onAddCustomer }: AddCustomerProps) => {
           onChange={handleInputChange}
           placeholder="Postal Code"
         />
-        <button onClick={handleAddCustomer}>Add Customer</button>
+        <div className="buttons">
+          <button onClick={handleAddCustomer}>Add Customer</button>
+          <button onClick={onClose}>Cancel</button>
+        </div>
       </div>
     </div>
   );
