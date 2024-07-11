@@ -1,4 +1,9 @@
-export default function Confirm({ onConfirm, onCancel }) {
+interface ConfirmProps {
+    onConfirm: () => void;
+    onCancel: () => void;
+}
+
+const Confirm:React.FC<ConfirmProps> = ({ onConfirm, onCancel }) => {
     return (
         <div className="flex flex-col items-center">
             <button className="mt-1 p-2.5 bg-red-500 text-white rounded-lg" onClick={() => onCancel()} >
@@ -10,4 +15,6 @@ export default function Confirm({ onConfirm, onCancel }) {
         </div>
     );
 }
+
+export default Confirm;
 
