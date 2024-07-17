@@ -134,3 +134,11 @@ export interface SortConfig {
     postal_code: string;
     store_id?: string;
   }
+
+  export interface SaleDetailsType {
+    date: string;
+    customer: string;
+    customerEmail: string;
+    items: ProductType[];
+    total: number;
+  }
