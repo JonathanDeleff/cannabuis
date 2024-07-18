@@ -160,6 +160,7 @@ export default function ProductsPage() {
 
   const handleClearCart = () => {
     setCart([]);
+    setSelectedCustomer(null); // Clear the selected customer
     setConfirm(false);
   };
 

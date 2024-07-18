@@ -27,6 +27,7 @@ const AddCustomer = ({ show, onClose, onAddCustomer }: AddCustomerProps) => {
 
   const handleAddCustomer = async () => {
     try {
+      console.log("Adding customer:", customer); // Debugging line
       const response = await fetch("/api/customer", {
         method: "POST",
         headers: {
@@ -40,6 +41,7 @@ const AddCustomer = ({ show, onClose, onAddCustomer }: AddCustomerProps) => {
       }
 
       const newCustomer = await response.json();
+      console.log("Customer added successfully:", newCustomer); // Debugging line
       onAddCustomer(newCustomer);
       onClose();
     } catch (error) {
