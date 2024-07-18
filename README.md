@@ -25,7 +25,8 @@ Completed must haves:
 
 Must haves: 
 - Return Products
-- Receipts
+- Add customer form
+- Receipts (backend maybe complete, will need testing when customers is in place)
 - Fix order page
 - More reporting
 
