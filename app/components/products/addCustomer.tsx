@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { CustomerType } from "@/app/types/dashboardTypes/types";
 
