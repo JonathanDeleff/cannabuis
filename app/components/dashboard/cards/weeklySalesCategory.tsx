@@ -15,7 +15,12 @@ export default function WeeklySalesCategory() {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                setCardData(data);
+                // Ensure total_sales is a number
+                const formattedData = data.map((item: any) => ({
+                    ...item,
+                    total_sales: parseFloat(item.total_sales)
+                }));
+                setCardData(formattedData);
             } catch (error) {
                 console.error('Error fetching information:', error);
                 setError('Failed to fetch data');
@@ -60,7 +65,7 @@ export default function WeeklySalesCategory() {
                         {cardData.map(category => (
                             <tr key={category.category}>
                                 <td className="p-2">{category.category}</td>
-                                <td className="p-2">${category.total_sales}</td>
+                                <td className="p-2">${category.total_sales.toFixed(2)}</td> {/* Format the sales to two decimal places */}
                             </tr>
                         ))}
                     </tbody>
