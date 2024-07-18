@@ -62,6 +62,7 @@ export default function ProductsPage() {
 
   useEffect(() => {
     setMounted(true);
+    fetchProducts();
   }, []);
 
   const fetchProducts = async () => {
@@ -80,10 +81,6 @@ export default function ProductsPage() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   const sortedProducts = useMemo(() => {
     let sortableProducts = [...products];
@@ -125,7 +122,7 @@ export default function ProductsPage() {
     setSortConfig({ key, direction });
   };
 
-  const cartEmpty = () => cart === undefined || cart.length === 0;
+  const cartEmpty = () => cart.length === 0;
 
   const totalCost = () => {
     let total = 0;
@@ -163,6 +160,7 @@ export default function ProductsPage() {
 
   const handleClearCart = () => {
     setCart([]);
+    setSelectedCustomer(null); // Clear the selected customer
     setConfirm(false);
   };
 
@@ -237,16 +235,22 @@ export default function ProductsPage() {
   return (
     <div className="flex gap-2 mt-5 flex-col">
       <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5 w-full">
-        <Cart 
-          products={cart} 
-          onRemoveFromCart={handleRemoveFromCart} 
-          handleQuantityChange={handleQuantityChange}
-        />
+        {mounted && (
+          <Cart 
+            products={cart} 
+            onRemoveFromCart={handleRemoveFromCart} 
+            handleQuantityChange={handleQuantityChange}
+            selectedCustomer={selectedCustomer}
+            setSelectedCustomer={setSelectedCustomer}
+            totalCost={totalCost()}
+            onConfirmSell={handleConfirmSell}
+          />
+        )}
         {cartEmpty() ? (
           <p className="p-2.5">Cart is empty</p>
         ) : (
           <div className="flex flex-col items-center w-full">
-            <p className="p-2.5">Total Cost: ${totalCost()}</p>
+            <p className="p-2.5">Total Cost: ${totalCost().toFixed(2)}</p>
             <button 
               className="p-2.5 bg-button text-black rounded-lg" 
               onClick={handleClearCart}
@@ -266,36 +270,6 @@ export default function ProductsPage() {
                 Sell Items
               </button>
             )}
-            <div className="mt-4 w-full flex items-center relative">
-              <input
-                type="text"
-                value={customerSearchQuery}
-                onChange={(e) => setCustomerSearchQuery(e.target.value)}
-                placeholder="Search by name, email, or phone"
-                className="flex-grow p-2 border rounded-lg"
-              />
-              <ul className="absolute left-0 top-full mt-1 w-full bg-white border rounded-lg z-10">
-                {customerSearchResults.map((customer) => (
-                  <li
-                    key={customer.customer_id}
-                    onClick={() => {
-                      setSelectedCustomer(customer);
-                      setCustomerSearchResults([]);
-                      setCustomerSearchQuery('');
-                    }}
-                    className="cursor-pointer p-2 border-b hover:bg-gray-200"
-                  >
-                    {customer.customer_fname} {customer.customer_lname} ({customer.customer_email})
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <button
-              className="p-2.5 bg-button text-black rounded-lg w-full mt-2"
-              onClick={handleOpenAddCustomer}
-            >
-              Add New Customer
-            </button>
           </div>
         )}
       </div>

@@ -86,3 +86,22 @@ a{
 .submit-button:hover {
   background: #45a049;
 }
+/* Add this to your global CSS or component CSS file */
+.dropdown {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+.dropdown li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown li:hover {
+  background: #f0f0f0;
+}

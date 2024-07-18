@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { CustomerType } from "@/app/types/dashboardTypes/types";
 
@@ -22,6 +21,15 @@ const CustomerSearch = ({ show, onClose, onSelectCustomer }: CustomerSearchProps
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    if (e.target.value.length > 2) {
+      handleSearch();
+    } else {
+      setSearchResults([]);
+    }
+  };
+
   if (!show) {
     return null;
   }
@@ -36,11 +44,10 @@ const CustomerSearch = ({ show, onClose, onSelectCustomer }: CustomerSearchProps
         <input
           type="text"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleChange}
           placeholder="Search by name, email, or phone"
         />
-        <button onClick={handleSearch}>Search</button>
-        <ul>
+        <ul className="dropdown">
           {searchResults.map((customer) => (
             <li key={customer.customer_id} onClick={() => onSelectCustomer(customer)}>
               {customer.customer_fname} {customer.customer_lname} ({customer.customer_email})
