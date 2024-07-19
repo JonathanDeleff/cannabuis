@@ -1,10 +1,10 @@
 "use client";
+import { useState, useEffect, useMemo } from "react";
 import { Search } from "@/app/components/dashboard/search";
 import Pagination from "@/app/components/dashboard/pagination";
-import { useState, useEffect, useMemo } from "react";
 import Product from "@/app/components/products/productRender";
-import Cart from "@/app/components/products/shoppingCart";
-import Confirm from "@/app/components/order/confirmOrder";
+import OrderCart from "@/app/components/orders/orderCart";
+import ConfirmOrder from "@/app/components/orders/confirmOrder";
 import AddProduct from "@/app/components/products/addProduct";
 import { ProductType, SortConfig } from "@/app/types/dashboardTypes/types";
 
@@ -105,7 +105,7 @@ export default function OrderPage() {
         let total = 0;
 
         if (!cartEmpty()) {
-            cart.forEach((product) => total += product.sell_price * product.inventory_level);
+            cart.forEach((product) => total += product.cost_price * product.inventory_level);
         }
 
         return total;
@@ -163,7 +163,7 @@ export default function OrderPage() {
                     order_items: cart.map(item => ({
                         product_sku: item.product_sku,
                         order_quantity: item.inventory_level,
-                        order_cost: item.sell_price * item.inventory_level
+                        order_cost: item.cost_price * item.inventory_level
                     }))
                 })
             });
@@ -176,7 +176,7 @@ export default function OrderPage() {
             console.log('Order completed:', data);
 
             handleClearCart();
-            //fetchProducts();
+            fetchProducts();
         } catch (error) {
             console.error('Error completing order:', error);
         }
@@ -198,16 +198,18 @@ export default function OrderPage() {
     return (
         <div className="flex gap-2 mt-5 flex-col">
         <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5 w-full">
-            <Cart 
-            products={cart} 
-            onRemoveFromCart={handleRemoveFromCart} 
-            handleQuantityChange={handleQuantityChange}
+            <OrderCart 
+                products={cart} 
+                onRemoveFromCart={handleRemoveFromCart} 
+                handleQuantityChange={handleQuantityChange}
+                totalCost={totalCost()}
+                onConfirmOrder={handleConfirmOrder}
             />
             {cartEmpty() ? (
                 <p className="p-2.5">Cart is empty</p>
             ) : (
                 <div className="flex flex-col items-center">
-                    <p className="p-2.5">Total Cost: ${totalCost()}</p>
+                    <p className="p-2.5">Total Cost: ${totalCost().toFixed(2)}</p>
                     <button 
                         className="p-2.5 bg-button text-black rounded-lg" 
                         onClick={handleClearCart}
@@ -215,7 +217,7 @@ export default function OrderPage() {
                         Clear Cart
                     </button>
                     {confirm ? (
-                        <Confirm 
+                        <ConfirmOrder 
                             onConfirm={handleConfirmOrder}
                             onCancel={() => setConfirm(false)}
                         />
