@@ -137,8 +137,8 @@ export interface SortConfig {
 
   export interface SaleDetailsType {
     date: string;
-    customer: string;
+    customerName: string;
     customerEmail: string;
     items: ProductType[];
-    total: number;
+    totalCost: number;
   }

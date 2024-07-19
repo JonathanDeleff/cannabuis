@@ -181,10 +181,11 @@ const ProductsPage = ( ) => {
 
   const handleConfirmSell = async () => {
     try {
-      const response = await fetch('/api/sell', {
+      // Step 1: Complete the sale
+      const sellResponse = await fetch('/api/sell', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           employee_id: session?.user?.id,
@@ -198,23 +199,74 @@ const ProductsPage = ( ) => {
           cartItems: cart.map(item => ({
             product_sku: item.product_sku,
             transaction_quantity: item.inventory_level,
-            transaction_cost: item.discount_price * item.inventory_level
-          }))
-        })
+            transaction_cost: item.discount_price * item.inventory_level,
+          })),
+        }),
       });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+  
+      if (!sellResponse.ok) {
+        throw new Error(`HTTP error! status: ${sellResponse.status}`);
       }
-
-      const data = await response.json();
-      console.log('Transaction completed:', data);
+  
+      const saleData = await sellResponse.json();
+  
+      // Step 2: Generate the receipt PDF
+      const pdfResponse = await fetch('/api/generateReceipt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          date: new Date().toLocaleDateString(),
+          customerName: `${selectedCustomer?.customer_fname || 'Unknown'} ${selectedCustomer?.customer_lname || ''}`,
+          totalCost: totalCost(),
+          items: cart.map(item => ({
+            product_title: item.product_title,
+            price: item.sell_price,
+            quantity: item.inventory_level,
+          })),
+        }),
+      });
+  
+      if (!pdfResponse.ok) {
+        throw new Error(`HTTP error! status: ${pdfResponse.status}`);
+      }
+  
+      const pdfBuffer = await pdfResponse.arrayBuffer();
+      const attachments = [
+        {
+          filename: 'receipt.pdf',
+          content: Buffer.from(pdfBuffer),
+        },
+      ];
+  
+      // Step 3: Send the email with the PDF attachment
+      const emailResponse = await fetch('/api/sendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: selectedCustomer?.customer_email || '',
+          subject: 'Your Receipt',
+          text: 'Please find attached your receipt.',
+          attachments,
+        }),
+      });
+  
+      if (!emailResponse.ok) {
+        throw new Error(`HTTP error! status: ${emailResponse.status}`);
+      }
+  
+      console.log('Transaction completed and receipt sent');
       handleClearCart();
       fetchProducts();
     } catch (error) {
       console.error('Error completing transaction:', error);
     }
   };
+  
+  
 
   const handleCustomerSearch = async () => {
     try {
