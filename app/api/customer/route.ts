@@ -10,8 +10,8 @@ const sql = postgres({
   ssl: 'require',
 });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
+  
     const { customer_fname, customer_lname, customer_email, customer_phone, street_address, city, province, postal_code, store_id } = req.body;
 
     try {
@@ -26,8 +26,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.error('Error adding customer:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
-  } else {
-    res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
-  }
 }

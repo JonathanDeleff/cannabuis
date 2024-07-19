@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import { MostSoldTodayType, ProductType } from "@/app/types/dashboardTypes/types";
 
 export default function MostSoldToday() {
-    // placeholder logic for number coloring
-    const [isPositive, setPositive] = useState<boolean>(true);
     const [cardData, setCardData] = useState<MostSoldTodayType[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [productData, setProductData] = useState<ProductType>({} as ProductType);
