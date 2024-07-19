@@ -10,6 +10,7 @@ import AddCustomer from "@/app/components/products/addCustomer";
 import CustomerSearch from "@/app/components/products/customerSearch";
 import { ProductType, SortConfig, CustomerType } from "@/app/types/dashboardTypes/types";
 
+
 const searchCustomer = async (searchQuery: string) => {
   try {
     const response = await fetch(`/api/customer/search?searchQuery=${encodeURIComponent(searchQuery)}`, {
@@ -27,7 +28,8 @@ const searchCustomer = async (searchQuery: string) => {
   }
 };
 
-export default function ProductsPage() {
+
+const ProductsPage = ( ) => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [cart, setCart] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -59,11 +61,24 @@ export default function ProductsPage() {
   const [customerSearchQuery, setCustomerSearchQuery] = useState<string>('');
   const [customerSearchResults, setCustomerSearchResults] = useState<CustomerType[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [session, setSession] = useState<any>(null);
 
   useEffect(() => {
     setMounted(true);
     fetchProducts();
+    fetchSession();
   }, []);
+
+  const fetchSession = async () => {
+    try {
+      const response = await fetch('/api/session');
+      if (!response.ok) throw new Error('Network response was not ok');
+      const data = await response.json();
+      setSession(data);
+    } catch (error) {
+      console.error('Error fetching session:', error);
+    }
+  };
 
   const fetchProducts = async () => {
     try {
@@ -172,16 +187,18 @@ export default function ProductsPage() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          employee_id: session?.user?.id,
+          store_id: session?.user?.storeId,
           customer_id: selectedCustomer?.customer_id,
           transaction_cost: totalCost(),
-          transaction_tax: totalCost() * 0.1,
+          transaction_tax: totalCost() * 0.05,
           transaction_prov: 'AB',
           payment_method: 'Credit Card',
           transaction_status: 'sold',
           cartItems: cart.map(item => ({
             product_sku: item.product_sku,
             transaction_quantity: item.inventory_level,
-            transaction_cost: item.sell_price * item.inventory_level
+            transaction_cost: item.discount_price * item.inventory_level
           }))
         })
       });
@@ -296,3 +313,5 @@ export default function ProductsPage() {
     </div>
   );
 }
+
+export default ProductsPage;
