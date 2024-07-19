@@ -7,7 +7,7 @@ const Receipt: React.FC<{ saleDetails: SaleDetailsType }> = ({ saleDetails }) =>
     <div>
       <h1>Receipt</h1>
       <p>Date: {saleDetails.date}</p>
-      <p>Customer: {saleDetails.customer}</p>
+      <p>Customer: {saleDetails.customerName}</p>
       <p>Items:</p>
       <ul>
         {saleDetails.items.map((item, index) => (
@@ -16,7 +16,7 @@ const Receipt: React.FC<{ saleDetails: SaleDetailsType }> = ({ saleDetails }) =>
           </li>
         ))}
       </ul>
-      <p>Total: ${saleDetails.total}</p>
+      <p>Total: ${saleDetails.totalCost}</p>
     </div>
   );
 };
