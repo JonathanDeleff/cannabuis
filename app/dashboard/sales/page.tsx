@@ -181,7 +181,7 @@ const ProductsPage = ( ) => {
 
   const handleConfirmSell = async () => {
     try {
-      // Step 1: Complete the sale
+      // Complete the sale
       const sellResponse = await fetch('/api/sell', {
         method: 'POST',
         headers: {
@@ -205,60 +205,73 @@ const ProductsPage = ( ) => {
       });
   
       if (!sellResponse.ok) {
-        throw new Error(`HTTP error! status: ${sellResponse.status}`);
+        throw new Error(`Failed to complete sale. Status: ${sellResponse.status}`);
       }
   
       const saleData = await sellResponse.json();
   
-      // Step 2: Generate the receipt PDF
-      const pdfResponse = await fetch('/api/generateReceipt', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          date: new Date().toLocaleDateString(),
-          customerName: `${selectedCustomer?.customer_fname || 'Unknown'} ${selectedCustomer?.customer_lname || ''}`,
-          totalCost: totalCost(),
-          items: cart.map(item => ({
-            product_title: item.product_title,
-            price: item.sell_price,
-            quantity: item.inventory_level,
-          })),
-        }),
-      });
+      let pdfBuffer;
   
-      if (!pdfResponse.ok) {
-        throw new Error(`HTTP error! status: ${pdfResponse.status}`);
+      // Generate the receipt PDF
+      try {
+        const pdfResponse = await fetch('/api/generateReceipt', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            date: new Date().toLocaleDateString(),
+            customerName: `${selectedCustomer?.customer_fname || 'Unknown'} ${selectedCustomer?.customer_lname || ''}`,
+            totalCost: totalCost(),
+            items: cart.map(item => ({
+              product_title: item.product_title,
+              price: item.discount_price,
+              quantity: item.inventory_level,
+            })),
+          }),
+        });
+  
+        if (!pdfResponse.ok) {
+          throw new Error(`Failed to generate receipt PDF. Status: ${pdfResponse.status}`);
+        }
+  
+        pdfBuffer = await pdfResponse.arrayBuffer();
+      } catch (error) {
+        console.error('Error generating receipt PDF:', error);
+        throw new Error('Failed to generate receipt PDF');
       }
   
-      const pdfBuffer = await pdfResponse.arrayBuffer();
-      const attachments = [
-        {
-          filename: 'receipt.pdf',
-          content: Buffer.from(pdfBuffer),
-        },
-      ];
+      // Send the email with the PDF attachment
+      try {
+        const emailResponse = await fetch('/api/sendEmail', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            to: selectedCustomer?.customer_email || '',
+            subject: 'Your Receipt',
+            text: 'Please find attached your receipt.',
+            attachments: [
+              {
+                filename: 'receipt.pdf',
+                content: Buffer.from(pdfBuffer).toString('base64'),
+                encoding: 'base64',
+              },
+            ],
+          }),
+        });
   
-      // Step 3: Send the email with the PDF attachment
-      const emailResponse = await fetch('/api/sendEmail', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          to: selectedCustomer?.customer_email || '',
-          subject: 'Your Receipt',
-          text: 'Please find attached your receipt.',
-          attachments,
-        }),
-      });
+        if (!emailResponse.ok) {
+          throw new Error(`Failed to send email. Status: ${emailResponse.status}`);
+        }
   
-      if (!emailResponse.ok) {
-        throw new Error(`HTTP error! status: ${emailResponse.status}`);
+        console.log('Transaction completed and receipt sent');
+      } catch (error) {
+        console.error('Error sending email:', error);
+        throw new Error('Failed to send email');
       }
   
-      console.log('Transaction completed and receipt sent');
       handleClearCart();
       fetchProducts();
     } catch (error) {

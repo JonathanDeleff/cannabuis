@@ -22,11 +22,11 @@ Completed must haves:
 - Add products
 - Order Products
 - Sell Products
+- Receipts
 
 Must haves: 
 - Return Products
 - Add customer form
-- Receipts (backend maybe complete, will need testing when customers is in place)
 - Fix order page
 - More reporting
 
