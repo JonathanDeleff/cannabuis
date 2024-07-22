@@ -65,7 +65,7 @@ export default function MostSoldToday() {
             <div className="flex flex-col gap-5">
                 <span className="title">Most sold item today: {productData.product_title}</span>
                 <span className="text-sm font-light">Total Sold: {cardData[0].total_quantity_sold}</span>
-                <span className="text-sm font-light">Average Cost: ${cardData[0].average_sale_cost}</span>
+                <span className="text-sm font-light">Average Cost: ${Number(cardData[0].average_sale_cost).toFixed(2)}</span>
             </div>
         ) : (
             <div className="flex flex-col gap-5">

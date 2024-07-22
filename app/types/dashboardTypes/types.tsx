@@ -20,7 +20,7 @@ export interface MenuLinkItem {
 }
 
 export interface CardDataType {
-    category: string;
+    category_name: string;
     total_sales: number;
 }
 

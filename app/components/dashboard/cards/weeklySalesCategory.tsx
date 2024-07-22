@@ -63,9 +63,9 @@ export default function WeeklySalesCategory() {
                     </thead>
                     <tbody>
                         {cardData.map(category => (
-                            <tr key={category.category}>
-                                <td className="p-2">{category.category}</td>
-                                <td className="p-2">${category.total_sales.toFixed(2)}</td> {/* Format the sales to two decimal places */}
+                            <tr key={category.category_name}>
+                                <td className="p-2">{category.category_name}</td>
+                                <td className="p-2">${category.total_sales.toFixed(2)}</td>
                             </tr>
                         ))}
                     </tbody>

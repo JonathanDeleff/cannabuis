@@ -7,7 +7,7 @@ const sql = postgres({
     username: process.env.PGUSER,
     password: process.env.PGPASSWORD,
     port: 5432,
-    ssl: { rejectUnauthorized: false }, // Updated to use an object for SSL options
+    ssl: { rejectUnauthorized: false }, 
 });
 
 export async function GET() {
