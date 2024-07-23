@@ -1,8 +1,21 @@
 {
-    "functions": {
-      "app/api/**/*.ts": {
-        "maxDuration": 60
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "out"
       }
     }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    }
+  ],
+  "scripts": {
+    "build": "npm run install:playwright && next build",
+    "install:playwright": "npx playwright install && npx playwright install-deps"
   }
-  
+}
