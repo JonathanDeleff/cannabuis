@@ -1,4 +1,5 @@
-import puppeteer from 'puppeteer';
+import chromium from 'chrome-aws-lambda';
+import puppeteer from 'puppeteer-core';
 import { NextResponse } from 'next/server';
 
 interface SaleItem {
@@ -15,14 +16,15 @@ interface SaleDetails {
 }
 
 const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => {
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  });
-
-  const page = await browser.newPage();
-
+  let browser: puppeteer.Browser | undefined;
   try {
+    browser = await puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
+    });
+
+    const page = await browser.newPage();
     await page.setContent(`
       <html>
         <head>
@@ -42,7 +44,7 @@ const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => 
     `, { waitUntil: 'networkidle0' });
 
     const pdf = await page.pdf({
-      format: 'A4', 
+      format: 'a4',
       printBackground: true,
     });
 
@@ -51,7 +53,9 @@ const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => 
     console.error('Error generating PDF:', error);
     throw new Error('Failed to generate PDF');
   } finally {
-    await browser.close();
+    if (browser) {
+      await browser.close();
+    }
   }
 };
 
