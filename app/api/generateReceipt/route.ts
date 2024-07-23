@@ -1,5 +1,6 @@
-import puppeteer from 'puppeteer';
 import { NextResponse } from 'next/server';
+import chromium from 'chrome-aws-lambda';
+import puppeteer from 'puppeteer-core';
 
 interface SaleItem {
   product_title: string;
@@ -15,9 +16,19 @@ interface SaleDetails {
 }
 
 const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => {
+  let executablePath = null;
+
+  if (process.env.AWS_LAMBDA_FUNCTION_NAME) {
+    executablePath = await chromium.executablePath;
+  } else {
+    const puppeteer = require('puppeteer');
+    executablePath = puppeteer.executablePath();
+  }
+
   const browser = await puppeteer.launch({
+    args: process.env.AWS_LAMBDA_FUNCTION_NAME ? chromium.args : ['--no-sandbox', '--disable-setuid-sandbox'],
+    executablePath,
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
 
   const page = await browser.newPage();
