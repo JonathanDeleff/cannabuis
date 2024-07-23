@@ -13,9 +13,5 @@
       "src": "/api/(.*)",
       "dest": "/api/$1"
     }
-  ],
-  "scripts": {
-    "build": "npm run install:playwright && next build",
-    "install:playwright": "npx playwright install && npx playwright install-deps"
-  }
+  ]
 }
