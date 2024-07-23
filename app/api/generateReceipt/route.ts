@@ -1,6 +1,5 @@
-import { NextResponse } from 'next/server';
 import puppeteer from 'puppeteer';
-
+import { NextResponse } from 'next/server';
 
 interface SaleItem {
   product_title: string;
@@ -20,7 +19,12 @@ const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => 
   try {
     browser = await puppeteer.launch({
       headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage', // Add this to avoid issues with shared memory
+      ],
+      executablePath: process.env.CHROME_EXECUTABLE_PATH || '/usr/bin/chromium-browser', // Adjust path as needed
     });
 
     const page = await browser.newPage();
@@ -42,11 +46,10 @@ const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => 
       </html>
     `, { waitUntil: 'networkidle0' });
 
-    // Increase timeout here
     const pdf = await page.pdf({
       format: 'A4',
       printBackground: true,
-      timeout: 60000, // 60 seconds
+      timeout: 60000, // Increase timeout to 60 seconds
     });
 
     return pdf;
@@ -59,7 +62,6 @@ const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => 
     }
   }
 };
-
 
 
 
