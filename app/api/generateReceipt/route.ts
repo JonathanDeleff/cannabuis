@@ -16,24 +16,16 @@ interface SaleDetails {
 }
 
 const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => {
-  let executablePath = null;
-
-  if (process.env.AWS_LAMBDA_FUNCTION_NAME) {
-    executablePath = await chromium.executablePath;
-  } else {
-    const puppeteer = require('puppeteer');
-    executablePath = puppeteer.executablePath();
-  }
-
-  const browser = await puppeteer.launch({
-    args: process.env.AWS_LAMBDA_FUNCTION_NAME ? chromium.args : ['--no-sandbox', '--disable-setuid-sandbox'],
-    executablePath,
-    headless: true,
-  });
-
-  const page = await browser.newPage();
-
+  let browser = null;
   try {
+    browser = await puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
+    });
+
+    const page = await browser.newPage();
+
     await page.setContent(`
       <html>
         <head>
@@ -45,7 +37,7 @@ const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => 
           <p>Customer: ${saleDetails.customerName}</p>
           <p>Items:</p>
           <ul>
-            ${saleDetails.items.map((item: SaleItem) => `<li>${item.product_title} - $${item.price} x ${item.quantity}</li>`).join('')}
+            ${saleDetails.items.map(item => `<li>${item.product_title} - $${item.price} x ${item.quantity}</li>`).join('')}
           </ul>
           <p>Total: $${saleDetails.totalCost}</p>
         </body>
@@ -63,10 +55,11 @@ const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => 
     console.error('Error generating PDF:', error);
     throw new Error('Failed to generate PDF');
   } finally {
-    await browser.close();
+    if (browser) {
+      await browser.close();
+    }
   }
 };
-
 export async function POST(request: Request) {
   try {
     const saleDetails: SaleDetails = await request.json();
