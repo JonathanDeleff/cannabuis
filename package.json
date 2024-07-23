@@ -34,7 +34,6 @@
   },
   "scripts": {
     "install:playwright": "npx playwright install",
-    "install:playwright-deps": "npx playwright install-deps",
-    "build": "npm run install:playwright-deps && npm run install:playwright && next build"
+    "build": "npm run install:playwright && next build"
   }
 }
