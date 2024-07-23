@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import chromium from 'chrome-aws-lambda';
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer';
+
 
 interface SaleItem {
   product_title: string;
@@ -19,13 +19,11 @@ const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => 
   let browser = null;
   try {
     browser = await puppeteer.launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath,
-      headless: chromium.headless,
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
     const page = await browser.newPage();
-
     await page.setContent(`
       <html>
         <head>
@@ -44,10 +42,11 @@ const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => 
       </html>
     `, { waitUntil: 'networkidle0' });
 
+    // Increase timeout here
     const pdf = await page.pdf({
-      format: 'a4',
+      format: 'A4',
       printBackground: true,
-      timeout: 60000,
+      timeout: 60000, // 60 seconds
     });
 
     return pdf;
@@ -60,6 +59,10 @@ const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => 
     }
   }
 };
+
+
+
+
 export async function POST(request: Request) {
   try {
     const saleDetails: SaleDetails = await request.json();
