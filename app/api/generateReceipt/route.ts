@@ -1,5 +1,5 @@
-import puppeteer from 'puppeteer';
 import { NextResponse } from 'next/server';
+import { chromium } from 'playwright';
 
 interface SaleItem {
   product_title: string;
@@ -17,14 +17,9 @@ interface SaleDetails {
 const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => {
   let browser = null;
   try {
-    browser = await puppeteer.launch({
+    browser = await chromium.launch({
       headless: true,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage', // Add this to avoid issues with shared memory
-      ],
-      executablePath: process.env.CHROME_EXECUTABLE_PATH || '/usr/bin/chromium-browser', // Adjust path as needed
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
     const page = await browser.newPage();
@@ -41,15 +36,14 @@ const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => 
           <ul>
             ${saleDetails.items.map(item => `<li>${item.product_title} - $${item.price} x ${item.quantity}</li>`).join('')}
           </ul>
-          <p>Total: $${saleDetails.totalCost}</p>
+          <p>Total: $${saleDetails.totalCost.toFixed(2)}</p>
         </body>
       </html>
-    `, { waitUntil: 'networkidle0' });
+    `, { waitUntil: 'networkidle' });
 
     const pdf = await page.pdf({
       format: 'A4',
       printBackground: true,
-      timeout: 60000, // Increase timeout to 60 seconds
     });
 
     return pdf;
@@ -62,8 +56,6 @@ const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => 
     }
   }
 };
-
-
 
 export async function POST(request: Request) {
   try {
