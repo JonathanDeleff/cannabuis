@@ -8,10 +8,7 @@
       }
     }
   ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    }
-  ]
+  "env": {
+    "PLAYWRIGHT_BROWSERS_PATH": "0"
+  }
 }
