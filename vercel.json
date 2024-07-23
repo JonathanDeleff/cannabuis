@@ -1,18 +1,4 @@
 {
-    "build": {
-      "env": {
-        "NODE_ENV": "production"
-      }
-    },
-    "builds": [
-      {
-        "src": "package.json",
-        "use": "@vercel/node",
-        "config": {
-          "includeFiles": ["*"]
-        }
-      }
-    ],
     "routes": [
       {
         "src": "/api/(.*)",
@@ -22,7 +8,6 @@
         "src": "/(.*)",
         "dest": "/"
       }
-    ],
-    "installCommand": "npm install --legacy-peer-deps"
+    ]
   }
   
