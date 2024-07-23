@@ -42,8 +42,9 @@ const generateReceiptPdf = async (saleDetails: SaleDetails): Promise<Buffer> => 
     `, { waitUntil: 'networkidle0' });
 
     const pdf = await page.pdf({
-      format: 'A4', 
+      format: 'A4',
       printBackground: true,
+      timeout: 60000,
     });
 
     return pdf;
