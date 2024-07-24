@@ -207,73 +207,83 @@ const ProductsPage = ( ) => {
       if (!sellResponse.ok) {
         throw new Error(`Failed to complete sale. Status: ${sellResponse.status}`);
       }
+
   
-      const saleData = await sellResponse.json();
+      // Generate the receipt PDF using PDFShift
+      const htmlContent = `
+        <html>
+          <head>
+            <style>
+              /* Your styles here */
+            </style>
+          </head>
+          <body>
+            <h1>Receipt</h1>
+            <p>Date: ${new Date().toLocaleDateString()}</p>
+            <p>Customer Name: ${selectedCustomer?.customer_fname || 'Unknown'} ${selectedCustomer?.customer_lname || ''}</p>
+            <p>Total Cost: ${totalCost().toFixed(2)}</p>
+            <ul>
+              ${cart.map(item => `
+                <li>${item.product_title} - $${item.discount_price} x ${item.inventory_level}</li>
+              `).join('')}
+            </ul>
+          </body>
+        </html>
+      `;
   
-      let pdfBuffer;
-  
-      // Generate the receipt PDF
-      try {
-        const pdfResponse = await fetch('/api/generateReceipt', {
+      const pdfApiKey = process.env.NEXT_PUBLIC_PDFSHIFT_API_KEY;
+
+      if (!pdfApiKey) {
+          throw new Error('PDFShift API key is missing.');
+      }
+
+      const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+              'Authorization': 'Basic ' + Buffer.from(`api:${pdfApiKey}`).toString('base64'),
+              'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            date: new Date().toLocaleDateString(),
-            customerName: `${selectedCustomer?.customer_fname || 'Unknown'} ${selectedCustomer?.customer_lname || ''}`,
-            totalCost: totalCost(),
-            items: cart.map(item => ({
-              product_title: item.product_title,
-              price: item.discount_price,
-              quantity: item.inventory_level,
-            })),
+              source: htmlContent,
+              // Additional options if needed
           }),
-        });
+      });
   
-        if (!pdfResponse.ok) {
-          throw new Error(`Failed to generate receipt PDF. Status: ${pdfResponse.status}`);
-        }
-  
-        pdfBuffer = await pdfResponse.arrayBuffer();
-      } catch (error) {
-        console.error('Error generating receipt PDF:', error);
-        throw new Error('Failed to generate receipt PDF');
+      if (!pdfResponse.ok) {
+        const errorText = await pdfResponse.text();
+        throw new Error(`Failed to generate receipt PDF. Status: ${pdfResponse.status}, Response: ${errorText}`);
       }
+  
+      const pdfArrayBuffer = await pdfResponse.arrayBuffer();
+      const pdfBuffer = Buffer.from(pdfArrayBuffer);
   
       // Send the email with the PDF attachment
-      try {
-        const emailResponse = await fetch('/api/sendEmail', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            to: selectedCustomer?.customer_email || '',
-            subject: 'Your Receipt',
-            text: 'Please find attached your receipt.',
-            attachments: [
-              {
-                filename: 'receipt.pdf',
-                content: Buffer.from(pdfBuffer).toString('base64'),
-                encoding: 'base64',
-              },
-            ],
-          }),
-        });
+      const emailResponse = await fetch('/api/sendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: selectedCustomer?.customer_email || '',
+          subject: 'Your Receipt',
+          text: 'Please find attached your receipt.',
+          attachments: [
+            {
+              filename: 'receipt.pdf',
+              content: pdfBuffer.toString('base64'),
+              encoding: 'base64',
+            },
+          ],
+        }),
+      });
   
-        if (!emailResponse.ok) {
-          throw new Error(`Failed to send email. Status: ${emailResponse.status}`);
-        }
-  
-        console.log('Transaction completed and receipt sent');
-      } catch (error) {
-        console.error('Error sending email:', error);
-        throw new Error('Failed to send email');
+      if (!emailResponse.ok) {
+        const errorText = await emailResponse.text();
+        throw new Error(`Failed to send email. Status: ${emailResponse.status}, Response: ${errorText}`);
       }
   
-      handleClearCart();
-      fetchProducts();
+      console.log('Receipt PDF generated and emailed successfully.');
+  
     } catch (error) {
       console.error('Error completing transaction:', error);
     }
