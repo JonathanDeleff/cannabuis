@@ -207,9 +207,8 @@ const ProductsPage = ( ) => {
       if (!sellResponse.ok) {
         throw new Error(`Failed to complete sale. Status: ${sellResponse.status}`);
       }
-
   
-      // Generate the receipt PDF using PDFShift
+      // Generate the receipt PDF using the API route
       const htmlContent = `
         <html>
           <head>
@@ -231,22 +230,14 @@ const ProductsPage = ( ) => {
         </html>
       `;
   
-      const pdfApiKey = process.env.NEXT_PUBLIC_PDFSHIFT_API_KEY;
-
-      if (!pdfApiKey) {
-          throw new Error('PDFShift API key is missing.');
-      }
-
-      const pdfResponse = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
-          method: 'POST',
-          headers: {
-              'Authorization': 'Basic ' + Buffer.from(`api:${pdfApiKey}`).toString('base64'),
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              source: htmlContent,
-              // Additional options if needed
-          }),
+      const pdfResponse = await fetch('/api/generatePdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          htmlContent,
+        }),
       });
   
       if (!pdfResponse.ok) {
@@ -254,8 +245,8 @@ const ProductsPage = ( ) => {
         throw new Error(`Failed to generate receipt PDF. Status: ${pdfResponse.status}, Response: ${errorText}`);
       }
   
-      const pdfArrayBuffer = await pdfResponse.arrayBuffer();
-      const pdfBuffer = Buffer.from(pdfArrayBuffer);
+      const pdfData = await pdfResponse.json();
+      const pdfBuffer = Buffer.from(pdfData.pdf, 'base64');
   
       // Send the email with the PDF attachment
       const emailResponse = await fetch('/api/sendEmail', {
