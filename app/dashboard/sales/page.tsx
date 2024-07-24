@@ -40,6 +40,7 @@ const ProductsPage = ( ) => {
   const [showAddCustomer, setShowAddCustomer] = useState<boolean>(false);
   const [showCustomerSearch, setShowCustomerSearch] = useState<boolean>(false);
   const [selectedCustomer, setSelectedCustomer] = useState<CustomerType | null>(null);
+  const [sendEmailReceipt, setSendEmailReceipt] = useState<boolean>(true);
   const [newProduct, setNewProduct] = useState<ProductType>({
     product_sku: '',
     product_brand: '',
@@ -208,75 +209,77 @@ const ProductsPage = ( ) => {
         throw new Error(`Failed to complete sale. Status: ${sellResponse.status}`);
       }
   
-      // Generate the receipt PDF using the API route
-      const htmlContent = `
-        <html>
-          <head>
-            <style>
-              /* Your styles here */
-            </style>
-          </head>
-          <body>
-            <h1>Receipt</h1>
-            <p>Date: ${new Date().toLocaleDateString()}</p>
-            <p>Customer Name: ${selectedCustomer?.customer_fname || 'Unknown'} ${selectedCustomer?.customer_lname || ''}</p>
-            <p>Total Cost: ${totalCost().toFixed(2)}</p>
-            <ul>
-              ${cart.map(item => `
-                <li>${item.product_title} - $${item.discount_price} x ${item.inventory_level}</li>
-              `).join('')}
-            </ul>
-          </body>
-        </html>
-      `;
+      if (sendEmailReceipt) {
+        // Generate the receipt PDF using the API route
+        const htmlContent = `
+          <html>
+            <head>
+              <style>
+                /* Your styles here */
+              </style>
+            </head>
+            <body>
+              <h1>Receipt</h1>
+              <p>Date: ${new Date().toLocaleDateString()}</p>
+              <p>Customer Name: ${selectedCustomer?.customer_fname || 'Unknown'} ${selectedCustomer?.customer_lname || ''}</p>
+              <p>Total Cost: ${totalCost().toFixed(2)}</p>
+              <ul>
+                ${cart.map(item => `
+                  <li>${item.product_title} - $${item.discount_price} x ${item.inventory_level}</li>
+                `).join('')}
+              </ul>
+            </body>
+          </html>
+        `;
   
-      const pdfResponse = await fetch('/api/generatePdf', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          htmlContent,
-        }),
-      });
+        const pdfResponse = await fetch('/api/generatePdf', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            htmlContent,
+          }),
+        });
   
-      if (!pdfResponse.ok) {
-        const errorText = await pdfResponse.text();
-        throw new Error(`Failed to generate receipt PDF. Status: ${pdfResponse.status}, Response: ${errorText}`);
+        if (!pdfResponse.ok) {
+          const errorText = await pdfResponse.text();
+          throw new Error(`Failed to generate receipt PDF. Status: ${pdfResponse.status}, Response: ${errorText}`);
+        }
+  
+        const pdfData = await pdfResponse.json();
+        const pdfBuffer = Buffer.from(pdfData.pdf, 'base64');
+  
+        // Send the email with the PDF attachment
+        const emailResponse = await fetch('/api/sendEmail', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            to: selectedCustomer?.customer_email || '',
+            subject: 'Your Receipt',
+            text: 'Please find attached your receipt.',
+            attachments: [
+              {
+                filename: 'receipt.pdf',
+                content: pdfBuffer.toString('base64'),
+                encoding: 'base64',
+              },
+            ],
+          }),
+        });
+  
+        if (!emailResponse.ok) {
+          const errorText = await emailResponse.text();
+          throw new Error(`Failed to send email. Status: ${emailResponse.status}, Response: ${errorText}`);
+        }
       }
   
-      const pdfData = await pdfResponse.json();
-      const pdfBuffer = Buffer.from(pdfData.pdf, 'base64');
-  
-      // Send the email with the PDF attachment
-      const emailResponse = await fetch('/api/sendEmail', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          to: selectedCustomer?.customer_email || '',
-          subject: 'Your Receipt',
-          text: 'Please find attached your receipt.',
-          attachments: [
-            {
-              filename: 'receipt.pdf',
-              content: pdfBuffer.toString('base64'),
-              encoding: 'base64',
-            },
-          ],
-        }),
-      });
-  
-      if (!emailResponse.ok) {
-        const errorText = await emailResponse.text();
-        throw new Error(`Failed to send email. Status: ${emailResponse.status}, Response: ${errorText}`);
-      }
-  
-      console.log('Receipt PDF generated and emailed successfully.');
-  
+      // Clear the cart after successful transaction
+      setCart([]);
     } catch (error) {
-      console.error('Error completing transaction:', error);
+      console.error('Error confirming sale:', error);
     }
   };
   
@@ -319,15 +322,17 @@ const ProductsPage = ( ) => {
     <div className="flex gap-2 mt-5 flex-col">
       <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5 w-full">
         {mounted && (
-          <Cart 
-            products={cart} 
-            onRemoveFromCart={handleRemoveFromCart} 
+          <Cart
+            products={cart}
+            onRemoveFromCart={handleRemoveFromCart}
             handleQuantityChange={handleQuantityChange}
             selectedCustomer={selectedCustomer}
             setSelectedCustomer={setSelectedCustomer}
             totalCost={totalCost()}
             onConfirmSell={handleConfirmSell}
-          />
+            sendEmailReceipt={sendEmailReceipt}
+            setSendEmailReceipt={setSendEmailReceipt}
+        />
         )}
         {cartEmpty() ? (
           <p className="p-2.5">Cart is empty</p>

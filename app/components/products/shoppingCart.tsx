@@ -11,6 +11,8 @@ type CartProps = {
   setSelectedCustomer: (customer: CustomerType | null) => void;
   totalCost: number;
   onConfirmSell: () => void;
+  sendEmailReceipt: boolean;
+  setSendEmailReceipt: (value: boolean) => void;
 };
 
 export default function Cart({
@@ -21,6 +23,8 @@ export default function Cart({
   setSelectedCustomer,
   totalCost,
   onConfirmSell,
+  sendEmailReceipt,
+  setSendEmailReceipt,
 }: CartProps) {
   const [showCustomerSearch, setShowCustomerSearch] = useState<boolean>(false);
   const [showAddCustomer, setShowAddCustomer] = useState<boolean>(false);
@@ -75,9 +79,19 @@ export default function Cart({
           </ul>
           <p>Total Cost: ${totalCost.toFixed(2)}</p>
           {selectedCustomer && (
-            <button onClick={onConfirmSell} className="p-2.5 bg-button text-black rounded-lg">
-              Confirm and Sell
-            </button>
+            <div>
+              <label>
+                <input 
+                  type="checkbox" 
+                  checked={sendEmailReceipt} 
+                  onChange={(e) => setSendEmailReceipt(e.target.checked)}
+                />
+                Send Email Receipt
+              </label>
+              <button onClick={onConfirmSell} className="p-2.5 bg-button text-black rounded-lg">
+                Confirm and Sell
+              </button>
+            </div>
           )}
         </div>
       )}
