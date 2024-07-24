@@ -1,7 +1,9 @@
 {
   "functions": {
     "api/generateReceipt": {
-      "includeFiles": "path-to-your-chromium-binary/**"
+      "memory": 1024,
+      "maxDuration": 10,
+      "includeFiles": "node_modules/playwright-core/.local-browsers/**"
     }
   }
 }
