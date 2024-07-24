@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "install:playwright": "npx playwright install",
     "postinstall": "npx playwright install"
   },
   "dependencies": {
