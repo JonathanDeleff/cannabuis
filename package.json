@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "install:playwright": "npx playwright install",
-    "postinstall": "npm run install:playwright"
+    "postinstall": "npx playwright install"
   },
   "dependencies": {
     "@sendgrid/mail": "^8.1.3",
