@@ -1,8 +1,7 @@
 {
-  "build": {
-    "env": {
-      "PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD": "false",
-      "PLAYWRIGHT_BROWSERS_PATH": "0"
+  "functions": {
+    "api/generateReceipt": {
+      "includeFiles": "path-to-your-chromium-binary/**"
     }
   }
 }
