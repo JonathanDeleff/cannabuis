@@ -6,11 +6,11 @@ const capitalizeFirstLetter = (str: string) => {
 
 const getStatusClass = (status: string) => {
   switch (status) {
-    case 'sold':
+    case 'Completed':
       return 'bg-complete';
-    case 'pending':
+    case 'Returned':
       return 'bg-pending';
-    case 'cancelled':
+    case 'Cancelled':
       return 'bg-cancelled';
     default:
       return 'bg-gray-500'; // Default styling if status is not recognized

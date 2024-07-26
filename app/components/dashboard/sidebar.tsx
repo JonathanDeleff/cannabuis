@@ -9,8 +9,7 @@ import {
     MdWork,
     MdAnalytics,
     MdPeople,
-    MdOutlineSettings,
-    MdHelpCenter,
+    MdMoneyOff, 
     MdLogout,
     MdAssignment,
 } from "react-icons/md";
@@ -24,7 +23,7 @@ const menuItems = [
             { title: "Employees", path: "/dashboard/employees", icon: <MdSupervisedUserCircle /> },
             { title: "Sales", path: "/dashboard/sales", icon: <MdShoppingBag /> },
             { title: "Transactions", path: "/dashboard/transactions", icon: <MdAttachMoney /> },
-            { title: "Order", path: "/dashboard/order", icon: <MdAssignment /> },
+            { title: "Return", path: "/dashboard/returns", icon: <MdMoneyOff /> },
             { title: "Orders", path: "/dashboard/orders", icon: <MdAssignment /> },
         ],
     },
@@ -36,13 +35,7 @@ const menuItems = [
             { title: "Teams", path: "/dashboard/teams", icon: <MdPeople /> },
         ],
     },
-    {
-        title: "User",
-        list: [
-            { title: "Settings", path: "/dashboard/settings", icon: <MdOutlineSettings /> },
-            { title: "Help", path: "/dashboard/help", icon: <MdHelpCenter /> },
-        ],
-    },
+    
 ];
 
 const Sidebar = async () => {
@@ -52,7 +45,6 @@ const Sidebar = async () => {
             <div className="flex items-center gap-5 mb-5">
                 <Image className="rounded-full object-cover" priority={true} src="/noavatar.png" alt="User Avatar" width={50} height={50} />
                 <div className="flex flex-col">
-                    {/* This will need restructuring when backend is integrated */}
                     <span className="font-medium">{session?.user?.name}</span>
                     <span className="text-xs text-textSoft">{session?.user?.jobTitle}</span>
                 </div>

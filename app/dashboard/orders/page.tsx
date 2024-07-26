@@ -63,7 +63,7 @@ export default function OrdersPage() {
         <div className="bg-bgSoft p-5 rounded-lg mt-5">
           <div className="flex items-center justify-between">
             <Search placeholder='Search for a Transaction' setSearchQuery={setSearchQuery}/>
-            <Link href={"/components/products/addProduct"}>
+            <Link href={"/dashboard/order"}>
               <button className="p-2.5 bg-button text-black rounded-lg">Add New</button>
             </Link>
           </div>
