@@ -1,12 +1,4 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
 
-export default {
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.externals.push('chrome-aws-lambda');
-    }
-    return config;
-  },
-  distDir: '.next',
-};
+export default nextConfig;

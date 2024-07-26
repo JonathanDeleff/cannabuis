@@ -9,6 +9,8 @@ import AddProduct from "@/app/components/products/addProduct";
 import AddCustomer from "@/app/components/products/addCustomer";
 import CustomerSearch from "@/app/components/products/customerSearch";
 import { ProductType, SortConfig, CustomerType } from "@/app/types/dashboardTypes/types";
+import { useProducts } from "@/app/contexts/ProductsContext";
+import { useSession } from "@/app/contexts/SessionContext";
 
 
 const searchCustomer = async (searchQuery: string) => {
@@ -30,7 +32,7 @@ const searchCustomer = async (searchQuery: string) => {
 
 
 const ProductsPage = ( ) => {
-  const [products, setProducts] = useState<ProductType[]>([]);
+  const { products, loading: productsLoading } = useProducts();
   const [cart, setCart] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -62,41 +64,13 @@ const ProductsPage = ( ) => {
   const [customerSearchQuery, setCustomerSearchQuery] = useState<string>('');
   const [customerSearchResults, setCustomerSearchResults] = useState<CustomerType[]>([]);
   const [mounted, setMounted] = useState(false);
-  const [session, setSession] = useState<any>(null);
+  const { session, loading: sessionLoading } = useSession();
 
   useEffect(() => {
     setMounted(true);
-    fetchProducts();
-    fetchSession();
   }, []);
 
-  const fetchSession = async () => {
-    try {
-      const response = await fetch('/api/session');
-      if (!response.ok) throw new Error('Network response was not ok');
-      const data = await response.json();
-      setSession(data);
-    } catch (error) {
-      console.error('Error fetching session:', error);
-    }
-  };
-
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch('/api/products', { method: 'GET' });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data: ProductType[] = await response.json();
-      setProducts(data);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  
 
   const sortedProducts = useMemo(() => {
     let sortableProducts = [...products];
@@ -378,7 +352,6 @@ const ProductsPage = ( ) => {
             requestSort={requestSort} 
             sortConfig={sortConfig} 
           />
-          <Pagination />
         </div>
       )}
     </div>
