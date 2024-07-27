@@ -165,7 +165,7 @@ const ProductsPage = ( ) => {
         transaction_tax: totalCost() * 0.05,
         transaction_prov: 'AB',
         payment_method: 'Credit Card',
-        transaction_status: 'sold',
+        transaction_status: 'Completed',
         cartItems: cart.map(item => ({
           product_sku: item.product_sku,
           transaction_quantity: item.inventory_level,
@@ -185,7 +185,7 @@ const ProductsPage = ( ) => {
       if (!sellResponse.ok) {
         throw new Error(`Failed to complete sale. Status: ${sellResponse.status}`);
       }
-  
+      // Only proceed with PDF generation and email if send receipt is checked
       if (sendEmailReceipt) {
         // Only proceed with PDF generation and email if a customer is selected
         if (selectedCustomer) {

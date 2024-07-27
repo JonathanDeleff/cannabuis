@@ -4,7 +4,6 @@ import { auth, signOut } from '@/auth';
 import {
     MdDashboard,
     MdSupervisedUserCircle,
-    MdShoppingBag,
     MdAttachMoney,
     MdWork,
     MdAnalytics,
@@ -13,7 +12,7 @@ import {
     MdLogout,
     MdAssignment,
 } from "react-icons/md";
-
+import { TbShoppingBagPlus, TbShoppingBagMinus } from "react-icons/tb";
 
 const menuItems = [
     {
@@ -21,9 +20,9 @@ const menuItems = [
         list: [
             { title: "Dashboard", path: "/dashboard", icon: <MdDashboard /> },
             { title: "Employees", path: "/dashboard/employees", icon: <MdSupervisedUserCircle /> },
-            { title: "Sales", path: "/dashboard/sales", icon: <MdShoppingBag /> },
+            { title: "Sales", path: "/dashboard/sales", icon: <TbShoppingBagPlus /> },
+            { title: "Returns", path: "/dashboard/returns", icon: <TbShoppingBagMinus /> },
             { title: "Transactions", path: "/dashboard/transactions", icon: <MdAttachMoney /> },
-            { title: "Return", path: "/dashboard/returns", icon: <MdMoneyOff /> },
             { title: "Orders", path: "/dashboard/orders", icon: <MdAssignment /> },
         ],
     },
@@ -34,6 +33,10 @@ const menuItems = [
             { title: "Reports", path: "/dashboard/reports", icon: <MdAnalytics /> },
             { title: "Teams", path: "/dashboard/teams", icon: <MdPeople /> },
         ],
+    },
+    {
+        title: "User",
+        list: [],
     },
     
 ];
