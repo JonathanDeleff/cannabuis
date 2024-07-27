@@ -12,7 +12,7 @@ const sql = postgres({
 export async function POST(req: Request) {
 
   const {
-    customer_id,
+    customer_id = null,
     transaction_cost,
     transaction_tax,
     transaction_prov,
