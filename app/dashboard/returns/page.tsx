@@ -13,13 +13,13 @@ const ReturnsPage = () => {
   const [filteredProducts, setFilteredProducts] = useState<ProductType[]>([]);
 
   useEffect(() => {
-    if (searchQuery) {
+    if (searchQuery.trim() === '') {
+      setFilteredProducts(products);
+    } else {
       const filtered = products.filter(product =>
         product.product_title.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilteredProducts(filtered);
-    } else {
-      setFilteredProducts(products);
     }
   }, [searchQuery, products]);
 
