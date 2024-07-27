@@ -156,27 +156,30 @@ const ProductsPage = ( ) => {
 
   const handleConfirmSell = async () => {
     try {
+      // Prepare request data
+      const requestData = {
+        employee_id: session?.user?.id,
+        store_id: session?.user?.storeId,
+        customer_id: selectedCustomer?.customer_id || null, // Set to null if no customer selected
+        transaction_cost: totalCost(),
+        transaction_tax: totalCost() * 0.05,
+        transaction_prov: 'AB',
+        payment_method: 'Credit Card',
+        transaction_status: 'sold',
+        cartItems: cart.map(item => ({
+          product_sku: item.product_sku,
+          transaction_quantity: item.inventory_level,
+          transaction_cost: item.discount_price * item.inventory_level,
+        })),
+      };
+  
       // Complete the sale
       const sellResponse = await fetch('/api/sell', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          employee_id: session?.user?.id,
-          store_id: session?.user?.storeId,
-          customer_id: selectedCustomer?.customer_id,
-          transaction_cost: totalCost(),
-          transaction_tax: totalCost() * 0.05,
-          transaction_prov: 'AB',
-          payment_method: 'Credit Card',
-          transaction_status: 'sold',
-          cartItems: cart.map(item => ({
-            product_sku: item.product_sku,
-            transaction_quantity: item.inventory_level,
-            transaction_cost: item.discount_price * item.inventory_level,
-          })),
-        }),
+        body: JSON.stringify(requestData),
       });
   
       if (!sellResponse.ok) {
@@ -184,69 +187,72 @@ const ProductsPage = ( ) => {
       }
   
       if (sendEmailReceipt) {
-        // Generate the receipt PDF using the API route
-        const htmlContent = `
-          <html>
-            <head>
-              <style>
-                /* Your styles here */
-              </style>
-            </head>
-            <body>
-              <h1>Receipt</h1>
-              <p>Date: ${new Date().toLocaleDateString()}</p>
-              <p>Customer Name: ${selectedCustomer?.customer_fname || 'Unknown'} ${selectedCustomer?.customer_lname || ''}</p>
-              <p>Total Cost: ${totalCost().toFixed(2)}</p>
-              <ul>
-                ${cart.map(item => `
-                  <li>${item.product_title} - $${item.discount_price} x ${item.inventory_level}</li>
-                `).join('')}
-              </ul>
-            </body>
-          </html>
-        `;
+        // Only proceed with PDF generation and email if a customer is selected
+        if (selectedCustomer) {
+          // Generate the receipt PDF using the API route
+          const htmlContent = `
+            <html>
+              <head>
+                <style>
+                  /* Your styles here */
+                </style>
+              </head>
+              <body>
+                <h1>Receipt</h1>
+                <p>Date: ${new Date().toLocaleDateString()}</p>
+                <p>Customer Name: ${selectedCustomer.customer_fname || 'Unknown'} ${selectedCustomer.customer_lname || ''}</p>
+                <p>Total Cost: ${totalCost().toFixed(2)}</p>
+                <ul>
+                  ${cart.map(item => `
+                    <li>${item.product_title} - $${item.discount_price} x ${item.inventory_level}</li>
+                  `).join('')}
+                </ul>
+              </body>
+            </html>
+          `;
   
-        const pdfResponse = await fetch('/api/generatePdf', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            htmlContent,
-          }),
-        });
+          const pdfResponse = await fetch('/api/generatePdf', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              htmlContent,
+            }),
+          });
   
-        if (!pdfResponse.ok) {
-          const errorText = await pdfResponse.text();
-          throw new Error(`Failed to generate receipt PDF. Status: ${pdfResponse.status}, Response: ${errorText}`);
-        }
+          if (!pdfResponse.ok) {
+            const errorText = await pdfResponse.text();
+            throw new Error(`Failed to generate receipt PDF. Status: ${pdfResponse.status}, Response: ${errorText}`);
+          }
   
-        const pdfData = await pdfResponse.json();
-        const pdfBuffer = Buffer.from(pdfData.pdf, 'base64');
+          const pdfData = await pdfResponse.json();
+          const pdfBuffer = Buffer.from(pdfData.pdf, 'base64');
   
-        // Send the email with the PDF attachment
-        const emailResponse = await fetch('/api/sendEmail', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            to: selectedCustomer?.customer_email || '',
-            subject: 'Your Receipt',
-            text: 'Please find attached your receipt.',
-            attachments: [
-              {
-                filename: 'receipt.pdf',
-                content: pdfBuffer.toString('base64'),
-                encoding: 'base64',
-              },
-            ],
-          }),
-        });
+          // Send the email with the PDF attachment
+          const emailResponse = await fetch('/api/sendEmail', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              to: selectedCustomer.customer_email || '',
+              subject: 'Your Receipt',
+              text: 'Please find attached your receipt.',
+              attachments: [
+                {
+                  filename: 'receipt.pdf',
+                  content: pdfBuffer.toString('base64'),
+                  encoding: 'base64',
+                },
+              ],
+            }),
+          });
   
-        if (!emailResponse.ok) {
-          const errorText = await emailResponse.text();
-          throw new Error(`Failed to send email. Status: ${emailResponse.status}, Response: ${errorText}`);
+          if (!emailResponse.ok) {
+            const errorText = await emailResponse.text();
+            throw new Error(`Failed to send email. Status: ${emailResponse.status}, Response: ${errorText}`);
+          }
         }
       }
   
@@ -256,6 +262,7 @@ const ProductsPage = ( ) => {
       console.error('Error confirming sale:', error);
     }
   };
+  
   
   
 
