@@ -39,3 +39,12 @@ export interface MostSoldTodayType {
     average_sale_cost: number;
 }
 
+export type ReportType = 
+    | EmpRefundType
+    | EmpSalesType
+    | LowHourSalesType
+    | PeakHourSalesType
+    | SalesPerCategoryType
+    | MostReturnedType
+    | MostSoldAllTimeType
+    | MostSoldTodayType;

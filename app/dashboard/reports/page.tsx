@@ -1,10 +1,11 @@
 "use client";
-
+import { ReportType } from "../../types/reportTypes/types";
 import React, { useState } from "react";
 import ReportButtons from "../../components/reports/reportButtons";
 
 const ReportsPage: React.FC = () => {
     const [selectedReport, setSelectedReport] = useState<string | null>(null);
+    const [reportData, setReportData] = useState<ReportType | null>(null);
 
     const renderReportContent = () => {
         switch (selectedReport) {

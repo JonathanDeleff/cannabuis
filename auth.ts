@@ -2,7 +2,7 @@ import NextAuth, { Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { z } from "zod";
 import type { EmployeeType } from "@/app/types/dashboardTypes/types";
-import sql from "@/app/lib/db";
+import sql from "@/app/services/dbService";
 
 // Validate credentials schema using Zod
 const credentialsSchema = z.object({
