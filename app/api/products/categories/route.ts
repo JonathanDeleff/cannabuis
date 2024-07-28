@@ -1,13 +1,5 @@
-import postgres from "postgres";
+import sql from "@/app/services/dbService";
 
-const sql = postgres({
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  username: process.env.PGUSER,
-  password: process.env.PGPASSWORD,
-  port: 5432,
-  ssl: 'require',
-});
 
 export async function GET() {
     try {

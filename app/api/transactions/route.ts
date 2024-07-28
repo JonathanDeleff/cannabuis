@@ -1,15 +1,6 @@
-import postgres from "postgres";
 import type { TransactionType } from "@/app/types/dashboardTypes/types";
+import sql from "@/app/services/dbService";
 
-// Database connection configuration
-const sql = postgres({
-    host: process.env.PGHOST,
-    database: process.env.PGDATABASE,
-    username: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-    port: 5432,
-    ssl: 'require',    
-});
 
 // GET function to fetch data
 export async function GET() {

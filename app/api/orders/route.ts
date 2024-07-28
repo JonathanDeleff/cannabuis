@@ -1,15 +1,6 @@
-import postgres from "postgres";
 import { OrderType } from "@/app/types/dashboardTypes/types";
 import { NextResponse } from "next/server";
-
-const sql = postgres({
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  username: process.env.PGUSER,
-  password: process.env.PGPASSWORD,
-  port: 5432,
-  ssl: 'require',
-});
+import sql from "@/app/services/dbService";
 
 export async function GET() {
   try {
