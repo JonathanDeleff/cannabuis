@@ -23,6 +23,7 @@ module.exports = {
         complete: '#afd6ee75',
         cancelled: '#f7737375',
         button: '#735CDD',
+        buttonDark: '#5E4CBB',
         border: '#735CDD',
       },
     },

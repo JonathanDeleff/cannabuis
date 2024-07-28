@@ -1,57 +1,30 @@
-import React from "react";
+// components/reports/ReportButtons.tsx
+import React from 'react';
 
-interface ReportButtonsProps {
-    onSelectReport: (reportName: string) => void;
-}
+type ReportButtonsProps = {
+    onSelectReport: (report: string) => void;
+    selectedReport: string | null;
+};
 
-const ReportButtons: React.FC<ReportButtonsProps> = ({ onSelectReport }) => {
+const ReportButtons: React.FC<ReportButtonsProps> = ({ onSelectReport, selectedReport }) => {
+    const buttons = [
+        'Employee Sales', 'Employee Refunds', 'Peak Hour Sales', 
+        'Low Hour Sales', 'Sales Per Category', 'Most Sold Items', 'Most Returned Items'
+    ];
+
     return (
-        <div className="bg-bgSoft w-full p-5 gap-2 rounded-lg">
-            <p>Select a report to view:</p>
-            <div className="flex gap-2">
+        <div className="flex gap-2 bg-bgSoft p-2 rounded-lg">
+            {buttons.map((report) => (
                 <button
-                    onClick={() => onSelectReport('Employee Sales')}
-                    className="text-white bg-button rounded-lg p-1.5 shadow-md shadow-slate-600"
+                    key={report}
+                    className={`text-white p-1.5 rounded-lg shadow-md transition transform
+                        ${selectedReport === report ? 'shadow-inner scale-95' : 'hover:scale-105'}
+                        ${selectedReport === report ? 'bg-buttonDark' : 'bg-button hover:bg-buttonDark'}`}
+                    onClick={() => onSelectReport(report)}
                 >
-                    Employee Sales
+                    {report}
                 </button>
-                <button
-                    onClick={() => onSelectReport('Employee Refunds')}
-                    className="text-white bg-button rounded-lg p-1.5 shadow-md shadow-slate-600"
-                >
-                    Employee Refunds
-                </button>
-                <button
-                    onClick={() => onSelectReport('Peak Hour Sales')}
-                    className="text-white bg-button rounded-lg p-1.5 shadow-md shadow-slate-600"
-                >
-                    Peak Hour Sales
-                </button>
-                <button
-                    onClick={() => onSelectReport('Low Hour Sales')}
-                    className="text-white bg-button rounded-lg p-1.5 shadow-md shadow-slate-600"
-                >
-                    Low Hour Sales
-                </button>
-                <button
-                    onClick={() => onSelectReport('Sales Per Category')}
-                    className="text-white bg-button rounded-lg p-1.5 shadow-md shadow-slate-600"
-                >
-                    Sales Per Category
-                </button>
-                <button
-                    onClick={() => onSelectReport('Most Sold Items')}
-                    className="text-white bg-button rounded-lg p-1.5 shadow-md shadow-slate-600"
-                >
-                    Most Sold Items
-                </button>
-                <button
-                    onClick={() => onSelectReport('Most Returned Items')}
-                    className="text-white bg-button rounded-lg p-1.5 shadow-md shadow-slate-600"
-                >
-                    Most Returned Items
-                </button>
-            </div>
+            ))}
         </div>
     );
 };

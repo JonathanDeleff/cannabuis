@@ -8,6 +8,11 @@ export interface EmpSalesType {
     total_sales: number;
 }
 
+export interface EmployeeSalesReportType {
+    mostSales: EmpSalesType | null;
+    leastSales: EmpSalesType | null;
+}
+
 export interface LowHourSalesType {
     hour: number;
     total_sales: number;
