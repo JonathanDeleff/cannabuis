@@ -21,15 +21,17 @@ const ReportsPage: React.FC = () => {
     const [selectedReport, setSelectedReport] = useState<string | null>(null);
     const [reportData, setReportData] = useState<ReportType | null>(null); // Include null in the type
 
+    //useEffect to fetch data when selectedReport changes
     useEffect(() => {
         if (!selectedReport) return;
 
+        // Fetch data based on selected report uses cases to determine which fetch function to call
         const fetchData = async () => {
             try {
                 let data: ReportType | undefined;
                 switch (selectedReport) {
                     case 'Employee Sales':
-                        data = await fetchMostSales(); // Replace with the relevant fetch function
+                        data = await fetchMostSales(); // will need changes
                         break;
                     case 'Employee Refunds':
                         data = await fetchEmployeeRefunds();
@@ -44,7 +46,7 @@ const ReportsPage: React.FC = () => {
                         data = await fetchSalesPerCategory();
                         break;
                     case 'Most Sold Items':
-                        data = await fetchMostSoldAllTime(); // Replace with the relevant fetch function
+                        data = await fetchMostSoldAllTime(); //will need changes
                         break;
                     case 'Most Returned Items':
                         data = await fetchMostReturned();

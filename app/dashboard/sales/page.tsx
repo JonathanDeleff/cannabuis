@@ -58,7 +58,8 @@ const ProductsPage = ( ) => {
     sell_price: 0,
     discount_price: 0,
     tags: '',
-    store_id: ''
+    store_id: '',
+    inventory_id:'',
   });
 
   const [customerSearchQuery, setCustomerSearchQuery] = useState<string>('');
@@ -70,10 +71,12 @@ const ProductsPage = ( ) => {
     setMounted(true);
   }, []);
 
-  
+  const filteredProducts = useMemo(() => {
+    return products.filter(product => product.store_id === session?.user?.storeId);
+  }, [products, session?.user?.storeId]);
 
   const sortedProducts = useMemo(() => {
-    let sortableProducts = [...products];
+    let sortableProducts = [...filteredProducts];
 
     if (sortConfig.key) {
       sortableProducts.sort((a, b) => {

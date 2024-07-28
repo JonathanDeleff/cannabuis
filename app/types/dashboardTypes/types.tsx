@@ -60,6 +60,7 @@ export interface ProductType {
     subcategory: string;
     case_size: string;
     inventory_level: number;
+    inventory_id: string;
     cost_price: number;
     sell_price: number;
     discount_price: number;

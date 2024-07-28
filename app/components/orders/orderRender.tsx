@@ -11,7 +11,7 @@ const capitalizeFirstLetter = (str: string) => {
 
 const getStatusClass = (status: string) => {
     switch (status) {
-      case 'delivered':
+      case 'received':
         return 'bg-complete';
       case 'on route':
         return 'bg-pending';

@@ -17,7 +17,9 @@ export async function GET() {
         p.tags,
         COALESCE(i.inventory_level, 0) AS inventory_level,
         COALESCE(i.sell_price, 0) AS sell_price,
-        i.discount_price
+        i.discount_price,
+        i.store_id,
+        i.inventory_id
       FROM 
         c_product p
       LEFT JOIN 

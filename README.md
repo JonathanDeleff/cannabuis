@@ -40,3 +40,22 @@ Should haves:
 - Have Login token expire
 - Double check inventory count
 - Condition for displaying store relevant or all stuff
+
+{
+	"101": {
+		"product_sku": "CNB000001",
+		"product_brand": "Aurora",
+		"product_title": "Aurora Indica Infused Pre-roll",
+		"product_description": "High quality infused pre-roll of Aurora Indica strain.",
+		"product_weight": "0.50",
+		"product_equivalency": "Pre-roll",
+		"category": "Prerolls",
+		"subcategory": "Infused",
+		"case_size": 12,
+		"cost_price": "8.00",
+		"tags": "THC, CBD",
+		"inventory_level": 17,
+		"sell_price": "12.00",
+		"discount_price": null
+	}
+}
