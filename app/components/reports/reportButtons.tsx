@@ -9,7 +9,7 @@ type ReportButtonsProps = {
 const ReportButtons: React.FC<ReportButtonsProps> = ({ onSelectReport, selectedReport }) => {
     const buttons = [
         'Employee Sales', 'Employee Refunds', 'Peak Hour Sales', 
-        'Low Hour Sales', 'Sales Per Category', 'Most Sold Items', 'Most Returned Items'
+        'Low Hour Sales', 'Sales Per Category', 'Most Sold Items', 'Most Sold Items Today', 'Most Returned Items'
     ];
 
     return (

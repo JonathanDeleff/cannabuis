@@ -1,25 +1,25 @@
-// pages/reports/ReportsPage.tsx
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
-    fetchLeastSales,
-    fetchMostSales,
-    fetchEmployeeRefunds,
-    fetchLowHourSales,
     fetchPeakHourSales,
     fetchMostReturned,
     fetchMostSoldAllTime,
     fetchMostSoldToday,
-    fetchSalesPerCategory
+    fetchSalesPerCategory,
+    fetchEmployeeRefunds,
+    fetchMostSales,
+    fetchLowHourSales
 } from "../../services/reportsService";
 import ReportButtons from "../../components/reports/reportButtons";
-import { ReportType } from "../../types/reportTypes/types";
+import { ReportType, EmpRefundType, EmpSalesType } from "../../types/reportTypes/types";
+import EmployeeRefundsReport from "../../components/reports/employeeRefundsReport";
+import EmployeeSalesReport from '@/app/components/reports/employeeSalesReport';
 
 const ReportsPage: React.FC = () => {
     const [selectedReport, setSelectedReport] = useState<string | null>(null);
-    const [reportData, setReportData] = useState<ReportType | null>(null); // Include null in the type
+    const [reportData, setReportData] = useState<ReportType | null>(null);
 
-    //useEffect to fetch data when selectedReport changes
+    // useEffect to fetch data when selectedReport changes
     useEffect(() => {
         if (!selectedReport) return;
 
@@ -29,7 +29,7 @@ const ReportsPage: React.FC = () => {
                 let data: ReportType | undefined;
                 switch (selectedReport) {
                     case 'Employee Sales':
-                        data = await fetchMostSales(); // will need changes
+                        data = await fetchMostSales();
                         break;
                     case 'Employee Refunds':
                         data = await fetchEmployeeRefunds();
@@ -44,7 +44,10 @@ const ReportsPage: React.FC = () => {
                         data = await fetchSalesPerCategory();
                         break;
                     case 'Most Sold Items':
-                        data = await fetchMostSoldAllTime(); //will need changes
+                        data = await fetchMostSoldAllTime();
+                        break;
+                    case 'Most Sold Items Today':
+                        data = await fetchMostSoldToday();
                         break;
                     case 'Most Returned Items':
                         data = await fetchMostReturned();
@@ -63,7 +66,14 @@ const ReportsPage: React.FC = () => {
         fetchData();
     }, [selectedReport]);
 
+    // conditional rendering depending on which report is selected
     const renderReportContent = () => {
+        if (selectedReport === 'Employee Refunds' && reportData && Array.isArray(reportData) && reportData.every(item => 'total_refunds' in item)) {
+            return <EmployeeRefundsReport reportData={reportData as EmpRefundType[]} />;
+        }
+        else if (selectedReport === 'Employee Sales' && reportData && Array.isArray(reportData) && reportData.every(item => 'total_sales' in item)) {
+            return <EmployeeSalesReport salesData={reportData as EmpSalesType[]} />;
+        }
         return <p>Data fetched, ready to render...</p>;
     };
 
