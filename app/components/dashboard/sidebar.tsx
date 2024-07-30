@@ -21,7 +21,6 @@ const menuItems = [
             { title: "Dashboard", path: "/dashboard", icon: <MdDashboard /> },
             { title: "Employees", path: "/dashboard/employees", icon: <MdSupervisedUserCircle /> },
             { title: "Sales", path: "/dashboard/sales", icon: <TbShoppingBagPlus /> },
-            { title: "Returns", path: "/dashboard/returns", icon: <TbShoppingBagMinus /> },
             { title: "Transactions", path: "/dashboard/transactions", icon: <MdAttachMoney /> },
             { title: "Orders", path: "/dashboard/orders", icon: <MdAssignment /> },
         ],
@@ -29,9 +28,7 @@ const menuItems = [
     {
         title: "Analytics",
         list: [
-            { title: "Revenue", path: "/dashboard/revenue", icon: <MdWork /> },
             { title: "Reports", path: "/dashboard/reports", icon: <MdAnalytics /> },
-            { title: "Teams", path: "/dashboard/teams", icon: <MdPeople /> },
         ],
     },
     {

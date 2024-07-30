@@ -58,9 +58,6 @@ export default function TransactionsPage() {
     <div className="bg-bgSoft p-5 rounded-lg mt-5 shadow-lg shadow-slate-700">
       <div className="flex items-center justify-between">
         <Search placeholder='Search for a Transaction' setSearchQuery={setSearchQuery} />
-        <Link href={"/components/products/addProduct"}>
-          <button className="p-2.5 bg-button text-black rounded-lg">Add New</button>
-        </Link>
       </div>
         <Transaction transactions={transactions} />
       <Pagination />
