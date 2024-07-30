@@ -4,7 +4,6 @@ import MostSoldToday from "@/app/components/dashboard/cards/mostSoldToday";
 import WeeklySalesCategory from "@/app/components/dashboard/cards/weeklySalesCategory";
 import Chart from "@/app/components/dashboard/chart";
 import Transaction from "@/app/components/transactions/transactionRender";
-import Announcements from "@/app/components/dashboard/announcements";
 import { useEffect, useState } from 'react';
 import { TransactionType } from "../types/dashboardTypes/types";
 
@@ -55,7 +54,7 @@ export default function Dashboard() {
 
     return (
         <div className="flex gap-5 mt-5 h-screen">
-            <div className="flex flex-col gap-5 w-4/5">
+            <div className="flex flex-col gap-5 w-full">
                 <div className="flex gap-5 justify-between">
                     <DailySales />
                     <MostSoldToday />
@@ -63,9 +62,6 @@ export default function Dashboard() {
                 </div>
                 <Transaction transactions={transactions} limit={4}/>
                 <Chart />
-            </div>
-            <div className="flex w-1/5">
-                <Announcements />
             </div>
         </div>
     );

@@ -1,7 +1,5 @@
 "use client";
 import { Search } from "@/app/components/dashboard/search";
-import Link from 'next/link';
-import Pagination from "@/app/components/dashboard/pagination";
 import Transaction from "@/app/components/transactions/transactionRender";
 import { useState, useEffect } from "react";
 import { TransactionType } from "@/app/types/dashboardTypes/types";
@@ -60,7 +58,6 @@ export default function TransactionsPage() {
         <Search placeholder='Search for a Transaction' setSearchQuery={setSearchQuery} />
       </div>
         <Transaction transactions={transactions} />
-      <Pagination />
     </div>
   );
 }

@@ -1,7 +1,5 @@
 "use client";
 import { Search } from "@/app/components/dashboard/search";
-import Link from 'next/link';
-import Pagination from "@/app/components/dashboard/pagination";
 import Employee from "@/app/components/employees/employeeRender";
 import { useState, useEffect } from "react";
 import type { EmployeeType, StoreType } from "@/app/types/dashboardTypes/types";
@@ -109,7 +107,6 @@ export default function EmployeesPage() {
           setAddNew={setAddNew}
           stores={stores}  
         />
-      <Pagination />
     </div>
   );
 }

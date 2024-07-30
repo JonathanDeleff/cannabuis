@@ -13,9 +13,7 @@ import {
     fetchSalesPerCategory
 } from "../../services/reportsService";
 import ReportButtons from "../../components/reports/reportButtons";
-import {
-    ReportType,
-} from "../../types/reportTypes/types";
+import { ReportType } from "../../types/reportTypes/types";
 
 const ReportsPage: React.FC = () => {
     const [selectedReport, setSelectedReport] = useState<string | null>(null);
