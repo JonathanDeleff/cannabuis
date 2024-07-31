@@ -74,7 +74,7 @@ const ReportsPage: React.FC = () => {
         else if (selectedReport === 'Employee Sales' && reportData && Array.isArray(reportData) && reportData.every(item => 'total_sales' in item)) {
             return <EmployeeSalesReport salesData={reportData as EmpSalesType[]} />;
         }
-        return <p>Data fetched, ready to render...</p>;
+        return <p>Loading...</p>;
     };
 
     return (
@@ -83,7 +83,6 @@ const ReportsPage: React.FC = () => {
             <div className="mt-5 bg-gray-100 p-4 rounded-lg shadow-md">
                 {selectedReport ? (
                     <div>
-                        <p className="text-lg font-bold">Selected Report: {selectedReport}</p>
                         <div className="mt-2">
                             {renderReportContent()}
                         </div>

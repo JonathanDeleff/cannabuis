@@ -52,7 +52,6 @@ const EmployeeSalesReport: React.FC<EmployeeSalesProps> = ({ salesData }) => {
     
     return (
         <div>
-            <h1>Employee Sales Report</h1>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="border-border rounded-md border-2 shadow-md shadow-slate-500 p-4 flex flex-col items-center">
                     <span>Highest Selling Employee:</span>

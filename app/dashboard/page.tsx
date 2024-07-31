@@ -2,7 +2,6 @@
 import DailySales from "@/app/components/dashboard/cards/dailySales";
 import MostSoldToday from "@/app/components/dashboard/cards/mostSoldToday";
 import WeeklySalesCategory from "@/app/components/dashboard/cards/weeklySalesCategory";
-import Chart from "@/app/components/dashboard/chart";
 import Transaction from "@/app/components/transactions/transactionRender";
 import { useEffect, useState } from 'react';
 import { TransactionType } from "../types/dashboardTypes/types";
@@ -61,7 +60,6 @@ export default function Dashboard() {
                     <WeeklySalesCategory />
                 </div>
                 <Transaction transactions={transactions} limit={4}/>
-                <Chart />
             </div>
         </div>
     );
