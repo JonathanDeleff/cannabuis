@@ -1,18 +1,6 @@
-import { MostSoldTodayType } from "../types/dashboardTypes/types";
-import { EmpRefundType, EmpSalesType, LowHourSalesType, MostReturnedType, MostSoldAllTimeType, PeakHourSalesType, SalesPerCategoryType } from "../types/reportTypes/types";
+import { EmployeeType } from "../types/dashboardTypes/types";
+import { MostSoldTodayType, EmpRefundType, EmpSalesType, LowHourSalesType, MostReturnedType, MostSoldAllTimeType, PeakHourSalesType, SalesPerCategoryType } from "../types/reportTypes/types";
 
-export const fetchLeastSales = async (): Promise<EmpSalesType | undefined> => {
-    try {
-        const response = await fetch('/api/reports/employeeReports/employeeLeastSales');
-        if (!response.ok) {
-            throw new Error('Failed to fetch employee sales data');
-        }
-        return response.json();
-    } catch (error) {
-        console.log('Failed to fetch employee sales data:', error);
-    }
-
-}
 
 export const fetchMostSales = async (): Promise<EmpSalesType | undefined> => {
     try {
@@ -101,6 +89,18 @@ export const fetchMostSoldToday = async (): Promise<MostSoldTodayType | undefine
 export const fetchSalesPerCategory = async (): Promise<SalesPerCategoryType | undefined> => {
     try {
         const response = await fetch('/api/reports/salesPerCategory');
+        if (!response.ok) {
+            throw new Error('Failed to fetch employee sales data');
+        }
+        return response.json();
+    } catch (error) {
+        console.log('Failed to fetch employee sales data:', error);
+    }
+}
+
+export const fetchEmployees = async (): Promise<EmployeeType | undefined> => {
+    try {
+        const response = await fetch('/api/employees');
         if (!response.ok) {
             throw new Error('Failed to fetch employee sales data');
         }

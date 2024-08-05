@@ -4,7 +4,7 @@ import { Buffer } from 'buffer';
 export async function POST(req: Request) {
   try {
     const { htmlContent } = await req.json();
-    const pdfApiKey = process.env.PDFSHIFT_API_KEY; // Use environment variable directly here
+    const pdfApiKey = process.env.PDFSHIFT_API_KEY; 
 
     if (!pdfApiKey) {
       return NextResponse.json({ error: 'PDFShift API key is missing.' }, { status: 400 });
@@ -18,7 +18,6 @@ export async function POST(req: Request) {
       },
       body: JSON.stringify({
         source: htmlContent,
-        // Additional options if needed
       }),
     });
 

@@ -1,7 +1,5 @@
 "use client";
 import { Search } from "@/app/components/dashboard/search";
-import Link from 'next/link';
-import Pagination from "@/app/components/dashboard/pagination";
 import Transaction from "@/app/components/transactions/transactionRender";
 import { useState, useEffect } from "react";
 import { TransactionType } from "@/app/types/dashboardTypes/types";
@@ -58,12 +56,8 @@ export default function TransactionsPage() {
     <div className="bg-bgSoft p-5 rounded-lg mt-5 shadow-lg shadow-slate-700">
       <div className="flex items-center justify-between">
         <Search placeholder='Search for a Transaction' setSearchQuery={setSearchQuery} />
-        <Link href={"/components/products/addProduct"}>
-          <button className="p-2.5 bg-button text-black rounded-lg">Add New</button>
-        </Link>
       </div>
         <Transaction transactions={transactions} />
-      <Pagination />
     </div>
   );
 }

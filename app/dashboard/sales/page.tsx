@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
 import { Search } from "@/app/components/dashboard/search";
-import Pagination from "@/app/components/dashboard/pagination";
 import Product from "@/app/components/products/productRender";
 import Cart from "@/app/components/products/shoppingCart";
 import Confirm from "@/app/components/products/confirmPage";

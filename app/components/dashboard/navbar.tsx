@@ -11,14 +11,6 @@ export default function Navbar() {
             <div className="text-textSoft font-bold capitalize">
                 {pathname.split("/").pop()}
             </div>
-            <div className="flex items-center gap-2">
-                <div className="flex items-center gap-2 bg-search rounded-lg p-1 border-solid border-border border-2">
-                    <div className='flex gap-2 text-black'>
-                    <MdSearch />
-                    </div>
-                    <input type="text" placeholder="Search..." className="bg-transparent text-black p-1" />
-                </div>
-            </div>
         </div>
     )
 }

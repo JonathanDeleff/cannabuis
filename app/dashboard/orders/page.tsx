@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import Orders from "@/app/components/orders/orderRender";
 import { Search } from "@/app/components/dashboard/search";
 import Link from 'next/link';
-import Pagination from "@/app/components/dashboard/pagination";
 import SelectedOrder from "@/app/components/orders/orderSelect";
 import { OrderType } from "@/app/types/dashboardTypes/types";
 
@@ -68,7 +67,6 @@ export default function OrdersPage() {
             </Link>
           </div>
             <Orders orders={orders} onSelect={handleSelectOrder} />
-          <Pagination />
         </div>
       </div>
     )

@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
 import { Search } from "@/app/components/dashboard/search";
-import Pagination from "@/app/components/dashboard/pagination";
 import Product from "@/app/components/products/productRender";
 import OrderCart from "@/app/components/orders/orderCart";
 import ConfirmOrder from "@/app/components/orders/confirmOrder";
@@ -27,6 +26,7 @@ export default function OrderPage() {
         subcategory: '',
         case_size: '',
         inventory_level: 0,
+        inventory_id: '',
         cost_price: 0,
         sell_price: 0,
         discount_price: 0,
@@ -244,7 +244,6 @@ export default function OrderPage() {
                 requestSort={requestSort} 
                 sortConfig={sortConfig} 
             />
-            <Pagination />
         </div>
         </div>
     );
