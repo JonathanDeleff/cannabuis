@@ -59,7 +59,7 @@ export default function Dashboard() {
                     <MostSoldToday />
                     <WeeklySalesCategory />
                 </div>
-                <Transaction transactions={transactions} limit={4}/>
+                <Transaction transactions={transactions} limit={8}/>
             </div>
         </div>
     );
