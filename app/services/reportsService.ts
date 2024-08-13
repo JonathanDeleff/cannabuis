@@ -100,7 +100,7 @@ export const fetchSalesPerCategory = async (): Promise<SalesPerCategoryType | un
 
 export const fetchEmployees = async (): Promise<EmployeeType | undefined> => {
     try {
-        const response = await fetch('/api/employees');
+        const response = await fetch('/api/reports/employeeList');
         if (!response.ok) {
             throw new Error('Failed to fetch employee sales data');
         }
