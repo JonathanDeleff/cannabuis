@@ -12,12 +12,7 @@ export interface EmpSalesType {
     total_sales: number;
 }
 
-export interface LowHourSalesType {
-    hour: number;
-    total_sales: number;
-}
-
-export interface PeakHourSalesType {
+export interface HourSalesType {
     hour: number;
     total_sales: number;
 }
@@ -49,8 +44,7 @@ export interface MostSoldTodayType {
 export type ReportType = 
     | EmpRefundType
     | EmpSalesType
-    | LowHourSalesType
-    | PeakHourSalesType
+    | HourSalesType
     | SalesPerCategoryType
     | MostReturnedType
     | MostSoldTodayType

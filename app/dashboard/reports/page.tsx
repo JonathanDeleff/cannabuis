@@ -11,9 +11,10 @@ import {
     fetchLowHourSales
 } from "../../services/reportsService";
 import ReportButtons from "../../components/reports/reportButtons";
-import { ReportType, EmpRefundType, EmpSalesType } from "../../types/reportTypes/types";
+import { ReportType, EmpRefundType, EmpSalesType, HourSalesType } from "../../types/reportTypes/types";
 import EmployeeRefundsReport from "../../components/reports/employeeRefundsReport";
 import EmployeeSalesReport from '@/app/components/reports/employeeSalesReport';
+import PeakHourSalesReport from '@/app/components/reports/peakHourSalesReport';
 
 const ReportsPage: React.FC = () => {
     const [selectedReport, setSelectedReport] = useState<string | null>(null);
@@ -36,6 +37,7 @@ const ReportsPage: React.FC = () => {
                         break;
                     case 'Peak Hour Sales':
                         data = await fetchPeakHourSales();
+                        console.log("Fetched Peak Hour Sales Data:", data);
                         break;
                     case 'Low Hour Sales':
                         data = await fetchLowHourSales();
@@ -73,6 +75,9 @@ const ReportsPage: React.FC = () => {
         }
         else if (selectedReport === 'Employee Sales' && reportData && Array.isArray(reportData) && reportData.every(item => 'total_sales' in item)) {
             return <EmployeeSalesReport salesData={reportData as EmpSalesType[]} />;
+        }
+        else if (selectedReport === 'Peak Hour Sales' && Array.isArray(reportData)) {
+            return <PeakHourSalesReport reportData={reportData as HourSalesType[]} />;
         }
         return <p>Loading...</p>;
     };

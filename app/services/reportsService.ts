@@ -1,5 +1,5 @@
 import { EmployeeType } from "../types/dashboardTypes/types";
-import { MostSoldTodayType, EmpRefundType, EmpSalesType, LowHourSalesType, MostReturnedType, MostSoldAllTimeType, PeakHourSalesType, SalesPerCategoryType } from "../types/reportTypes/types";
+import { MostSoldTodayType, EmpRefundType, EmpSalesType, HourSalesType, MostReturnedType, MostSoldAllTimeType, SalesPerCategoryType } from "../types/reportTypes/types";
 
 
 export const fetchMostSales = async (): Promise<EmpSalesType | undefined> => {
@@ -26,7 +26,7 @@ export const fetchEmployeeRefunds = async (): Promise<EmpRefundType | undefined>
     }
 }
 
-export const fetchLowHourSales = async (): Promise<LowHourSalesType | undefined> => {
+export const fetchLowHourSales = async (): Promise<HourSalesType | undefined> => {
     try {
         const response = await fetch('/api/reports/lowHourSales');
         if (!response.ok) {
@@ -38,7 +38,7 @@ export const fetchLowHourSales = async (): Promise<LowHourSalesType | undefined>
     }
 }
 
-export const fetchPeakHourSales = async (): Promise<PeakHourSalesType | undefined> => {
+export const fetchPeakHourSales = async (): Promise<HourSalesType | undefined> => {
     try {
         const response = await fetch('/api/reports/peakHourSales');
         if (!response.ok) {
