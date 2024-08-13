@@ -260,6 +260,7 @@ const ProductsPage = ( ) => {
   
       // Clear the cart after successful transaction
       setCart([]);
+      clearCustomer();
     } catch (error) {
       console.error('Error confirming sale:', error);
     }
@@ -301,6 +302,10 @@ const ProductsPage = ( ) => {
     setShowCustomerSearch(false);
   };
 
+  const clearCustomer = () => {
+    setSelectedCustomer(null);
+  }
+
   return (
     <div className="flex gap-2 mt-5 flex-col">
       <div className="bg-bgSoft p-5 rounded-lg mt-5 max-h-4/5 w-full">
@@ -315,6 +320,7 @@ const ProductsPage = ( ) => {
             onConfirmSell={handleConfirmSell}
             sendEmailReceipt={sendEmailReceipt}
             setSendEmailReceipt={setSendEmailReceipt}
+            clearCustomer={clearCustomer}
         />
         )}
         {cartEmpty() ? (
