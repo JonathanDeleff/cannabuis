@@ -1,7 +1,7 @@
 import { HourSalesType } from "@/app/types/reportTypes/types";
 
 interface PeakHourSalesReportProps {
-    reportData: HourSalesType[] | null; // Update type to handle array
+    reportData: HourSalesType[] | null; 
 }
 
 const PeakHourSalesReport: React.FC<PeakHourSalesReportProps> = ({ reportData }) => {

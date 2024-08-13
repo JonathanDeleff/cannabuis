@@ -15,6 +15,7 @@ import { ReportType, EmpRefundType, EmpSalesType, HourSalesType } from "../../ty
 import EmployeeRefundsReport from "../../components/reports/employeeRefundsReport";
 import EmployeeSalesReport from '@/app/components/reports/employeeSalesReport';
 import PeakHourSalesReport from '@/app/components/reports/peakHourSalesReport';
+import LowHourSalesReport from '@/app/components/reports/lowHourSalesReport';
 
 const ReportsPage: React.FC = () => {
     const [selectedReport, setSelectedReport] = useState<string | null>(null);
@@ -78,6 +79,9 @@ const ReportsPage: React.FC = () => {
         }
         else if (selectedReport === 'Peak Hour Sales' && Array.isArray(reportData)) {
             return <PeakHourSalesReport reportData={reportData as HourSalesType[]} />;
+        }
+        else if (selectedReport === 'Low Hour Sales' && Array.isArray(reportData)) {
+            return <LowHourSalesReport reportData={reportData as HourSalesType[]} />;
         }
         return <p>Loading...</p>;
     };
