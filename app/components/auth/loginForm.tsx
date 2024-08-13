@@ -25,7 +25,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
           type="password"
           name="password"
           placeholder="Password"
-          className="p-8 border-2 rounded-md bg-hover text-white"
+          className="p-8 border-2 rounded-md bg-hover text-black"
         />
         <LoginButton />
         {errorMessage && (
